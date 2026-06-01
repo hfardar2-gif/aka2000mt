@@ -67,6 +67,8 @@ function Index() {
     galv: typeof d.galv === "number" ? d.galv : null,
   }));
 
+  const { logout } = useAuth();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
@@ -99,6 +101,14 @@ function Index() {
                 <p className="text-xs uppercase tracking-wider text-muted-foreground">Version</p>
                 <p className="font-semibold tabular-nums">v{report.version}</p>
               </div>
+              <div className="h-10 w-px bg-border" />
+              <button
+                onClick={logout}
+                className="inline-flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              >
+                <LogOut className="h-4 w-4" />
+                خروج
+              </button>
             </div>
           </div>
         </div>
