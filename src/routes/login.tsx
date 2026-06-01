@@ -1,23 +1,26 @@
-import { createFileRoute, redirect, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect, type FormEvent } from "react";
 import { Lock, LogIn, Shield, Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/login")({
-  beforeLoad: ({ context }) => {
-    if (context.auth.isAuthenticated) {
-      throw redirect({ to: "/" });
-    }
-  },
   component: LoginPage,
 });
 
 function LoginPage() {
-  const { auth } = Route.useRouteContext();
+  const { isAuthenticated, login } = useAuth();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate({ to: "/" });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -25,15 +28,10 @@ function LoginPage() {
     setIsLoading(true);
 
     setTimeout(() => {
-      const ok = auth.login(username, password);
+      const ok = login(username, password);
       if (!ok) {
         setError("نام کاربری یا رمز عبور اشتباه است");
         setIsLoading(false);
-      }
-      // If ok is true, auth state changes and beforeLoad on next navigation will pass.
-      // We trigger a redirect manually since login doesn't cause a re-render with route context update immediately.
-      if (ok) {
-        window.location.href = "/";
       }
     }, 500);
   };
