@@ -50,6 +50,21 @@ const CHART_COLORS = [
 
 function Index() {
   const t = report.totals;
+
+  // Validate data load status
+  let loadStatus: { ok: boolean; message: string } = { ok: true, message: "داده‌ها با موفقیت بارگذاری شدند" };
+  try {
+    if (!report || !report.totals || !Array.isArray(report.daily)) {
+      loadStatus = { ok: false, message: "ساختار فایل داده نامعتبر است" };
+    }
+  } catch (e) {
+    loadStatus = { ok: false, message: "خطا در خواندن فایل داده" };
+  }
+  const lastUpdate = new Date().toLocaleString("fa-IR", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+
   const dailyNumeric = report.daily.map((d) => ({
     date: d.date.slice(5),
     pickling: typeof d.pickling === "number" ? d.pickling : 0,
@@ -99,6 +114,28 @@ function Index() {
               </div>
               <div className="h-10 w-px bg-border" />
             </div>
+          </div>
+          <div
+            className={`mt-6 flex flex-wrap items-center gap-3 rounded-xl border px-4 py-3 text-sm ${
+              loadStatus.ok
+                ? "border-primary/30 bg-primary/10"
+                : "border-destructive/40 bg-destructive/10"
+            }`}
+          >
+            <span
+              className={`flex h-2.5 w-2.5 rounded-full ${
+                loadStatus.ok ? "bg-primary animate-pulse" : "bg-destructive"
+              }`}
+            />
+            <span className="font-medium text-foreground">
+              {loadStatus.ok ? "وضعیت: موفق" : "وضعیت: ناموفق"}
+            </span>
+            <span className="text-muted-foreground">·</span>
+            <span className="text-muted-foreground">{loadStatus.message}</span>
+            <span className="text-muted-foreground">·</span>
+            <span className="text-muted-foreground">
+              آخرین به‌روزرسانی: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
+            </span>
           </div>
         </div>
       </header>
