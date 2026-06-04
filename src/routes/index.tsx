@@ -104,7 +104,7 @@ function Index() {
             <div className="flex items-center gap-6 text-sm">
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground">Report date</p>
-                <p className="font-semibold tabular-nums">{report.reportDate}</p>
+                <p className="font-semibold tabular-nums">{new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
               <div className="h-10 w-px bg-border" />
               <div>
