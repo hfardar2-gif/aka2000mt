@@ -52,18 +52,17 @@ function Index() {
   const t = report.totals;
 
   // Validate data load status
-  let loadStatus: { ok: boolean; message: string } = { ok: true, message: "داده‌ها با موفقیت بارگذاری شدند" };
+  let loadStatus: { ok: boolean; message: string } = { ok: true, message: "Data loaded successfully" };
   try {
     if (!report || !report.totals || !Array.isArray(report.daily)) {
-      loadStatus = { ok: false, message: "ساختار فایل داده نامعتبر است" };
+      loadStatus = { ok: false, message: "Invalid data file structure" };
     }
   } catch (e) {
-    loadStatus = { ok: false, message: "خطا در خواندن فایل داده" };
+    loadStatus = { ok: false, message: "Error reading data file" };
   }
-  const lastUpdate = new Date().toLocaleString("fa-IR", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  const lastUpdate = report.reportDate
+    ? new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
   const dailyNumeric = report.daily.map((d) => ({
     date: d.date.slice(5),
