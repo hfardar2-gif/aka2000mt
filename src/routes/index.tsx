@@ -127,13 +127,13 @@ function Index() {
               }`}
             />
             <span className="font-medium text-foreground">
-              {loadStatus.ok ? "وضعیت: موفق" : "وضعیت: ناموفق"}
+              {loadStatus.ok ? "Status: Success" : "Status: Failed"}
             </span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">{loadStatus.message}</span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">
-              آخرین به‌روزرسانی: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
+              Last updated: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
             </span>
           </div>
         </div>
