@@ -52,18 +52,17 @@ function Index() {
   const t = report.totals;
 
   // Validate data load status
-  let loadStatus: { ok: boolean; message: string } = { ok: true, message: "داده‌ها با موفقیت بارگذاری شدند" };
+  let loadStatus: { ok: boolean; message: string } = { ok: true, message: "Data loaded successfully" };
   try {
     if (!report || !report.totals || !Array.isArray(report.daily)) {
-      loadStatus = { ok: false, message: "ساختار فایل داده نامعتبر است" };
+      loadStatus = { ok: false, message: "Invalid data file structure" };
     }
   } catch (e) {
-    loadStatus = { ok: false, message: "خطا در خواندن فایل داده" };
+    loadStatus = { ok: false, message: "Error reading data file" };
   }
-  const lastUpdate = new Date().toLocaleString("fa-IR", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
+  const lastUpdate = report.reportDate
+    ? new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
   const dailyNumeric = report.daily.map((d) => ({
     date: d.date.slice(5),
@@ -105,7 +104,7 @@ function Index() {
             <div className="flex items-center gap-6 text-sm">
               <div>
                 <p className="text-xs uppercase tracking-wider text-muted-foreground">Report date</p>
-                <p className="font-semibold tabular-nums">{report.reportDate}</p>
+                <p className="font-semibold tabular-nums">{new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
               <div className="h-10 w-px bg-border" />
               <div>
@@ -128,13 +127,13 @@ function Index() {
               }`}
             />
             <span className="font-medium text-foreground">
-              {loadStatus.ok ? "وضعیت: موفق" : "وضعیت: ناموفق"}
+              {loadStatus.ok ? "Status: Success" : "Status: Failed"}
             </span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">{loadStatus.message}</span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">
-              آخرین به‌روزرسانی: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
+              Last updated: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
             </span>
           </div>
         </div>
