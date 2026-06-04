@@ -20,7 +20,7 @@ import { StatCard } from "@/components/dashboard/StatCard";
 import { Section } from "@/components/dashboard/Section";
 import { useAuth } from "@/lib/auth";
 
-export const Route = createFileRoute("/_authenticated/")({
+export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Daily 2000mt Project Report — Production Dashboard" },
