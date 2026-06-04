@@ -14,11 +14,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { LogOut } from "lucide-react";
 import report from "@/data/report.json";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Section } from "@/components/dashboard/Section";
-import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
