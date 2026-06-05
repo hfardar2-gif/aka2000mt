@@ -85,12 +85,12 @@ const translations: Record<string, Record<Lang, string>> = {
   scrap: { en: "Scrap by Line", zh: "各线废料", fa: "ضایعات هر خط" },
   scrapSub: { en: "Spira & scrap totals", zh: "螺旋与废料合计", fa: "مجموع اسپیرا و ضایعات" },
   coating: { en: "Coating Weight Consumed (Zinc & Zamak)", zh: "镀层消耗(锌与扎马克)", fa: "وزن پوشش مصرفی (روی و زاماک)" },
-  coatingSub: { en: "Theoretical vs actual coating with 20% dross loss", zh: "理论与实际镀层(含 20% 渣损)", fa: "پوشش نظری در برابر واقعی با ۲۰٪ تلفات سرباره" },
+  coatingSub: { en: "Theoretical vs actual coating with 18% dross loss", zh: "理论与实际镀层(含 18% 渣损)", fa: "پوشش نظری در برابر واقعی با ۱۸٪ تلفات سرباره" },
   thickness: { en: "Thickness (mm)", zh: "厚度 (毫米)", fa: "ضخامت (میلی‌متر)" },
   width: { en: "Width", zh: "宽度", fa: "عرض" },
   produced: { en: "Produced (ton)", zh: "产量 (吨)", fa: "تولید (تن)" },
   theoZn: { en: "Theoretical Zn (kg)", zh: "理论 Zn (千克)", fa: "روی نظری (کیلوگرم)" },
-  dross: { en: "Dross 20% (kg)", zh: "渣损 20% (千克)", fa: "سرباره ۲۰٪ (کیلوگرم)" },
+  dross: { en: "Dross (kg)", zh: "渣损 (千克)", fa: "سرباره (کیلوگرم)" },
   actualCoating: { en: "Actual coating (kg)", zh: "实际镀层 (千克)", fa: "پوشش واقعی (کیلوگرم)" },
   zincPurchased: { en: "Zinc & Zamak purchased", zh: "已采购锌与扎马克", fa: "روی و زاماک خریداری شده" },
   remaining: { en: "Remaining", zh: "剩余", fa: "باقیمانده" },
@@ -121,7 +121,49 @@ const translations: Record<string, Record<Lang, string>> = {
   loadOk: { en: "Data loaded successfully", zh: "数据加载成功", fa: "داده‌ها با موفقیت بارگذاری شد" },
   print: { en: "Print PDF", zh: "打印 PDF", fa: "چاپ PDF" },
   theme: { en: "Theme", zh: "主题", fa: "تم" },
+  kpis: { en: "Zinc Performance KPIs", zh: "锌性能 KPI", fa: "شاخص‌های عملکرد روی" },
+  kpisSub: { en: "Efficiency and productivity benchmarks vs industry standard", zh: "效率与生产力对标行业标准", fa: "بازده و بهره‌وری در مقایسه با استاندارد صنعت" },
+  category: { en: "Category", zh: "类别", fa: "دسته‌بندی" },
+  kpi: { en: "KPI", zh: "指标", fa: "شاخص" },
+  value: { en: "Value", zh: "数值", fa: "مقدار" },
+  unit: { en: "Unit", zh: "单位", fa: "واحد" },
+  industryStd: { en: "Industry Standard", zh: "行业标准", fa: "استاندارد صنعت" },
+  catPerf: { en: "Performance", zh: "性能", fa: "عملکرد" },
+  catProd: { en: "Productivity", zh: "生产力", fa: "بهره‌وری" },
+  kpiZnEff: { en: "Zinc Efficiency", zh: "锌效率", fa: "بازده روی" },
+  kpiZnLoss: { en: "Zinc Loss Rate", zh: "锌损失率", fa: "نرخ تلفات روی" },
+  kpiZnInt: { en: "Zinc Intensity", zh: "锌强度", fa: "شدت مصرف روی" },
+  kpiSteelPerZn: { en: "Steel Production per Zinc Consumption", zh: "单位锌消耗钢产量", fa: "تولید فولاد به ازای مصرف روی" },
+  copyright: {
+    en: "Designed and developed by Eng. Hamid Reza Fardar · Copyright © 2026, all rights reserved.",
+    zh: "由 Hamid Reza Fardar 工程师设计与开发 · 版权所有 © 2026。",
+    fa: "طراح و سازنده مهندس حمیدرضا فاردار · کپی‌رایت برای سازنده محفوظ است ۲۰۲۶",
+  },
 };
+
+const dataTr: Record<string, Record<Lang, string>> = {
+  // warehouse
+  "Unpickled": { en: "Unpickled", zh: "未酸洗", fa: "اسیدشویی نشده" },
+  "Pickled": { en: "Pickled", zh: "已酸洗", fa: "اسیدشویی شده" },
+  "Rolled": { en: "Rolled", zh: "已轧制", fa: "نورد شده" },
+  // scrap / yields
+  "Rolling": { en: "Rolling", zh: "轧制", fa: "نورد" },
+  "Galvanizing": { en: "Galvanizing", zh: "镀锌", fa: "گالوانیزه" },
+  "Pickling Yield": { en: "Pickling Yield", zh: "酸洗良率", fa: "راندمان اسیدشویی" },
+  "Rolling Yield": { en: "Rolling Yield", zh: "轧制良率", fa: "راندمان نورد" },
+  "Galvanizing Yield": { en: "Galvanizing Yield", zh: "镀锌良率", fa: "راندمان گالوانیزه" },
+  "Coil to Coil Yield": { en: "Coil to Coil Yield", zh: "卷到卷良率", fa: "راندمان کلاف به کلاف" },
+  // material balance
+  "Factory Input": { en: "Factory Input", zh: "工厂输入", fa: "ورودی کارخانه" },
+  "Final Product": { en: "Final Product", zh: "最终产品", fa: "محصول نهایی" },
+  "Warehouse + WIP": { en: "Warehouse + WIP", zh: "仓库 + 在制品", fa: "انبار + کالای در جریان" },
+  "Warehouse + WIP − Sold": { en: "Warehouse + WIP − Sold", zh: "仓库 + 在制品 − 已售", fa: "انبار + WIP − فروش رفته" },
+  "Ready to ship": { en: "Ready to ship", zh: "待发货", fa: "آماده ارسال" },
+  "Total Scrap": { en: "Total Scrap", zh: "总废料", fa: "کل ضایعات" },
+  // signature
+  "AKA Technical Representative": { en: "AKA Technical Representative", zh: "AKA 技术代表", fa: "نماینده فنی آکا" },
+};
+const dt = (k: string, lang: Lang) => dataTr[k]?.[lang] ?? k;
 
 function Index() {
   const t = report.totals;
