@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Sun, Moon, Printer, Languages } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -48,8 +50,104 @@ const CHART_COLORS = [
   "var(--color-chart-5)",
 ];
 
+type Lang = "en" | "zh" | "fa";
+const translations: Record<string, Record<Lang, string>> = {
+  badge: { en: "Management Report", zh: "管理报告", fa: "گزارش مدیریتی" },
+  title: { en: "Daily 2000mt Project Report", zh: "每日 2000 吨项目报告", fa: "گزارش روزانه پروژه ۲۰۰۰ تن" },
+  subtitle: {
+    en: "Cumulative production, yield, warehouse balance, sales & planning for the galvanizing line.",
+    zh: "镀锌生产线的累计产量、良率、库存、销售与计划。",
+    fa: "تولید تجمعی، راندمان، موجودی انبار، فروش و برنامه‌ریزی خط گالوانیزه.",
+  },
+  reportDate: { en: "Report date", zh: "报告日期", fa: "تاریخ گزارش" },
+  version: { en: "Version", zh: "版本", fa: "نسخه" },
+  statusOk: { en: "Status: Success", zh: "状态:成功", fa: "وضعیت: موفق" },
+  statusFail: { en: "Status: Failed", zh: "状态:失败", fa: "وضعیت: ناموفق" },
+  lastUpdated: { en: "Last updated:", zh: "最后更新:", fa: "آخرین به‌روزرسانی:" },
+  inputCoils: { en: "Input Coils", zh: "输入卷材", fa: "کلاف‌های ورودی" },
+  pickling: { en: "Pickling", zh: "酸洗", fa: "اسیدشویی" },
+  rolling: { en: "Rolling", zh: "轧制", fa: "نورد" },
+  galvanized: { en: "Galvanized", zh: "镀锌", fa: "گالوانیزه" },
+  sold: { en: "Sold", zh: "已售", fa: "فروش رفته" },
+  readyToShip: { en: "Ready to ship", zh: "待发货", fa: "آماده ارسال" },
+  ton: { en: "ton", zh: "吨", fa: "تن" },
+  coils: { en: "coils", zh: "卷", fa: "کلاف" },
+  yields: { en: "Process Yields", zh: "工序良率", fa: "راندمان فرآیند" },
+  yieldsSub: { en: "Efficiency across each stage of the line", zh: "各工序效率", fa: "بازده در هر مرحله از خط" },
+  dailyProd: { en: "Daily Production", zh: "每日产量", fa: "تولید روزانه" },
+  dailyProdSub: { en: "Ton per day by process", zh: "按工序每日吨数", fa: "تن در روز به تفکیک فرآیند" },
+  cumProd: { en: "Cumulative Production", zh: "累计产量", fa: "تولید تجمعی" },
+  cumProdSub: { en: "Running totals across the project", zh: "项目累计总量", fa: "مجموع تجمعی پروژه" },
+  warehouse: { en: "Warehouse & WIP", zh: "仓库与在制品", fa: "انبار و کالای در جریان" },
+  warehouseSub: { en: "Stocks held in process", zh: "在产库存", fa: "موجودی در فرآیند" },
+  matBal: { en: "Material Balance", zh: "物料平衡", fa: "بالانس مواد" },
+  matBalSub: { en: "Factory input vs output + WIP + scrap", zh: "进料 vs 出料 + 在制品 + 废料", fa: "ورودی کارخانه در برابر خروجی + WIP + ضایعات" },
+  scrap: { en: "Scrap by Line", zh: "各线废料", fa: "ضایعات هر خط" },
+  scrapSub: { en: "Spira & scrap totals", zh: "螺旋与废料合计", fa: "مجموع اسپیرا و ضایعات" },
+  coating: { en: "Coating Weight Consumed (Zinc & Zamak)", zh: "镀层消耗(锌与扎马克)", fa: "وزن پوشش مصرفی (روی و زاماک)" },
+  coatingSub: { en: "Theoretical vs actual coating with 20% dross loss", zh: "理论与实际镀层(含 20% 渣损)", fa: "پوشش نظری در برابر واقعی با ۲۰٪ تلفات سرباره" },
+  thickness: { en: "Thickness (mm)", zh: "厚度 (毫米)", fa: "ضخامت (میلی‌متر)" },
+  width: { en: "Width", zh: "宽度", fa: "عرض" },
+  produced: { en: "Produced (ton)", zh: "产量 (吨)", fa: "تولید (تن)" },
+  theoZn: { en: "Theoretical Zn (kg)", zh: "理论 Zn (千克)", fa: "روی نظری (کیلوگرم)" },
+  dross: { en: "Dross 20% (kg)", zh: "渣损 20% (千克)", fa: "سرباره ۲۰٪ (کیلوگرم)" },
+  actualCoating: { en: "Actual coating (kg)", zh: "实际镀层 (千克)", fa: "پوشش واقعی (کیلوگرم)" },
+  zincPurchased: { en: "Zinc & Zamak purchased", zh: "已采购锌与扎马克", fa: "روی و زاماک خریداری شده" },
+  remaining: { en: "Remaining", zh: "剩余", fa: "باقیمانده" },
+  sales: { en: "Sales Report", zh: "销售报告", fa: "گزارش فروش" },
+  salesSub: { en: "Buyer transactions", zh: "买方交易", fa: "تراکنش‌های خریداران" },
+  date: { en: "Date", zh: "日期", fa: "تاریخ" },
+  buyer: { en: "Buyer", zh: "买方", fa: "خریدار" },
+  tonnage: { en: "Tonnage", zh: "吨位", fa: "تناژ" },
+  amount: { en: "Amount (rial)", zh: "金额 (里亚尔)", fa: "مبلغ (ریال)" },
+  transport: { en: "Transport", zh: "运输", fa: "حمل و نقل" },
+  transportSub: { en: "Loading status", zh: "装载状态", fa: "وضعیت بارگیری" },
+  underLoading: { en: "Under loading", zh: "装载中", fa: "در حال بارگیری" },
+  readyWarehouse: { en: "Ready in warehouse", zh: "仓库待发", fa: "آماده در انبار" },
+  transportNote: {
+    en: "Note: Under-loading capacity must be at least 25 ton to enable delivery to the buyer.",
+    zh: "注:装载量需至少 25 吨方可交付买方。",
+    fa: "توجه: ظرفیت بارگیری باید حداقل ۲۵ تن باشد تا تحویل به خریدار ممکن شود.",
+  },
+  plan: { en: "Production Plan", zh: "生产计划", fa: "برنامه تولید" },
+  planSub: { en: "Weekly plan and execution status", zh: "周计划及执行状态", fa: "برنامه هفتگی و وضعیت اجرا" },
+  tons: { en: "Tons", zh: "吨", fa: "تن" },
+  status: { en: "Status", zh: "状态", fa: "وضعیت" },
+  scheduled: { en: "Scheduled", zh: "计划中", fa: "برنامه‌ریزی شده" },
+  notes: { en: "Notes", zh: "备注", fa: "یادداشت‌ها" },
+  notesSub: { en: "Decisions & remarks", zh: "决策与说明", fa: "تصمیمات و توضیحات" },
+  generated: { en: "Generated from", zh: "生成自", fa: "تولید شده از" },
+  project: { en: "Daily 2000mt project", zh: "每日 2000 吨项目", fa: "پروژه روزانه ۲۰۰۰ تن" },
+  loadOk: { en: "Data loaded successfully", zh: "数据加载成功", fa: "داده‌ها با موفقیت بارگذاری شد" },
+  print: { en: "Print PDF", zh: "打印 PDF", fa: "چاپ PDF" },
+  theme: { en: "Theme", zh: "主题", fa: "تم" },
+};
+
 function Index() {
   const t = report.totals;
+  const [lang, setLang] = useState<Lang>("en");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const tr = (k: keyof typeof translations) => translations[k as string][lang];
+
+  useEffect(() => {
+    const savedLang = (localStorage.getItem("lang") as Lang) || "en";
+    const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
+    setLang(savedLang);
+    setTheme(savedTheme);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "light") root.classList.add("light");
+    else root.classList.remove("light");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+    localStorage.setItem("lang", lang);
+  }, [lang]);
 
   // Validate data load status
   let loadStatus: { ok: boolean; message: string } = { ok: true, message: "Data loaded successfully" };
@@ -60,6 +158,7 @@ function Index() {
   } catch (e) {
     loadStatus = { ok: false, message: "Error reading data file" };
   }
+  loadStatus.message = loadStatus.ok ? tr("loadOk") : loadStatus.message;
   const lastUpdate = report.reportDate
     ? new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
     : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -81,6 +180,41 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Toolbar */}
+      <div className="no-print sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-end gap-2 px-6 py-2">
+          <div className="flex items-center gap-1 rounded-md border border-border bg-secondary/40 p-1">
+            <Languages className="ml-1 h-3.5 w-3.5 text-muted-foreground" />
+            {(["en", "zh", "fa"] as Lang[]).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`rounded px-2 py-0.5 text-xs font-medium transition-colors ${
+                  lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {l === "en" ? "EN" : l === "zh" ? "中文" : "فارسی"}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 text-xs font-medium text-foreground hover:bg-secondary"
+            title={tr("theme")}
+          >
+            {theme === "dark" ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+            {theme === "dark" ? "Light" : "Dark"}
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md bg-primary px-2.5 text-xs font-semibold text-primary-foreground hover:opacity-90"
+          >
+            <Printer className="h-3.5 w-3.5" />
+            {tr("print")}
+          </button>
+        </div>
+      </div>
+
       {/* Header */}
       <header
         className="border-b border-border"
@@ -91,24 +225,23 @@ function Index() {
             <div>
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
                 <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                Management Report
+                {tr("badge")}
               </div>
               <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">
-                Daily 2000mt Project Report
+                {tr("title")}
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                Cumulative production, yield, warehouse balance, sales & planning for the
-                galvanizing line.
+                {tr("subtitle")}
               </p>
             </div>
             <div className="flex items-center gap-6 text-sm">
               <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Report date</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("reportDate")}</p>
                 <p className="font-semibold tabular-nums">{new Date(report.reportDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
               </div>
               <div className="h-10 w-px bg-border" />
               <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Version</p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("version")}</p>
                 <p className="font-semibold tabular-nums">v{report.version}</p>
               </div>
               <div className="h-10 w-px bg-border" />
@@ -127,13 +260,13 @@ function Index() {
               }`}
             />
             <span className="font-medium text-foreground">
-              {loadStatus.ok ? "Status: Success" : "Status: Failed"}
+              {loadStatus.ok ? tr("statusOk") : tr("statusFail")}
             </span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">{loadStatus.message}</span>
             <span className="text-muted-foreground">·</span>
             <span className="text-muted-foreground">
-              Last updated: <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
+              {tr("lastUpdated")} <span className="font-semibold text-foreground tabular-nums">{lastUpdate}</span>
             </span>
           </div>
         </div>
@@ -142,16 +275,16 @@ function Index() {
       <main className="mx-auto max-w-7xl space-y-8 px-6 py-10">
         {/* KPI grid */}
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-          <StatCard label="Input Coils" value={fmt(t.inputCoilsTon, 0)} unit="ton" hint={`${t.inputCoilsQty} coils`} />
-          <StatCard label="Pickling" value={fmt(t.pickling, 0)} unit="ton" accent="chart-2" />
-          <StatCard label="Rolling" value={fmt(t.rolling, 0)} unit="ton" accent="chart-4" />
-          <StatCard label="Galvanized" value={fmt(t.galvanized, 0)} unit="ton" accent="primary" />
-          <StatCard label="Sold" value={fmt(t.sold, 0)} unit="ton" accent="accent" />
-          <StatCard label="Ready to ship" value={fmt(report.transport.readyWarehouse, 0)} unit="ton" accent="chart-2" />
+          <StatCard label={tr("inputCoils")} value={fmt(t.inputCoilsTon, 0)} unit={tr("ton")} hint={`${t.inputCoilsQty} ${tr("coils")}`} />
+          <StatCard label={tr("pickling")} value={fmt(t.pickling, 0)} unit={tr("ton")} accent="chart-2" />
+          <StatCard label={tr("rolling")} value={fmt(t.rolling, 0)} unit={tr("ton")} accent="chart-4" />
+          <StatCard label={tr("galvanized")} value={fmt(t.galvanized, 0)} unit={tr("ton")} accent="primary" />
+          <StatCard label={tr("sold")} value={fmt(t.sold, 0)} unit={tr("ton")} accent="accent" />
+          <StatCard label={tr("readyToShip")} value={fmt(report.transport.readyWarehouse, 0)} unit={tr("ton")} accent="chart-2" />
         </div>
 
         {/* Yields */}
-        <Section title="Process Yields" subtitle="Efficiency across each stage of the line">
+        <Section title={tr("yields")} subtitle={tr("yieldsSub")}>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {report.yields.map((y) => {
               const pct = y.value * 100;
@@ -179,7 +312,7 @@ function Index() {
 
         {/* Daily chart + Cumulative chart */}
         <div className="grid gap-6 lg:grid-cols-2">
-          <Section title="Daily Production" subtitle="Ton per day by process">
+          <Section title={tr("dailyProd")} subtitle={tr("dailyProdSub")}>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={dailyNumeric}>
@@ -195,15 +328,15 @@ function Index() {
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Bar dataKey="pickling" stackId="a" fill="var(--color-chart-2)" name="Pickling" />
-                  <Bar dataKey="rolling" stackId="a" fill="var(--color-chart-4)" name="Rolling" />
-                  <Bar dataKey="galv" stackId="a" fill="var(--color-chart-1)" name="Galvanized" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="pickling" stackId="a" fill="var(--color-chart-2)" name={tr("pickling")} />
+                  <Bar dataKey="rolling" stackId="a" fill="var(--color-chart-4)" name={tr("rolling")} />
+                  <Bar dataKey="galv" stackId="a" fill="var(--color-chart-1)" name={tr("galvanized")} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Section>
 
-          <Section title="Cumulative Production" subtitle="Running totals across the project">
+          <Section title={tr("cumProd")} subtitle={tr("cumProdSub")}>
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={cumulativeNumeric}>
@@ -219,9 +352,9 @@ function Index() {
                     }}
                   />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Line type="monotone" dataKey="pickling" stroke="var(--color-chart-2)" strokeWidth={2} dot={false} name="Pickling" connectNulls />
-                  <Line type="monotone" dataKey="rolling" stroke="var(--color-chart-4)" strokeWidth={2} dot={false} name="Rolling" connectNulls />
-                  <Line type="monotone" dataKey="galv" stroke="var(--color-chart-1)" strokeWidth={2.5} dot={false} name="Galvanized" connectNulls />
+                  <Line type="monotone" dataKey="pickling" stroke="var(--color-chart-2)" strokeWidth={2} dot={false} name={tr("pickling")} connectNulls />
+                  <Line type="monotone" dataKey="rolling" stroke="var(--color-chart-4)" strokeWidth={2} dot={false} name={tr("rolling")} connectNulls />
+                  <Line type="monotone" dataKey="galv" stroke="var(--color-chart-1)" strokeWidth={2.5} dot={false} name={tr("galvanized")} connectNulls />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -230,18 +363,18 @@ function Index() {
 
         {/* Warehouse / Material Balance / Scrap */}
         <div className="grid gap-6 lg:grid-cols-3">
-          <Section title="Warehouse & WIP" subtitle="Stocks held in process">
+          <Section title={tr("warehouse")} subtitle={tr("warehouseSub")}>
             <ul className="space-y-3">
               {report.warehouse.map((w) => (
                 <li key={w.name} className="flex items-center justify-between rounded-lg border border-border bg-secondary/30 px-4 py-3">
                   <span className="text-sm text-foreground">{w.name}</span>
-                  <span className="font-semibold tabular-nums text-primary">{fmt(w.ton)} <span className="text-xs text-muted-foreground">ton</span></span>
+                  <span className="font-semibold tabular-nums text-primary">{fmt(w.ton)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></span>
                 </li>
               ))}
             </ul>
           </Section>
 
-          <Section title="Material Balance" subtitle="Factory input vs output + WIP + scrap">
+          <Section title={tr("matBal")} subtitle={tr("matBalSub")}>
             <ul className="space-y-2">
               {report.materialBalance.map((m) => (
                 <li key={m.k} className="flex items-center justify-between border-b border-border/60 py-2 text-sm last:border-0">
@@ -252,7 +385,7 @@ function Index() {
             </ul>
           </Section>
 
-          <Section title="Scrap by Line" subtitle="Spira & scrap totals">
+          <Section title={tr("scrap")} subtitle={tr("scrapSub")}>
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -277,17 +410,17 @@ function Index() {
         </div>
 
         {/* Coating consumption */}
-        <Section title="Coating Weight Consumed (Zinc & Zamak)" subtitle="Theoretical vs actual coating with 20% dross loss">
+        <Section title={tr("coating")} subtitle={tr("coatingSub")}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="py-3 pr-4 font-medium">Thickness (mm)</th>
-                  <th className="py-3 pr-4 font-medium">Width</th>
-                  <th className="py-3 pr-4 text-right font-medium">Produced (ton)</th>
-                  <th className="py-3 pr-4 text-right font-medium">Theoretical Zn (kg)</th>
-                  <th className="py-3 pr-4 text-right font-medium">Dross 20% (kg)</th>
-                  <th className="py-3 text-right font-medium">Actual coating (kg)</th>
+                  <th className="py-3 pr-4 font-medium">{tr("thickness")}</th>
+                  <th className="py-3 pr-4 font-medium">{tr("width")}</th>
+                  <th className="py-3 pr-4 text-right font-medium">{tr("produced")}</th>
+                  <th className="py-3 pr-4 text-right font-medium">{tr("theoZn")}</th>
+                  <th className="py-3 pr-4 text-right font-medium">{tr("dross")}</th>
+                  <th className="py-3 text-right font-medium">{tr("actualCoating")}</th>
                 </tr>
               </thead>
               <tbody className="tabular-nums">
@@ -306,12 +439,12 @@ function Index() {
           </div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Zinc & Zamak purchased</p>
-              <p className="mt-1 text-xl font-semibold text-foreground">{fmt(report.zincPurchased)} <span className="text-xs text-muted-foreground">ton</span></p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("zincPurchased")}</p>
+              <p className="mt-1 text-xl font-semibold text-foreground">{fmt(report.zincPurchased)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
             </div>
             <div className="rounded-lg border border-primary/30 bg-primary/10 px-4 py-3">
-              <p className="text-xs uppercase tracking-wider text-primary">Remaining</p>
-              <p className="mt-1 text-xl font-semibold text-primary">{fmt(report.zincRemaining)} <span className="text-xs text-muted-foreground">ton</span></p>
+              <p className="text-xs uppercase tracking-wider text-primary">{tr("remaining")}</p>
+              <p className="mt-1 text-xl font-semibold text-primary">{fmt(report.zincRemaining)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
             </div>
           </div>
         </Section>
@@ -319,14 +452,14 @@ function Index() {
         {/* Sales + Transport */}
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <Section title="Sales Report" subtitle="Buyer transactions">
+            <Section title={tr("sales")} subtitle={tr("salesSub")}>
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
-                    <th className="py-3 pr-4 font-medium">Date</th>
-                    <th className="py-3 pr-4 font-medium">Buyer</th>
-                    <th className="py-3 pr-4 text-right font-medium">Tonnage</th>
-                    <th className="py-3 text-right font-medium">Amount (rial)</th>
+                    <th className="py-3 pr-4 font-medium">{tr("date")}</th>
+                    <th className="py-3 pr-4 font-medium">{tr("buyer")}</th>
+                    <th className="py-3 pr-4 text-right font-medium">{tr("tonnage")}</th>
+                    <th className="py-3 text-right font-medium">{tr("amount")}</th>
                   </tr>
                 </thead>
                 <tbody className="tabular-nums">
@@ -342,34 +475,34 @@ function Index() {
               </table>
             </Section>
           </div>
-          <Section title="Transport" subtitle="Loading status">
+          <Section title={tr("transport")} subtitle={tr("transportSub")}>
             <div className="space-y-3">
               <div className="rounded-lg border border-border bg-secondary/30 p-4">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Under loading</p>
-                <p className="mt-1 text-2xl font-semibold text-foreground">{fmt(report.transport.underLoading)} <span className="text-xs text-muted-foreground">ton</span></p>
+                <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("underLoading")}</p>
+                <p className="mt-1 text-2xl font-semibold text-foreground">{fmt(report.transport.underLoading)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
               </div>
               <div className="rounded-lg border border-primary/30 bg-primary/10 p-4">
-                <p className="text-xs uppercase tracking-wider text-primary">Ready in warehouse</p>
-                <p className="mt-1 text-2xl font-semibold text-primary">{fmt(report.transport.readyWarehouse)} <span className="text-xs text-muted-foreground">ton</span></p>
+                <p className="text-xs uppercase tracking-wider text-primary">{tr("readyWarehouse")}</p>
+                <p className="mt-1 text-2xl font-semibold text-primary">{fmt(report.transport.readyWarehouse)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
               </div>
               <p className="text-xs text-muted-foreground">
-                Note: Under-loading capacity must be at least 25 ton to enable delivery to the buyer.
+                {tr("transportNote")}
               </p>
             </div>
           </Section>
         </div>
 
         {/* Plan */}
-        <Section title="Production Plan" subtitle="Weekly plan and execution status">
+        <Section title={tr("plan")} subtitle={tr("planSub")}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="py-3 pr-4 font-medium">Date</th>
-                  <th className="py-3 pr-4 font-medium">Thickness (mm)</th>
-                  <th className="py-3 pr-4 font-medium">Width</th>
-                  <th className="py-3 pr-4 text-right font-medium">Tons</th>
-                  <th className="py-3 font-medium">Status</th>
+                  <th className="py-3 pr-4 font-medium">{tr("date")}</th>
+                  <th className="py-3 pr-4 font-medium">{tr("thickness")}</th>
+                  <th className="py-3 pr-4 font-medium">{tr("width")}</th>
+                  <th className="py-3 pr-4 text-right font-medium">{tr("tons")}</th>
+                  <th className="py-3 font-medium">{tr("status")}</th>
                 </tr>
               </thead>
               <tbody className="tabular-nums">
@@ -388,7 +521,7 @@ function Index() {
                       ) : (
                         <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/50 px-2.5 py-0.5 text-xs text-muted-foreground">
                           <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground" />
-                          Scheduled
+                          {tr("scheduled")}
                         </span>
                       )}
                     </td>
@@ -400,7 +533,7 @@ function Index() {
         </Section>
 
         {/* Notes */}
-        <Section title="Notes" subtitle="Decisions & remarks">
+        <Section title={tr("notes")} subtitle={tr("notesSub")}>
           <ol className="space-y-3 text-sm">
             {report.notes.map((n, i) => (
               <li key={i} className="flex gap-3">
@@ -416,7 +549,7 @@ function Index() {
         {/* Signature */}
         <footer className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card px-6 py-5 text-sm">
           <p className="text-muted-foreground">
-            Generated from <span className="font-medium text-foreground">Report.xlsx</span> · Daily 2000mt project
+            {tr("generated")} <span className="font-medium text-foreground">Report.xlsx</span> · {tr("project")}
           </p>
           <div className="text-right">
             <p className="text-xs uppercase tracking-wider text-muted-foreground">{report.signature.role}</p>
