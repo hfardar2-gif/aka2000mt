@@ -118,17 +118,17 @@
       "date": "2026-05-14",
       "inputTon": 2073.75,
       "inputQty": 121,
-      "pickling": "Shut down",
-      "rolling": "Shut down",
-      "galv": "Shut down"
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     },
     {
       "date": "2026-05-15",
       "inputTon": 2073.75,
       "inputQty": 121,
-      "pickling": "Shut down",
-      "rolling": "Shut down",
-      "galv": "Shut down"
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     },
     {
       "date": "2026-05-16",
@@ -198,7 +198,7 @@
       "date": "2026-05-24",
       "inputTon": 2073.75,
       "inputQty": 121,
-      "pickling": "Shut down",
+      "pickling": 0,
       "rolling": 518.77,
       "galv": 283.626
     },
@@ -256,6 +256,38 @@
       "inputQty": 121,
       "pickling": 477.497,
       "rolling": 706.28,
+      "galv": 0
+    },
+     {
+      "date": "2026-06-01",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+     {
+      "date": "2026-06-02",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+     {
+      "date": "2026-06-03",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+     },
+     {
+      "date": "2026-06-04",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
       "galv": 0
     }
   ],
