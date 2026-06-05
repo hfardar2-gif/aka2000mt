@@ -332,7 +332,7 @@ function Index() {
               const pct = y.value * 100;
               return (
                 <div key={y.process} className="rounded-xl border border-border bg-secondary/30 p-4">
-                  <p className="text-sm font-medium text-foreground">{y.process}</p>
+                  <p className="text-sm font-medium text-foreground">{dt(y.process, lang)}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{y.formula}</p>
                   <div className="mt-4 flex items-baseline gap-2">
                     <span className="text-2xl font-semibold tabular-nums text-primary">
@@ -409,7 +409,7 @@ function Index() {
             <ul className="space-y-3">
               {report.warehouse.map((w) => (
                 <li key={w.name} className="flex items-center justify-between rounded-lg border border-border bg-secondary/30 px-4 py-3">
-                  <span className="text-sm text-foreground">{w.name}</span>
+                  <span className="text-sm text-foreground">{dt(w.name, lang)}</span>
                   <span className="font-semibold tabular-nums text-primary">{fmt(w.ton)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></span>
                 </li>
               ))}
@@ -420,7 +420,7 @@ function Index() {
             <ul className="space-y-2">
               {report.materialBalance.map((m) => (
                 <li key={m.k} className="flex items-center justify-between border-b border-border/60 py-2 text-sm last:border-0">
-                  <span className="text-muted-foreground">{m.k}</span>
+                  <span className="text-muted-foreground">{dt(m.k, lang)}</span>
                   <span className="font-semibold tabular-nums text-foreground">{fmt(m.v)}</span>
                 </li>
               ))}
@@ -431,7 +431,7 @@ function Index() {
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie data={report.scrap} dataKey="ton" nameKey="line" innerRadius={50} outerRadius={80} paddingAngle={4}>
+                  <Pie data={report.scrap.map((s) => ({ ...s, line: dt(s.line, lang) }))} dataKey="ton" nameKey="line" innerRadius={50} outerRadius={80} paddingAngle={4}>
                     {report.scrap.map((_, i) => (
                       <Cell key={i} fill={CHART_COLORS[i]} />
                     ))}
@@ -624,11 +624,9 @@ function Index() {
 
         {/* Signature */}
         <footer className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card px-6 py-5 text-sm">
-          <p className="text-muted-foreground">
-            {tr("generated")} <span className="font-medium text-foreground">Report.xlsx</span> · {tr("project")}
-          </p>
-          <div className="text-right">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">{report.signature.role}</p>
+          <p className="text-muted-foreground">{tr("copyright")}</p>
+          <div className={lang === "fa" ? "text-left" : "text-right"}>
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">{dt(report.signature.role, lang)}</p>
             <p className="mt-0.5 font-semibold text-foreground">{report.signature.name}</p>
           </div>
         </footer>
