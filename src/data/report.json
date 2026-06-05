@@ -35,11 +35,11 @@
   ],
   "materialBalance": [
     {
-      "k": "Factory Input",
+      "k": "Factory Input (HRC)",
       "v": 2073.75
     },
     {
-      "k": "Final Product",
+      "k": "Final Product (Galvanized)",
       "v": 1009.18
     },
     {
