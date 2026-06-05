@@ -127,7 +127,18 @@
 
 @media print {
   .no-print { display: none !important; }
-  body { background: white !important; }
+  @page { size: A4; margin: 12mm; }
+  html, body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .sticky { position: static !important; }
+  main, header, section, footer, table { break-inside: avoid; page-break-inside: avoid; }
+  section, .rounded-2xl { box-shadow: none !important; }
+  a { text-decoration: none !important; color: inherit !important; }
+  .recharts-wrapper, svg { max-width: 100% !important; }
 }
 
 .dark {
