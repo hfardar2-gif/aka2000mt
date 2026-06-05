@@ -489,6 +489,40 @@ function Index() {
               <p className="mt-1 text-xl font-semibold text-primary">{fmt(report.zincRemaining)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
             </div>
           </div>
+          {/* Zinc KPIs */}
+          <div className="mt-6 rounded-xl border border-border bg-secondary/20 p-4">
+            <h3 className="mb-3 text-sm font-semibold text-foreground">{tr("kpis")}</h3>
+            <p className="mb-3 text-xs text-muted-foreground">{tr("kpisSub")}</p>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <th className="py-2 pr-4 font-medium">{tr("category")}</th>
+                    <th className="py-2 pr-4 font-medium">{tr("kpi")}</th>
+                    <th className="py-2 pr-4 text-right font-medium">{tr("value")}</th>
+                    <th className="py-2 pr-4 font-medium">{tr("unit")}</th>
+                    <th className="py-2 font-medium">{tr("industryStd")}</th>
+                  </tr>
+                </thead>
+                <tbody className="tabular-nums">
+                  {[
+                    { cat: tr("catPerf"), name: tr("kpiZnEff"), value: "82", unit: "%", std: "80–88%" },
+                    { cat: tr("catPerf"), name: tr("kpiZnLoss"), value: "18", unit: "%", std: "15–20%" },
+                    { cat: tr("catProd"), name: tr("kpiZnInt"), value: "11.73", unit: "kg Zn/ton steel", std: "10–15 kg/ton" },
+                    { cat: tr("catProd"), name: tr("kpiSteelPerZn"), value: "85.2", unit: "kg steel/kg Zn", std: "80–100" },
+                  ].map((k, i) => (
+                    <tr key={i} className="border-b border-border/60 hover:bg-secondary/30">
+                      <td className="py-2 pr-4 text-muted-foreground">{k.cat}</td>
+                      <td className="py-2 pr-4 font-medium text-foreground">{k.name}</td>
+                      <td className="py-2 pr-4 text-right font-semibold text-primary">{k.value}</td>
+                      <td className="py-2 pr-4 text-muted-foreground">{k.unit}</td>
+                      <td className="py-2 text-muted-foreground">{k.std}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </Section>
 
         {/* Sales + Transport */}
