@@ -122,6 +122,27 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <nav className="no-print sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-6 py-2 text-sm">
+          <Link
+            to="/"
+            activeOptions={{ exact: true }}
+            activeProps={{ className: "text-primary font-semibold" }}
+            inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
+            className="transition-colors"
+          >
+            Home
+          </Link>
+          <Link
+            to="/data-transformer"
+            activeProps={{ className: "text-primary font-semibold" }}
+            inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
+            className="transition-colors"
+          >
+            Data Transformer
+          </Link>
+        </div>
+      </nav>
       <Outlet />
     </QueryClientProvider>
   );
