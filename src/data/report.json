@@ -1,6 +1,6 @@
 {
-  "reportDate": "2026-06-05",
-  "version": "01",
+  "reportDate": "2026-06-06",
+  "version": "0",
   "totals": {
     "inputCoilsTon": 2073.75,
     "inputCoilsQty": 121,
@@ -63,7 +63,7 @@
     {
       "process": "Pickling Yield",
       "formula": "Pickling ÷ (Input − Unpickled WH)",
-      "value": 1.0
+      "value": 1
     },
     {
       "process": "Rolling Yield",
@@ -258,7 +258,7 @@
       "rolling": 706.28,
       "galv": 0
     },
-     {
+    {
       "date": "2026-06-01",
       "inputTon": 2073.75,
       "inputQty": 121,
@@ -266,7 +266,7 @@
       "rolling": 0,
       "galv": 0
     },
-     {
+    {
       "date": "2026-06-02",
       "inputTon": 2073.75,
       "inputQty": 121,
@@ -274,15 +274,15 @@
       "rolling": 0,
       "galv": 0
     },
-     {
+    {
       "date": "2026-06-03",
       "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 0,
       "rolling": 0,
       "galv": 0
-     },
-     {
+    },
+    {
       "date": "2026-06-04",
       "inputTon": 2073.75,
       "inputQty": 121,
@@ -492,14 +492,14 @@
     },
     {
       "date": "2026-06-01",
-     "inputTon": 2073.75,
+      "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 2025.877,
       "rolling": 1872.574,
       "galv": 1035.386,
       "sold": 251.26100000000002
     },
-      {
+    {
       "date": "2026-06-02",
       "inputTon": 2073.75,
       "inputQty": 121,
@@ -508,7 +508,7 @@
       "galv": 1035.386,
       "sold": 251.26100000000002
     },
-      {
+    {
       "date": "2026-06-03",
       "inputTon": 2073.75,
       "inputQty": 121,
@@ -535,11 +535,11 @@
       "galv": 1035.386,
       "sold": 251.26100000000002
     },
-      {
+    {
       "date": "2026-06-06",
       "inputTon": 2073.75,
       "inputQty": 121,
-       "pickling": 2025.877,
+      "pickling": 2025.877,
       "rolling": 1872.574,
       "galv": 1035.386,
       "sold": 251.26100000000002
@@ -595,7 +595,7 @@
       "actual": 118.5
     },
     {
-      "thickness": 1.0,
+      "thickness": 1,
       "width": 1000,
       "weight": 67.581,
       "theoZn": 542.37,
