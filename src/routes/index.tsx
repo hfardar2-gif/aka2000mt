@@ -53,7 +53,7 @@ const CHART_COLORS = [
 type Lang = "en" | "zh" | "fa";
 const translations: Record<string, Record<Lang, string>> = {
   badge: { en: "Management Report", zh: "管理报告", fa: "گزارش مدیریتی" },
-  title: { en: "Daily 2000mt Project Report", zh: "每日 2000 吨项目报告", fa: "گزارش روزانه پروژه ۲۰۰۰ تن" },
+  title: { en: "2000mt Project Report", zh: "2000 吨项目报告", fa: "گزارش پروژه ۲۰۰۰ تن" },
   subtitle: {
     en: "Cumulative production, yield, warehouse balance, sales & planning for the galvanizing line.",
     zh: "镀锌生产线的累计产量、良率、库存、销售与计划。",
@@ -116,6 +116,24 @@ const translations: Record<string, Record<Lang, string>> = {
   scheduled: { en: "Scheduled", zh: "计划中", fa: "برنامه‌ریزی شده" },
   notes: { en: "Notes", zh: "备注", fa: "یادداشت‌ها" },
   notesSub: { en: "Decisions & remarks", zh: "决策与说明", fa: "تصمیمات و توضیحات" },
+  yieldTrend: { en: "Daily Yield Trend (Last 7 days)", zh: "每日良率趋势(最近 7 天)", fa: "روند روزانه راندمان (۷ روز اخیر)" },
+  yieldTrendSub: {
+    en: "Pickling / Rolling / Galvanizing yield per day to spot quality drops early",
+    zh: "每日酸洗 / 轧制 / 镀锌良率,提前发现质量下降",
+    fa: "راندمان روزانه اسیدشویی / نورد / گالوانیزه برای شناسایی زودهنگام افت کیفیت",
+  },
+  planVsActual: { en: "Plan vs Actual Production", zh: "计划 vs 实际产量", fa: "مقایسه برنامه با تولید واقعی" },
+  planVsActualSub: {
+    en: "Planned tonnage vs delivered tonnage per plan entry",
+    zh: "各计划项的计划吨位与实际完成对比",
+    fa: "تناژ برنامه‌ریزی شده در برابر تناژ تحویل شده برای هر ردیف برنامه",
+  },
+  planned: { en: "Planned", zh: "计划", fa: "برنامه‌ریزی شده" },
+  actual: { en: "Actual", zh: "实际", fa: "واقعی" },
+  delta: { en: "Variance", zh: "偏差", fa: "اختلاف" },
+  totalPlanned: { en: "Total planned", zh: "计划总量", fa: "مجموع برنامه" },
+  totalActual: { en: "Total actual", zh: "实际总量", fa: "مجموع واقعی" },
+  achievement: { en: "Achievement", zh: "完成率", fa: "درصد تحقق" },
   generated: { en: "Generated from", zh: "生成自", fa: "تولید شده از" },
   project: { en: "Daily 2000mt project", zh: "每日 2000 吨项目", fa: "پروژه روزانه ۲۰۰۰ تن" },
   loadOk: { en: "Data loaded successfully", zh: "数据加载成功", fa: "داده‌ها با موفقیت بارگذاری شد" },
