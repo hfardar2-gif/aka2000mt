@@ -210,7 +210,7 @@ function Index() {
     pickling: typeof d.pickling === "number" ? d.pickling : 0,
     rolling: typeof d.rolling === "number" ? d.rolling : 0,
     galv: typeof d.galv === "number" ? d.galv : 0,
-    shutdown: d.pickling === "Shut down",
+    shutdown: (d.pickling as unknown) === "Shut down",
   }));
 
   const cumulativeNumeric = report.cumulative.map((d) => ({
