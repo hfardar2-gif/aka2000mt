@@ -23,9 +23,9 @@ import { Section } from "@/components/dashboard/Section";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Daily 2000mt Project Report — Production Dashboard" },
+      { title: "2000mt Project Report — Production Dashboard" },
       { name: "description", content: "Live management dashboard for the Daily 2000mt galvanizing project: production, yields, sales, planning." },
-      { property: "og:title", content: "Daily 2000mt Project Report" },
+      { property: "og:title", content: "2000mt Project Report" },
       { property: "og:description", content: "Production, yield, warehouse and sales overview for the 2000mt project." },
     ],
   }),
@@ -53,7 +53,7 @@ const CHART_COLORS = [
 type Lang = "en" | "zh" | "fa";
 const translations: Record<string, Record<Lang, string>> = {
   badge: { en: "Management Report", zh: "管理报告", fa: "گزارش مدیریتی" },
-  title: { en: "Daily 2000mt Project Report", zh: "每日 2000 吨项目报告", fa: "گزارش روزانه پروژه ۲۰۰۰ تن" },
+  title: { en: "2000mt Project Report", zh: "2000 吨项目报告", fa: "گزارش پروژه ۲۰۰۰ تن" },
   subtitle: {
     en: "Cumulative production, yield, warehouse balance, sales & planning for the galvanizing line.",
     zh: "镀锌生产线的累计产量、良率、库存、销售与计划。",
@@ -116,6 +116,24 @@ const translations: Record<string, Record<Lang, string>> = {
   scheduled: { en: "Scheduled", zh: "计划中", fa: "برنامه‌ریزی شده" },
   notes: { en: "Notes", zh: "备注", fa: "یادداشت‌ها" },
   notesSub: { en: "Decisions & remarks", zh: "决策与说明", fa: "تصمیمات و توضیحات" },
+  yieldTrend: { en: "Daily Yield Trend (Last 7 days)", zh: "每日良率趋势(最近 7 天)", fa: "روند روزانه راندمان (۷ روز اخیر)" },
+  yieldTrendSub: {
+    en: "Pickling / Rolling / Galvanizing yield per day to spot quality drops early",
+    zh: "每日酸洗 / 轧制 / 镀锌良率,提前发现质量下降",
+    fa: "راندمان روزانه اسیدشویی / نورد / گالوانیزه برای شناسایی زودهنگام افت کیفیت",
+  },
+  planVsActual: { en: "Plan vs Actual Production", zh: "计划 vs 实际产量", fa: "مقایسه برنامه با تولید واقعی" },
+  planVsActualSub: {
+    en: "Planned tonnage vs delivered tonnage per plan entry",
+    zh: "各计划项的计划吨位与实际完成对比",
+    fa: "تناژ برنامه‌ریزی شده در برابر تناژ تحویل شده برای هر ردیف برنامه",
+  },
+  planned: { en: "Planned", zh: "计划", fa: "برنامه‌ریزی شده" },
+  actual: { en: "Actual", zh: "实际", fa: "واقعی" },
+  delta: { en: "Variance", zh: "偏差", fa: "اختلاف" },
+  totalPlanned: { en: "Total planned", zh: "计划总量", fa: "مجموع برنامه" },
+  totalActual: { en: "Total actual", zh: "实际总量", fa: "مجموع واقعی" },
+  achievement: { en: "Achievement", zh: "完成率", fa: "درصد تحقق" },
   generated: { en: "Generated from", zh: "生成自", fa: "تولید شده از" },
   project: { en: "Daily 2000mt project", zh: "每日 2000 吨项目", fa: "پروژه روزانه ۲۰۰۰ تن" },
   loadOk: { en: "Data loaded successfully", zh: "数据加载成功", fa: "داده‌ها با موفقیت بارگذاری شد" },
@@ -162,6 +180,17 @@ const dataTr: Record<string, Record<Lang, string>> = {
   "Total Scrap": { en: "Total Scrap", zh: "总废料", fa: "کل ضایعات" },
   // signature
   "AKA Technical Representative": { en: "AKA Technical Representative", zh: "AKA 技术代表", fa: "نماینده فنی آکا" },
+  // notes
+  "It has been planned that all coils will be galvanized within 4 weeks as of 2026-05-12.": {
+    en: "It has been planned that all coils will be galvanized within 4 weeks as of 2026-05-12.",
+    zh: "计划自 2026-05-12 起,所有卷材将在 4 周内完成镀锌。",
+    fa: "برنامه‌ریزی شده است که از تاریخ ۲۰۲۶-۰۵-۱۲ همه کلاف‌ها ظرف ۴ هفته گالوانیزه شوند.",
+  },
+  "Every galvanized coil produced is immediately placed in the sales and shipment program.": {
+    en: "Every galvanized coil produced is immediately placed in the sales and shipment program.",
+    zh: "每生产一卷镀锌产品,即刻进入销售与发货计划。",
+    fa: "هر کلاف گالوانیزه تولید شده بلافاصله در برنامه فروش و ارسال قرار می‌گیرد.",
+  },
 };
 const dt = (k: string, lang: Lang) => dataTr[k]?.[lang] ?? k;
 
@@ -219,6 +248,34 @@ function Index() {
     rolling: typeof d.rolling === "number" ? d.rolling : null,
     galv: typeof d.galv === "number" ? d.galv : null,
   }));
+
+  // Last 7 days of daily yields (pickling/input, rolling/pickling, galv/rolling)
+  const yieldTrend = report.daily.slice(-7).map((d) => {
+    const pickling = typeof d.pickling === "number" ? d.pickling : 0;
+    const rolling = typeof d.rolling === "number" ? d.rolling : 0;
+    const galv = typeof d.galv === "number" ? d.galv : 0;
+    const input = typeof d.inputTon === "number" ? d.inputTon : 0;
+    const pct = (num: number, den: number) => (den > 0 ? Math.min(100, +(num / den * 100).toFixed(2)) : 0);
+    return {
+      date: d.date.slice(5),
+      picklingYield: pct(pickling, input),
+      rollingYield: pct(rolling, pickling),
+      galvYield: pct(galv, rolling),
+    };
+  });
+
+  // Plan vs Actual: derive actual from status text ("Complete" => planned tons; else 0)
+  const planVsActual = report.plan.map((p) => {
+    const isComplete = typeof p.status === "string" && /complete/i.test(p.status);
+    return {
+      date: p.date,
+      planned: p.tons ?? 0,
+      actual: isComplete ? (p.tons ?? 0) : 0,
+    };
+  });
+  const totalPlanned = planVsActual.reduce((s, p) => s + p.planned, 0);
+  const totalActual = planVsActual.reduce((s, p) => s + p.actual, 0);
+  const achievementPct = totalPlanned > 0 ? (totalActual / totalPlanned) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -402,6 +459,99 @@ function Index() {
             </div>
           </Section>
         </div>
+
+        {/* Daily Yield Trend (Last 7 days) */}
+        <Section title={tr("yieldTrend")} subtitle={tr("yieldTrendSub")}>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={yieldTrend}>
+                <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-muted-foreground)" fontSize={11} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--color-popover)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: 8,
+                    fontSize: 12,
+                  }}
+                  formatter={(v: number) => `${v}%`}
+                />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Line type="monotone" dataKey="picklingYield" stroke="var(--color-chart-2)" strokeWidth={2} name={dt("Pickling Yield", lang)} />
+                <Line type="monotone" dataKey="rollingYield" stroke="var(--color-chart-4)" strokeWidth={2} name={dt("Rolling Yield", lang)} />
+                <Line type="monotone" dataKey="galvYield" stroke="var(--color-chart-1)" strokeWidth={2.5} name={dt("Galvanizing Yield", lang)} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </Section>
+
+        {/* Plan vs Actual */}
+        <Section title={tr("planVsActual")} subtitle={tr("planVsActualSub")}>
+          <div className="grid gap-3 md:grid-cols-3 mb-4">
+            <div className="rounded-lg border border-border bg-secondary/30 p-4">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("totalPlanned")}</p>
+              <p className="mt-1 text-2xl font-semibold text-foreground tabular-nums">{fmt0(totalPlanned)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
+            </div>
+            <div className="rounded-lg border border-primary/30 bg-primary/10 p-4">
+              <p className="text-xs uppercase tracking-wider text-primary">{tr("totalActual")}</p>
+              <p className="mt-1 text-2xl font-semibold text-primary tabular-nums">{fmt0(totalActual)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
+            </div>
+            <div className="rounded-lg border border-border bg-secondary/30 p-4">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("achievement")}</p>
+              <p className="mt-1 text-2xl font-semibold text-foreground tabular-nums">{achievementPct.toFixed(1)}<span className="text-xs text-muted-foreground"> %</span></p>
+            </div>
+          </div>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={planVsActual}>
+                <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-muted-foreground)" fontSize={11} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} />
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--color-popover)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: 8,
+                    fontSize: 12,
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="planned" fill="var(--color-chart-4)" name={tr("planned")} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="actual" fill="var(--color-chart-1)" name={tr("actual")} radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="py-2 pr-4 font-medium">{tr("date")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("planned")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("actual")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("delta")}</th>
+                  <th className="py-2 font-medium">{tr("status")}</th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {report.plan.map((p, i) => {
+                  const planned = p.tons ?? 0;
+                  const actual = planVsActual[i].actual;
+                  const delta = actual - planned;
+                  return (
+                    <tr key={i} className="border-b border-border/60 hover:bg-secondary/30">
+                      <td className="py-2 pr-4 font-medium text-foreground">{p.date}</td>
+                      <td className="py-2 pr-4 text-right">{fmt0(planned)}</td>
+                      <td className="py-2 pr-4 text-right font-semibold text-primary">{fmt0(actual)}</td>
+                      <td className={`py-2 pr-4 text-right ${delta < 0 ? "text-destructive" : "text-muted-foreground"}`}>{delta > 0 ? "+" : ""}{fmt0(delta)}</td>
+                      <td className="py-2 text-muted-foreground">{p.status || tr("scheduled")}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Section>
 
         {/* Warehouse / Material Balance / Scrap */}
         <div className="grid gap-6 lg:grid-cols-3">
@@ -616,7 +766,7 @@ function Index() {
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[10px] font-semibold tabular-nums text-primary">
                   {i + 1}
                 </span>
-                <span className="text-muted-foreground">{n}</span>
+                <span className="text-muted-foreground">{dt(n, lang)}</span>
               </li>
             ))}
           </ol>
