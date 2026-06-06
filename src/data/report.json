@@ -1,26 +1,30 @@
 {
   "reportDate": "2026-06-06",
-  "version": "0",
+  "version": "1",
   "totals": {
     "inputCoilsTon": 2073.75,
     "inputCoilsQty": 121,
-    "pickling": 2025.874,
-    "rolling": 1872.574,
+    "pickling": 2023.674,
+    "rolling": 2023.674,
     "galvanized": 1035.386,
     "sold": 251.261
   },
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 47.876
+      "ton": 50.076
     },
     {
       "name": "Pickled",
-      "ton": 153.3
+      "ton": 0
     },
     {
       "name": "Rolled",
-      "ton": 837.188
+      "ton": 988.288
+    },
+    {
+      "name": "Galvanized",
+      "ton": 758.17
     }
   ],
   "scrap": [
@@ -68,7 +72,7 @@
     {
       "process": "Rolling Yield",
       "formula": "(Rolling − Scrap − Rolled WH) ÷ (Pickling − Pickled WH)",
-      "value": 0.5369
+      "value": 0.4668
     },
     {
       "process": "Galvanizing Yield",
@@ -287,7 +291,15 @@
       "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 0,
-      "rolling": 0,
+      "rolling": 100,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-05",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 51.1,
       "galv": 0
     }
   ],
@@ -522,7 +534,7 @@
       "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 2025.877,
-      "rolling": 1872.574,
+      "rolling": 1972.574,
       "galv": 1035.386,
       "sold": 251.26100000000002
     },
@@ -531,16 +543,7 @@
       "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 2025.877,
-      "rolling": 1872.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-06",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1872.574,
+      "rolling": 2023.674,
       "galv": 1035.386,
       "sold": 251.26100000000002
     }
@@ -701,7 +704,7 @@
     "Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
     "At the beginning of each week, the production plan for that week is announced.",
     "Per meeting (Ms. Torabi & Mr. Nasehi), production schedule changed to 2026-06-08.",
-    "As of 2026-05-28, production progress vs plan is 100% — plan fully achieved."
+    "Considering the warehouse capacity and our current inventory in it, , the galvanized production plan for  will enter the production line starting 6/6"
   ],
   "signature": {
     "role": "AKA Technical Representative",
