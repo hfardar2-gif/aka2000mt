@@ -23,9 +23,9 @@ import { Section } from "@/components/dashboard/Section";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Daily 2000mt Project Report — Production Dashboard" },
+      { title: "2000mt Project Report — Production Dashboard" },
       { name: "description", content: "Live management dashboard for the Daily 2000mt galvanizing project: production, yields, sales, planning." },
-      { property: "og:title", content: "Daily 2000mt Project Report" },
+      { property: "og:title", content: "2000mt Project Report" },
       { property: "og:description", content: "Production, yield, warehouse and sales overview for the 2000mt project." },
     ],
   }),
