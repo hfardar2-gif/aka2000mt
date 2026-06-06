@@ -249,6 +249,34 @@ function Index() {
     galv: typeof d.galv === "number" ? d.galv : null,
   }));
 
+  // Last 7 days of daily yields (pickling/input, rolling/pickling, galv/rolling)
+  const yieldTrend = report.daily.slice(-7).map((d) => {
+    const pickling = typeof d.pickling === "number" ? d.pickling : 0;
+    const rolling = typeof d.rolling === "number" ? d.rolling : 0;
+    const galv = typeof d.galv === "number" ? d.galv : 0;
+    const input = typeof d.inputTon === "number" ? d.inputTon : 0;
+    const pct = (num: number, den: number) => (den > 0 ? Math.min(100, +(num / den * 100).toFixed(2)) : 0);
+    return {
+      date: d.date.slice(5),
+      picklingYield: pct(pickling, input),
+      rollingYield: pct(rolling, pickling),
+      galvYield: pct(galv, rolling),
+    };
+  });
+
+  // Plan vs Actual: derive actual from status text ("Complete" => planned tons; else 0)
+  const planVsActual = report.plan.map((p) => {
+    const isComplete = typeof p.status === "string" && /complete/i.test(p.status);
+    return {
+      date: p.date,
+      planned: p.tons ?? 0,
+      actual: isComplete ? (p.tons ?? 0) : 0,
+    };
+  });
+  const totalPlanned = planVsActual.reduce((s, p) => s + p.planned, 0);
+  const totalActual = planVsActual.reduce((s, p) => s + p.actual, 0);
+  const achievementPct = totalPlanned > 0 ? (totalActual / totalPlanned) * 100 : 0;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Toolbar */}
