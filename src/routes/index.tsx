@@ -460,6 +460,99 @@ function Index() {
           </Section>
         </div>
 
+        {/* Daily Yield Trend (Last 7 days) */}
+        <Section title={tr("yieldTrend")} subtitle={tr("yieldTrendSub")}>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={yieldTrend}>
+                <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-muted-foreground)" fontSize={11} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--color-popover)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: 8,
+                    fontSize: 12,
+                  }}
+                  formatter={(v: number) => `${v}%`}
+                />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Line type="monotone" dataKey="picklingYield" stroke="var(--color-chart-2)" strokeWidth={2} name={dt("Pickling Yield", lang)} />
+                <Line type="monotone" dataKey="rollingYield" stroke="var(--color-chart-4)" strokeWidth={2} name={dt("Rolling Yield", lang)} />
+                <Line type="monotone" dataKey="galvYield" stroke="var(--color-chart-1)" strokeWidth={2.5} name={dt("Galvanizing Yield", lang)} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </Section>
+
+        {/* Plan vs Actual */}
+        <Section title={tr("planVsActual")} subtitle={tr("planVsActualSub")}>
+          <div className="grid gap-3 md:grid-cols-3 mb-4">
+            <div className="rounded-lg border border-border bg-secondary/30 p-4">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("totalPlanned")}</p>
+              <p className="mt-1 text-2xl font-semibold text-foreground tabular-nums">{fmt0(totalPlanned)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
+            </div>
+            <div className="rounded-lg border border-primary/30 bg-primary/10 p-4">
+              <p className="text-xs uppercase tracking-wider text-primary">{tr("totalActual")}</p>
+              <p className="mt-1 text-2xl font-semibold text-primary tabular-nums">{fmt0(totalActual)} <span className="text-xs text-muted-foreground">{tr("ton")}</span></p>
+            </div>
+            <div className="rounded-lg border border-border bg-secondary/30 p-4">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{tr("achievement")}</p>
+              <p className="mt-1 text-2xl font-semibold text-foreground tabular-nums">{achievementPct.toFixed(1)}<span className="text-xs text-muted-foreground"> %</span></p>
+            </div>
+          </div>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={planVsActual}>
+                <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" stroke="var(--color-muted-foreground)" fontSize={11} />
+                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} />
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--color-popover)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: 8,
+                    fontSize: 12,
+                  }}
+                />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="planned" fill="var(--color-chart-4)" name={tr("planned")} radius={[4, 4, 0, 0]} />
+                <Bar dataKey="actual" fill="var(--color-chart-1)" name={tr("actual")} radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="py-2 pr-4 font-medium">{tr("date")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("planned")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("actual")}</th>
+                  <th className="py-2 pr-4 text-right font-medium">{tr("delta")}</th>
+                  <th className="py-2 font-medium">{tr("status")}</th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {report.plan.map((p, i) => {
+                  const planned = p.tons ?? 0;
+                  const actual = planVsActual[i].actual;
+                  const delta = actual - planned;
+                  return (
+                    <tr key={i} className="border-b border-border/60 hover:bg-secondary/30">
+                      <td className="py-2 pr-4 font-medium text-foreground">{p.date}</td>
+                      <td className="py-2 pr-4 text-right">{fmt0(planned)}</td>
+                      <td className="py-2 pr-4 text-right font-semibold text-primary">{fmt0(actual)}</td>
+                      <td className={`py-2 pr-4 text-right ${delta < 0 ? "text-destructive" : "text-muted-foreground"}`}>{delta > 0 ? "+" : ""}{fmt0(delta)}</td>
+                      <td className="py-2 text-muted-foreground">{p.status || tr("scheduled")}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
         {/* Warehouse / Material Balance / Scrap */}
         <div className="grid gap-6 lg:grid-cols-3">
           <Section title={tr("warehouse")} subtitle={tr("warehouseSub")}>
