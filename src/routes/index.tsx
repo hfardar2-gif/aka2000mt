@@ -180,6 +180,17 @@ const dataTr: Record<string, Record<Lang, string>> = {
   "Total Scrap": { en: "Total Scrap", zh: "总废料", fa: "کل ضایعات" },
   // signature
   "AKA Technical Representative": { en: "AKA Technical Representative", zh: "AKA 技术代表", fa: "نماینده فنی آکا" },
+  // notes
+  "It has been planned that all coils will be galvanized within 4 weeks as of 2026-05-12.": {
+    en: "It has been planned that all coils will be galvanized within 4 weeks as of 2026-05-12.",
+    zh: "计划自 2026-05-12 起,所有卷材将在 4 周内完成镀锌。",
+    fa: "برنامه‌ریزی شده است که از تاریخ ۲۰۲۶-۰۵-۱۲ همه کلاف‌ها ظرف ۴ هفته گالوانیزه شوند.",
+  },
+  "Every galvanized coil produced is immediately placed in the sales and shipment program.": {
+    en: "Every galvanized coil produced is immediately placed in the sales and shipment program.",
+    zh: "每生产一卷镀锌产品,即刻进入销售与发货计划。",
+    fa: "هر کلاف گالوانیزه تولید شده بلافاصله در برنامه فروش و ارسال قرار می‌گیرد.",
+  },
 };
 const dt = (k: string, lang: Lang) => dataTr[k]?.[lang] ?? k;
 
