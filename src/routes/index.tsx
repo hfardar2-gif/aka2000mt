@@ -766,7 +766,7 @@ function Index() {
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[10px] font-semibold tabular-nums text-primary">
                   {i + 1}
                 </span>
-                <span className="text-muted-foreground">{n}</span>
+                <span className="text-muted-foreground">{dt(n, lang)}</span>
               </li>
             ))}
           </ol>
