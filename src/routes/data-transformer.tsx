@@ -222,10 +222,10 @@ function DataTransformerPage() {
 
         <Card title="Meta">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Report Date" path={["reportDate"]} value={data.reportDate} />
-            <Field label="Version" path={["version"]} value={data.version} />
-            <Field label="Zinc Purchased" path={["zincPurchased"]} value={data.zincPurchased} type="number" />
-            <Field label="Zinc Remaining" path={["zincRemaining"]} value={data.zincRemaining} type="number" />
+            <Field label="Report Date" value={data.reportDate} onChange={(v) => update(["reportDate"], v)} />
+            <Field label="Version" value={data.version} onChange={(v) => update(["version"], v)} />
+            <Field label="Zinc Purchased" value={data.zincPurchased} type="number" onChange={(v) => update(["zincPurchased"], v)} />
+            <Field label="Zinc Remaining" value={data.zincRemaining} type="number" onChange={(v) => update(["zincRemaining"], v)} />
           </div>
         </Card>
 
@@ -233,7 +233,7 @@ function DataTransformerPage() {
           <Card title="Totals">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {Object.entries(data.totals).map(([k, v]) => (
-                <Field key={k} label={k} path={["totals", k]} value={v} type="number" />
+                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["totals", k], val)} />
               ))}
             </div>
           </Card>
@@ -243,7 +243,7 @@ function DataTransformerPage() {
           <Card title="Transport">
             <div className="grid grid-cols-2 gap-4">
               {Object.entries(data.transport).map(([k, v]) => (
-                <Field key={k} label={k} path={["transport", k]} value={v} type="number" />
+                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["transport", k], val)} />
               ))}
             </div>
           </Card>
@@ -253,76 +253,54 @@ function DataTransformerPage() {
           <Card title="Signature">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(data.signature).map(([k, v]) => (
-                <Field key={k} label={k} path={["signature", k]} value={v} />
+                <Field key={k} label={k} value={v} onChange={(val) => update(["signature", k], val)} />
               ))}
             </div>
           </Card>
         )}
 
         <Card title="Warehouse">
-          <ArrayTable
-            arrKey="warehouse"
-            columns={[
+          {renderArray("warehouse", [
               { key: "name", label: "Name" },
               { key: "ton", label: "Ton", type: "number" },
-            ]}
-            template={{ name: "", ton: 0 }}
-          />
+            ], { name: "", ton: 0 })}
         </Card>
 
         <Card title="Scrap">
-          <ArrayTable
-            arrKey="scrap"
-            columns={[
+          {renderArray("scrap", [
               { key: "line", label: "Line" },
               { key: "ton", label: "Ton", type: "number" },
-            ]}
-            template={{ line: "", ton: 0 }}
-          />
+            ], { line: "", ton: 0 })}
         </Card>
 
         <Card title="Material Balance">
-          <ArrayTable
-            arrKey="materialBalance"
-            columns={[
+          {renderArray("materialBalance", [
               { key: "k", label: "Key" },
               { key: "v", label: "Value", type: "number" },
-            ]}
-            template={{ k: "", v: 0 }}
-          />
+            ], { k: "", v: 0 })}
         </Card>
 
         <Card title="Yields">
-          <ArrayTable
-            arrKey="yields"
-            columns={[
+          {renderArray("yields", [
               { key: "process", label: "Process" },
               { key: "formula", label: "Formula" },
               { key: "value", label: "Value", type: "number" },
-            ]}
-            template={{ process: "", formula: "", value: 0 }}
-          />
+            ], { process: "", formula: "", value: 0 })}
         </Card>
 
         <Card title="Daily">
-          <ArrayTable
-            arrKey="daily"
-            columns={[
+          {renderArray("daily", [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
               { key: "pickling", label: "Pickling", type: "number" },
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
-            ]}
-            template={{ date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 }}
-          />
+            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 })}
         </Card>
 
         <Card title="Cumulative">
-          <ArrayTable
-            arrKey="cumulative"
-            columns={[
+          {renderArray("cumulative", [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
@@ -330,51 +308,37 @@ function DataTransformerPage() {
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
               { key: "sold", label: "Sold", type: "number" },
-            ]}
-            template={{ date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0, sold: 0 }}
-          />
+            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0, sold: 0 })}
         </Card>
 
         <Card title="Coating">
-          <ArrayTable
-            arrKey="coating"
-            columns={[
+          {renderArray("coating", [
               { key: "thickness", label: "Thickness", type: "number" },
               { key: "width", label: "Width", type: "number" },
               { key: "weight", label: "Weight", type: "number" },
               { key: "theoZn", label: "Theo Zn", type: "number" },
               { key: "dross", label: "Dross", type: "number" },
               { key: "actual", label: "Actual", type: "number" },
-            ]}
-            template={{ thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 }}
-          />
+            ], { thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 })}
         </Card>
 
         <Card title="Sales">
-          <ArrayTable
-            arrKey="sales"
-            columns={[
+          {renderArray("sales", [
               { key: "date", label: "Date" },
               { key: "buyer", label: "Buyer" },
               { key: "tonnage", label: "Tonnage", type: "number" },
               { key: "amount", label: "Amount", type: "number" },
-            ]}
-            template={{ date: "", buyer: "", tonnage: 0, amount: 0 }}
-          />
+            ], { date: "", buyer: "", tonnage: 0, amount: 0 })}
         </Card>
 
         <Card title="Plan">
-          <ArrayTable
-            arrKey="plan"
-            columns={[
+          {renderArray("plan", [
               { key: "date", label: "Date" },
               { key: "thickness", label: "Thickness" },
               { key: "width", label: "Width", type: "number" },
               { key: "tons", label: "Tons", type: "number" },
               { key: "status", label: "Status" },
-            ]}
-            template={{ date: "", thickness: "", width: 1000, tons: 0, status: "" }}
-          />
+            ], { date: "", thickness: "", width: 1000, tons: 0, status: "" })}
         </Card>
 
         <Card title="Notes">
