@@ -460,32 +460,6 @@ function Index() {
           </Section>
         </div>
 
-        {/* Daily Yield Trend (Last 7 days) */}
-        <Section title={tr("yieldTrend")} subtitle={tr("yieldTrendSub")}>
-          <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={yieldTrend}>
-                <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="date" stroke="var(--color-muted-foreground)" fontSize={11} />
-                <YAxis stroke="var(--color-muted-foreground)" fontSize={11} domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
-                <Tooltip
-                  contentStyle={{
-                    background: "var(--color-popover)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: 8,
-                    fontSize: 12,
-                  }}
-                  formatter={(v: number) => `${v}%`}
-                />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Line type="monotone" dataKey="picklingYield" stroke="var(--color-chart-2)" strokeWidth={2} name={dt("Pickling Yield", lang)} />
-                <Line type="monotone" dataKey="rollingYield" stroke="var(--color-chart-4)" strokeWidth={2} name={dt("Rolling Yield", lang)} />
-                <Line type="monotone" dataKey="galvYield" stroke="var(--color-chart-1)" strokeWidth={2.5} name={dt("Galvanizing Yield", lang)} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Section>
-
         {/* Plan vs Actual */}
         <Section title={tr("planVsActual")} subtitle={tr("planVsActualSub")}>
           <div className="grid gap-3 md:grid-cols-3 mb-4">
@@ -766,7 +740,7 @@ function Index() {
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[10px] font-semibold tabular-nums text-primary">
                   {i + 1}
                 </span>
-                <span className="text-muted-foreground">{dt(n, lang)}</span>
+                <span className="text-muted-foreground">{typeof n === "string" ? n : (n as any)?.note ?? ""}</span>
               </li>
             ))}
           </ol>

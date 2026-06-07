@@ -10,6 +10,107 @@ const PASSWORD = "AKA";
 
 type AnyObj = Record<string, any>;
 
+const inputCls =
+  "w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
+
+const parseNum = (v: string) => (v === "" ? 0 : isNaN(Number(v)) ? v : Number(v));
+
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <h2 className="text-lg font-semibold text-foreground mb-4">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Field({
+  label,
+  value,
+  type = "text",
+  onChange,
+}: {
+  label: string;
+  value: any;
+  type?: "text" | "number";
+  onChange: (v: any) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <input
+        className={inputCls + " mt-1"}
+        value={value ?? ""}
+        onChange={(e) => onChange(type === "number" ? parseNum(e.target.value) : e.target.value)}
+      />
+    </label>
+  );
+}
+
+function ArrayTable({
+  arr,
+  columns,
+  onUpdate,
+  onRemove,
+  onAdd,
+}: {
+  arr: AnyObj[];
+  columns: { key: string; label: string; type?: "text" | "number" }[];
+  onUpdate: (i: number, key: string, v: any) => void;
+  onRemove: (i: number) => void;
+  onAdd: () => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-muted-foreground">
+              {columns.map((c) => (
+                <th key={c.key} className="px-2 py-2 font-medium">
+                  {c.label}
+                </th>
+              ))}
+              <th className="px-2 py-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {arr.map((row, i) => (
+              <tr key={i} className="border-b border-border/50">
+                {columns.map((c) => (
+                  <td key={c.key} className="px-2 py-1">
+                    <input
+                      className={inputCls}
+                      value={row[c.key] ?? ""}
+                      onChange={(e) =>
+                        onUpdate(i, c.key, c.type === "number" ? parseNum(e.target.value) : e.target.value)
+                      }
+                    />
+                  </td>
+                ))}
+                <td className="px-2 py-1">
+                  <button
+                    onClick={() => onRemove(i)}
+                    className="text-xs rounded-md bg-destructive text-destructive-foreground px-2 py-1 hover:bg-destructive/90"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button
+        onClick={onAdd}
+        className="text-xs rounded-md bg-secondary text-secondary-foreground px-3 py-1.5 hover:bg-secondary/80"
+      >
+        + Add Row
+      </button>
+    </div>
+  );
+}
+
 function DataTransformerPage() {
   const [authed, setAuthed] = useState(false);
   const [pwd, setPwd] = useState("");
@@ -89,101 +190,18 @@ function DataTransformerPage() {
     URL.revokeObjectURL(url);
   };
 
-  const parseNum = (v: string) => (v === "" ? 0 : isNaN(Number(v)) ? v : Number(v));
-
-  const inputCls =
-    "w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
-
-  const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <section className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <h2 className="text-lg font-semibold text-foreground mb-4">{title}</h2>
-      {children}
-    </section>
-  );
-
-  const ArrayTable = ({
-    arrKey,
-    columns,
-    template,
-  }: {
-    arrKey: string;
-    columns: { key: string; label: string; type?: "text" | "number" }[];
-    template: AnyObj;
-  }) => {
-    const arr: AnyObj[] = data[arrKey] ?? [];
-    return (
-      <div className="space-y-2">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-left text-muted-foreground">
-                {columns.map((c) => (
-                  <th key={c.key} className="px-2 py-2 font-medium">
-                    {c.label}
-                  </th>
-                ))}
-                <th className="px-2 py-2"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {arr.map((row, i) => (
-                <tr key={i} className="border-b border-border/50">
-                  {columns.map((c) => (
-                    <td key={c.key} className="px-2 py-1">
-                      <input
-                        className={inputCls}
-                        value={row[c.key] ?? ""}
-                        onChange={(e) =>
-                          update(
-                            [arrKey, i, c.key],
-                            c.type === "number" ? parseNum(e.target.value) : e.target.value,
-                          )
-                        }
-                      />
-                    </td>
-                  ))}
-                  <td className="px-2 py-1">
-                    <button
-                      onClick={() => removeRow(arrKey, i)}
-                      className="text-xs rounded-md bg-destructive text-destructive-foreground px-2 py-1 hover:bg-destructive/90"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <button
-          onClick={() => addRow(arrKey, template)}
-          className="text-xs rounded-md bg-secondary text-secondary-foreground px-3 py-1.5 hover:bg-secondary/80"
-        >
-          + Add Row
-        </button>
-      </div>
-    );
-  };
-
-  const Field = ({
-    label,
-    path,
-    value,
-    type = "text",
-  }: {
-    label: string;
-    path: (string | number)[];
-    value: any;
-    type?: "text" | "number";
-  }) => (
-    <label className="block">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <input
-        className={inputCls + " mt-1"}
-        value={value ?? ""}
-        onChange={(e) => update(path, type === "number" ? parseNum(e.target.value) : e.target.value)}
-      />
-    </label>
+  const renderArray = (
+    arrKey: string,
+    columns: { key: string; label: string; type?: "text" | "number" }[],
+    template: AnyObj,
+  ) => (
+    <ArrayTable
+      arr={(data[arrKey] ?? []) as AnyObj[]}
+      columns={columns}
+      onUpdate={(i, key, v) => update([arrKey, i, key], v)}
+      onRemove={(i) => removeRow(arrKey, i)}
+      onAdd={() => addRow(arrKey, template)}
+    />
   );
 
   return (
@@ -204,10 +222,10 @@ function DataTransformerPage() {
 
         <Card title="Meta">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Report Date" path={["reportDate"]} value={data.reportDate} />
-            <Field label="Version" path={["version"]} value={data.version} />
-            <Field label="Zinc Purchased" path={["zincPurchased"]} value={data.zincPurchased} type="number" />
-            <Field label="Zinc Remaining" path={["zincRemaining"]} value={data.zincRemaining} type="number" />
+            <Field label="Report Date" value={data.reportDate} onChange={(v) => update(["reportDate"], v)} />
+            <Field label="Version" value={data.version} onChange={(v) => update(["version"], v)} />
+            <Field label="Zinc Purchased" value={data.zincPurchased} type="number" onChange={(v) => update(["zincPurchased"], v)} />
+            <Field label="Zinc Remaining" value={data.zincRemaining} type="number" onChange={(v) => update(["zincRemaining"], v)} />
           </div>
         </Card>
 
@@ -215,7 +233,7 @@ function DataTransformerPage() {
           <Card title="Totals">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {Object.entries(data.totals).map(([k, v]) => (
-                <Field key={k} label={k} path={["totals", k]} value={v} type="number" />
+                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["totals", k], val)} />
               ))}
             </div>
           </Card>
@@ -225,7 +243,7 @@ function DataTransformerPage() {
           <Card title="Transport">
             <div className="grid grid-cols-2 gap-4">
               {Object.entries(data.transport).map(([k, v]) => (
-                <Field key={k} label={k} path={["transport", k]} value={v} type="number" />
+                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["transport", k], val)} />
               ))}
             </div>
           </Card>
@@ -235,76 +253,54 @@ function DataTransformerPage() {
           <Card title="Signature">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(data.signature).map(([k, v]) => (
-                <Field key={k} label={k} path={["signature", k]} value={v} />
+                <Field key={k} label={k} value={v} onChange={(val) => update(["signature", k], val)} />
               ))}
             </div>
           </Card>
         )}
 
         <Card title="Warehouse">
-          <ArrayTable
-            arrKey="warehouse"
-            columns={[
+          {renderArray("warehouse", [
               { key: "name", label: "Name" },
               { key: "ton", label: "Ton", type: "number" },
-            ]}
-            template={{ name: "", ton: 0 }}
-          />
+            ], { name: "", ton: 0 })}
         </Card>
 
         <Card title="Scrap">
-          <ArrayTable
-            arrKey="scrap"
-            columns={[
+          {renderArray("scrap", [
               { key: "line", label: "Line" },
               { key: "ton", label: "Ton", type: "number" },
-            ]}
-            template={{ line: "", ton: 0 }}
-          />
+            ], { line: "", ton: 0 })}
         </Card>
 
         <Card title="Material Balance">
-          <ArrayTable
-            arrKey="materialBalance"
-            columns={[
+          {renderArray("materialBalance", [
               { key: "k", label: "Key" },
               { key: "v", label: "Value", type: "number" },
-            ]}
-            template={{ k: "", v: 0 }}
-          />
+            ], { k: "", v: 0 })}
         </Card>
 
         <Card title="Yields">
-          <ArrayTable
-            arrKey="yields"
-            columns={[
+          {renderArray("yields", [
               { key: "process", label: "Process" },
               { key: "formula", label: "Formula" },
               { key: "value", label: "Value", type: "number" },
-            ]}
-            template={{ process: "", formula: "", value: 0 }}
-          />
+            ], { process: "", formula: "", value: 0 })}
         </Card>
 
         <Card title="Daily">
-          <ArrayTable
-            arrKey="daily"
-            columns={[
+          {renderArray("daily", [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
               { key: "pickling", label: "Pickling", type: "number" },
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
-            ]}
-            template={{ date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 }}
-          />
+            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 })}
         </Card>
 
         <Card title="Cumulative">
-          <ArrayTable
-            arrKey="cumulative"
-            columns={[
+          {renderArray("cumulative", [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
@@ -312,51 +308,37 @@ function DataTransformerPage() {
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
               { key: "sold", label: "Sold", type: "number" },
-            ]}
-            template={{ date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0, sold: 0 }}
-          />
+            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0, sold: 0 })}
         </Card>
 
         <Card title="Coating">
-          <ArrayTable
-            arrKey="coating"
-            columns={[
+          {renderArray("coating", [
               { key: "thickness", label: "Thickness", type: "number" },
               { key: "width", label: "Width", type: "number" },
               { key: "weight", label: "Weight", type: "number" },
               { key: "theoZn", label: "Theo Zn", type: "number" },
               { key: "dross", label: "Dross", type: "number" },
               { key: "actual", label: "Actual", type: "number" },
-            ]}
-            template={{ thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 }}
-          />
+            ], { thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 })}
         </Card>
 
         <Card title="Sales">
-          <ArrayTable
-            arrKey="sales"
-            columns={[
+          {renderArray("sales", [
               { key: "date", label: "Date" },
               { key: "buyer", label: "Buyer" },
               { key: "tonnage", label: "Tonnage", type: "number" },
               { key: "amount", label: "Amount", type: "number" },
-            ]}
-            template={{ date: "", buyer: "", tonnage: 0, amount: 0 }}
-          />
+            ], { date: "", buyer: "", tonnage: 0, amount: 0 })}
         </Card>
 
         <Card title="Plan">
-          <ArrayTable
-            arrKey="plan"
-            columns={[
+          {renderArray("plan", [
               { key: "date", label: "Date" },
               { key: "thickness", label: "Thickness" },
               { key: "width", label: "Width", type: "number" },
               { key: "tons", label: "Tons", type: "number" },
               { key: "status", label: "Status" },
-            ]}
-            template={{ date: "", thickness: "", width: 1000, tons: 0, status: "" }}
-          />
+            ], { date: "", thickness: "", width: 1000, tons: 0, status: "" })}
         </Card>
 
         <Card title="Notes">
