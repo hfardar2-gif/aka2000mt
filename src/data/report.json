@@ -1,18 +1,18 @@
 {
-  "reportDate": "2026-06-06",
+  "reportDate": "2026-06-07",
   "version": "1",
   "totals": {
     "inputCoilsTon": 2073.75,
     "inputCoilsQty": 121,
-    "pickling": 2023.674,
-    "rolling": 2023.674,
-    "galvanized": 1035.386,
+    "pickling": 2051.949,
+    "rolling": 2051.949,
+    "galvanized": 1120.257,
     "sold": 251.261
   },
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 50.076
+      "ton": 21.801
     },
     {
       "name": "Pickled",
@@ -20,21 +20,21 @@
     },
     {
       "name": "Rolled",
-      "ton": 988.288
+      "ton": 904.533
     },
     {
       "name": "Galvanized",
-      "ton": 758.17
+      "ton": 840.73
     }
   ],
   "scrap": [
     {
       "line": "Rolling",
-      "ton": 29.933
+      "ton": 27.159
     },
     {
       "line": "Galvanizing",
-      "ton": 26.206
+      "ton": 28.266
     }
   ],
   "materialBalance": [
@@ -44,23 +44,23 @@
     },
     {
       "k": "Final Product",
-      "v": 1009.18
+      "v": 1091.991
     },
     {
       "k": "Warehouse + WIP",
-      "v": 1035.386
+      "v": 1120.257
     },
     {
       "k": "Warehouse + WIP − Sold",
-      "v": 784.125
+      "v": 868.996
     },
     {
       "k": "Ready to ship",
-      "v": 757.919
+      "v": 840.73
     },
     {
       "k": "Total Scrap",
-      "v": 56.139
+      "v": 55.425
     }
   ],
   "yields": [
@@ -72,12 +72,12 @@
     {
       "process": "Rolling Yield",
       "formula": "(Rolling − Scrap − Rolled WH) ÷ (Pickling − Pickled WH)",
-      "value": 0.4668
+      "value": 0.5459
     },
     {
       "process": "Galvanizing Yield",
       "formula": "(Galv − Scrap) ÷ (Rolling − Rolled WH)",
-      "value": 0.9747
+      "value": 0.9517
     },
     {
       "process": "Coil to Coil Yield",
@@ -301,6 +301,14 @@
       "pickling": 0,
       "rolling": 51.1,
       "galv": 0
+    },
+    {
+      "date": "2026-06-06",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 26.072,
+      "rolling": 28.275,
+      "galv": 84.871
     }
   ],
   "cumulative": [
@@ -638,7 +646,7 @@
   ],
   "transport": {
     "underLoading": 0,
-    "readyWarehouse": 757.919
+    "readyWarehouse": 840.73
   },
   "plan": [
     {
@@ -674,14 +682,14 @@
       "thickness": "0.6",
       "width": 1000,
       "tons": 250,
-      "status": "In progress"
+      "status": "Hold ( Item 7 note)"
     },
     {
       "date": "2026-06-04",
       "thickness": "0.5",
       "width": 1000,
       "tons": 250,
-      "status": "In progress"
+      "status": "Hold ( Item 7 note)"
     },
     {
       "date": "2026-06-08",
@@ -704,7 +712,8 @@
     "Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
     "At the beginning of each week, the production plan for that week is announced.",
     "Per meeting (Ms. Torabi & Mr. Nasehi), production schedule changed to 2026-06-08.",
-    "Considering the warehouse capacity and our current inventory in it, , the galvanized production plan for  will enter the production line starting 6/6"
+    "Considering the warehouse capacity and our current inventory in it, , the galvanized production plan for  will enter the production line starting 6/6",
+    "Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t"
   ],
   "signature": {
     "role": "AKA Technical Representative",
