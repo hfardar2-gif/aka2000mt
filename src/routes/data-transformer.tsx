@@ -10,6 +10,107 @@ const PASSWORD = "AKA";
 
 type AnyObj = Record<string, any>;
 
+const inputCls =
+  "w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
+
+const parseNum = (v: string) => (v === "" ? 0 : isNaN(Number(v)) ? v : Number(v));
+
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <h2 className="text-lg font-semibold text-foreground mb-4">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+function Field({
+  label,
+  value,
+  type = "text",
+  onChange,
+}: {
+  label: string;
+  value: any;
+  type?: "text" | "number";
+  onChange: (v: any) => void;
+}) {
+  return (
+    <label className="block">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <input
+        className={inputCls + " mt-1"}
+        value={value ?? ""}
+        onChange={(e) => onChange(type === "number" ? parseNum(e.target.value) : e.target.value)}
+      />
+    </label>
+  );
+}
+
+function ArrayTable({
+  arr,
+  columns,
+  onUpdate,
+  onRemove,
+  onAdd,
+}: {
+  arr: AnyObj[];
+  columns: { key: string; label: string; type?: "text" | "number" }[];
+  onUpdate: (i: number, key: string, v: any) => void;
+  onRemove: (i: number) => void;
+  onAdd: () => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-muted-foreground">
+              {columns.map((c) => (
+                <th key={c.key} className="px-2 py-2 font-medium">
+                  {c.label}
+                </th>
+              ))}
+              <th className="px-2 py-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {arr.map((row, i) => (
+              <tr key={i} className="border-b border-border/50">
+                {columns.map((c) => (
+                  <td key={c.key} className="px-2 py-1">
+                    <input
+                      className={inputCls}
+                      value={row[c.key] ?? ""}
+                      onChange={(e) =>
+                        onUpdate(i, c.key, c.type === "number" ? parseNum(e.target.value) : e.target.value)
+                      }
+                    />
+                  </td>
+                ))}
+                <td className="px-2 py-1">
+                  <button
+                    onClick={() => onRemove(i)}
+                    className="text-xs rounded-md bg-destructive text-destructive-foreground px-2 py-1 hover:bg-destructive/90"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button
+        onClick={onAdd}
+        className="text-xs rounded-md bg-secondary text-secondary-foreground px-3 py-1.5 hover:bg-secondary/80"
+      >
+        + Add Row
+      </button>
+    </div>
+  );
+}
+
 function DataTransformerPage() {
   const [authed, setAuthed] = useState(false);
   const [pwd, setPwd] = useState("");
