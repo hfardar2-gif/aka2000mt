@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-06-07",
+  "reportDate": "2026-06-08",
   "version": "02",
   "totals": {
     "inputCoilsTon": 2073.75,
@@ -309,6 +309,14 @@
       "pickling": 26.072,
       "rolling": 28.275,
       "galv": 84.871
+    },
+    {
+      "date": "2026-06-07",
+      "inputTon": 207375,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     }
   ],
   "cumulative": [
@@ -563,6 +571,15 @@
       "rolling": 2051.949,
       "galv": 1120.257,
       "sold": 251261
+    },
+    {
+      "date": "2026-07-07",
+      "inputTon": 207375,
+      "inputQty": 121,
+      "pickling": 2051949,
+      "rolling": 2051949,
+      "galv": 1120257,
+      "sold": 251261
     }
   ],
   "coating": [
@@ -641,16 +658,10 @@
       "amount": 283941238000
     },
     {
-      "date": "2026-05-18",
+      "date": "Go to note Item3",
       "buyer": "Hirad Co.",
-      "tonnage": 52.33,
-      "amount": 102187794566
-    },
-    {
-      "date": "2026-05-19",
-      "buyer": "Hirad Co.",
-      "tonnage": 48.75,
-      "amount": 95062485375
+      "tonnage": 101.08,
+      "amount": "172,856,589,785\t"
     }
   ],
   "transport": {
@@ -702,13 +713,11 @@
     }
   ],
   "notes": [
-    "It has been planned that all coils will be galvanized within 4 weeks as of 2026-05-12.",
     "Every galvanized coil produced is immediately placed in the sales and shipment program.",
     "Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
-    "At the beginning of each week, the production plan for that week is announced.",
-    "Per meeting (Ms. Torabi & Mr. Nasehi), production schedule changed to 2026-06-08.",
-    "Considering the warehouse capacity and our current inventory in it, , the galvanized production plan for  will enter the production line starting 6/6",
-    "Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t"
+    "Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t",
+    "In the reports of the past days, the amount and date for the goods sold to Hirad Company had been recorded based on the initial proforma invoice. After issuing the final invoice, the correct amounts will be entered into the report",
+    "The invoices and sales documents will be announced"
   ],
   "signature": {
     "role": "AKA Technical Representative",
