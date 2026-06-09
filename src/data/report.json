@@ -1,5 +1,5 @@
 {
-  "reportDate": "2026-06-08",
+  "reportDate": "2026-06-09",
   "version": "02",
   "totals": {
     "inputCoilsTon": 2073.75,
@@ -317,6 +317,14 @@
       "pickling": 0,
       "rolling": 0,
       "galv": 0
+    },
+    {
+      "date": "2026-06-08",
+      "inputTon": 207375,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     }
   ],
   "cumulative": [
@@ -570,16 +578,25 @@
       "pickling": 2051.949,
       "rolling": 2051.949,
       "galv": 1120.257,
-      "sold": 251261
+      "sold": 251.26100000000002
     },
     {
-      "date": "2026-07-07",
+      "date": "2026-076-07",
       "inputTon": 207375,
       "inputQty": 121,
-      "pickling": 2051949,
-      "rolling": 2051949,
-      "galv": 1120257,
-      "sold": 251261
+      "pickling": 2051.949,
+      "rolling": 2051.949,
+      "galv": 1120.257,
+      "sold": 251.26100000000002
+    },
+    {
+      "date": "2026-06-08",
+      "inputTon": 207375,
+      "inputQty": 121,
+      "pickling": 2051.949,
+      "rolling": 2051.949,
+      "galv": 1120.257,
+      "sold": 251.26100000000002
     }
   ],
   "coating": [
@@ -702,22 +719,22 @@
       "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
       "width": 1000,
       "tons": 500,
-      "status": "Hold ( Item 7 note)"
+      "status": "Hold ( Item 3 note)"
     },
     {
       "date": "2026-06-08",
       "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
       "width": 1000,
       "tons": 500,
-      "status": ""
+      "status": "Hold ( Item 3 note)"
     }
   ],
   "notes": [
-    "Every galvanized coil produced is immediately placed in the sales and shipment program.",
-    "Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
-    "Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t",
-    "In the reports of the past days, the amount and date for the goods sold to Hirad Company had been recorded based on the initial proforma invoice. After issuing the final invoice, the correct amounts will be entered into the report",
-    "The invoices and sales documents will be announced"
+    "1.Every galvanized coil produced is immediately placed in the sales and shipment program.",
+    "2.Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
+    "3.Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t",
+    "4.In the reports of the past days, the amount and date for the goods sold to Hirad Company had been recorded based on the initial proforma invoice. After issuing the final invoice, the correct amounts will be entered into the report",
+    "5.The invoices and sales documents will be announced"
   ],
   "signature": {
     "role": "AKA Technical Representative",
