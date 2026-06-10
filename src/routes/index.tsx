@@ -332,6 +332,20 @@ function Index() {
             <Printer className="h-3.5 w-3.5" />
             {tr("print")}
           </button>
+          <button
+            onClick={() => setShowAnalysis(true)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 text-xs font-medium text-foreground hover:bg-secondary"
+          >
+            <FileText className="h-3.5 w-3.5" />
+            {tr("projectAnalysis")}
+          </button>
+          <button
+            onClick={() => setShowCommentary(true)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 text-xs font-medium text-foreground hover:bg-secondary"
+          >
+            <MessageSquare className="h-3.5 w-3.5" />
+            {tr("mgmtCommentary")}
+          </button>
         </div>
       </div>
 
