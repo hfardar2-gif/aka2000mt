@@ -257,6 +257,44 @@ function DataTransformerPage() {
               ))}
             </div>
           </Card>
+
+        <Card title="Project Analysis">
+          <label className="block">
+            <span className="text-xs text-muted-foreground">
+              Project analysis (shown in the Project Analysis modal on the dashboard)
+            </span>
+            <textarea
+              className={inputCls + " mt-1 min-h-[160px] font-mono text-xs leading-relaxed"}
+              value={data.projectAnalysis ?? ""}
+              onChange={(e) => update(["projectAnalysis"], e.target.value)}
+              placeholder="Enter 5–10 lines of project analysis…"
+            />
+          </label>
+        </Card>
+
+        <Card title="Management Commentary">
+          <div className="grid grid-cols-1 gap-4">
+            {([
+              ["overall", "Overall Project Status"],
+              ["production", "Production Status"],
+              ["sales", "Sales Status"],
+              ["inventory", "Inventory Status"],
+              ["keyNote", "Key Management Note"],
+            ] as const).map(([k, label]) => (
+              <label key={k} className="block">
+                <span className="text-xs text-muted-foreground">{label}</span>
+                <textarea
+                  className={inputCls + " mt-1 min-h-[80px] text-sm leading-relaxed"}
+                  value={(data.managementCommentary?.[k] as string) ?? ""}
+                  onChange={(e) =>
+                    update(["managementCommentary", k], e.target.value)
+                  }
+                  placeholder="1–3 short sentences…"
+                />
+              </label>
+            ))}
+          </div>
+        </Card>
         )}
 
         <Card title="Warehouse">
