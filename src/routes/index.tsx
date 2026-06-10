@@ -668,7 +668,7 @@ function Index() {
                       <td className="py-3 pr-4 text-muted-foreground">{s.date}</td>
                       <td className="py-3 pr-4 font-medium text-foreground">{s.buyer}</td>
                       <td className="py-3 pr-4 text-right">{fmt(s.tonnage)}</td>
-                      <td className="py-3 text-right font-semibold text-primary">{fmtRial(s.amount)}</td>
+                      <td className="py-3 text-right font-semibold text-primary">{fmtRial(Number(s.amount))}</td>
                     </tr>
                   ))}
                 </tbody>
