@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Printer, Languages } from "lucide-react";
+import { Sun, Moon, Printer, Languages, FileText, MessageSquare, X } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -157,6 +157,25 @@ const translations: Record<string, Record<Lang, string>> = {
     zh: "由 Hamid Reza Fardar 工程师设计与开发 · 版权所有 © 2026。",
     fa: "طراح و سازنده مهندس حمیدرضا فاردار · کپی‌رایت برای سازنده محفوظ است ۲۰۲۶",
   },
+  projectAnalysis: { en: "Project Analysis", zh: "项目分析", fa: "تحلیل پروژه" },
+  noAnalysis: {
+    en: "No project analysis has been entered.",
+    zh: "尚未输入项目分析。",
+    fa: "هیچ تحلیل پروژه‌ای وارد نشده است.",
+  },
+  mgmtCommentary: { en: "Management Commentary", zh: "管理层评论", fa: "تفسیر مدیریتی" },
+  noComment: { en: "No comment provided.", zh: "未提供评论。", fa: "توضیحی ارائه نشده است." },
+  noCommentary: {
+    en: "No management commentary has been entered.",
+    zh: "尚未输入管理层评论。",
+    fa: "هیچ تفسیر مدیریتی وارد نشده است.",
+  },
+  mcOverall: { en: "Overall Project Status", zh: "项目总体状态", fa: "وضعیت کلی پروژه" },
+  mcProduction: { en: "Production Status", zh: "生产状态", fa: "وضعیت تولید" },
+  mcSales: { en: "Sales Status", zh: "销售状态", fa: "وضعیت فروش" },
+  mcInventory: { en: "Inventory Status", zh: "库存状态", fa: "وضعیت موجودی" },
+  mcKeyNote: { en: "Key Management Note", zh: "关键管理说明", fa: "نکته کلیدی مدیریتی" },
+  close: { en: "Close", zh: "关闭", fa: "بستن" },
 };
 
 const dataTr: Record<string, Record<Lang, string>> = {
@@ -198,6 +217,8 @@ function Index() {
   const t = report.totals;
   const [lang, setLang] = useState<Lang>("en");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [showCommentary, setShowCommentary] = useState(false);
   const tr = (k: keyof typeof translations) => translations[k as string][lang];
 
   useEffect(() => {
