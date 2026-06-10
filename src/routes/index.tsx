@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Sun, Moon, Printer, Languages } from "lucide-react";
+import { Sun, Moon, Printer, Languages, FileText, MessageSquare, X } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -157,6 +157,25 @@ const translations: Record<string, Record<Lang, string>> = {
     zh: "由 Hamid Reza Fardar 工程师设计与开发 · 版权所有 © 2026。",
     fa: "طراح و سازنده مهندس حمیدرضا فاردار · کپی‌رایت برای سازنده محفوظ است ۲۰۲۶",
   },
+  projectAnalysis: { en: "Project Analysis", zh: "项目分析", fa: "تحلیل پروژه" },
+  noAnalysis: {
+    en: "No project analysis has been entered.",
+    zh: "尚未输入项目分析。",
+    fa: "هیچ تحلیل پروژه‌ای وارد نشده است.",
+  },
+  mgmtCommentary: { en: "Management Commentary", zh: "管理层评论", fa: "تفسیر مدیریتی" },
+  noComment: { en: "No comment provided.", zh: "未提供评论。", fa: "توضیحی ارائه نشده است." },
+  noCommentary: {
+    en: "No management commentary has been entered.",
+    zh: "尚未输入管理层评论。",
+    fa: "هیچ تفسیر مدیریتی وارد نشده است.",
+  },
+  mcOverall: { en: "Overall Project Status", zh: "项目总体状态", fa: "وضعیت کلی پروژه" },
+  mcProduction: { en: "Production Status", zh: "生产状态", fa: "وضعیت تولید" },
+  mcSales: { en: "Sales Status", zh: "销售状态", fa: "وضعیت فروش" },
+  mcInventory: { en: "Inventory Status", zh: "库存状态", fa: "وضعیت موجودی" },
+  mcKeyNote: { en: "Key Management Note", zh: "关键管理说明", fa: "نکته کلیدی مدیریتی" },
+  close: { en: "Close", zh: "关闭", fa: "بستن" },
 };
 
 const dataTr: Record<string, Record<Lang, string>> = {
@@ -198,6 +217,8 @@ function Index() {
   const t = report.totals;
   const [lang, setLang] = useState<Lang>("en");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [showCommentary, setShowCommentary] = useState(false);
   const tr = (k: keyof typeof translations) => translations[k as string][lang];
 
   useEffect(() => {
@@ -310,6 +331,20 @@ function Index() {
           >
             <Printer className="h-3.5 w-3.5" />
             {tr("print")}
+          </button>
+          <button
+            onClick={() => setShowAnalysis(true)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 text-xs font-medium text-foreground hover:bg-secondary"
+          >
+            <FileText className="h-3.5 w-3.5" />
+            {tr("projectAnalysis")}
+          </button>
+          <button
+            onClick={() => setShowCommentary(true)}
+            className="inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-secondary/40 px-2.5 text-xs font-medium text-foreground hover:bg-secondary"
+          >
+            <MessageSquare className="h-3.5 w-3.5" />
+            {tr("mgmtCommentary")}
           </button>
         </div>
       </div>
@@ -668,7 +703,7 @@ function Index() {
                       <td className="py-3 pr-4 text-muted-foreground">{s.date}</td>
                       <td className="py-3 pr-4 font-medium text-foreground">{s.buyer}</td>
                       <td className="py-3 pr-4 text-right">{fmt(s.tonnage)}</td>
-                      <td className="py-3 text-right font-semibold text-primary">{fmtRial(s.amount)}</td>
+                      <td className="py-3 text-right font-semibold text-primary">{fmtRial(Number(s.amount))}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -755,6 +790,96 @@ function Index() {
           </div>
         </footer>
       </main>
+
+      {showAnalysis && (
+        <Modal title={tr("projectAnalysis")} onClose={() => setShowAnalysis(false)} closeLabel={tr("close")}>
+          {(() => {
+            const text = ((report as any).projectAnalysis ?? "").trim();
+            if (!text) {
+              return <p className="text-sm text-muted-foreground italic">{tr("noAnalysis")}</p>;
+            }
+            return (
+              <div className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
+                {text}
+              </div>
+            );
+          })()}
+        </Modal>
+      )}
+
+      {showCommentary && (
+        <Modal title={tr("mgmtCommentary")} onClose={() => setShowCommentary(false)} closeLabel={tr("close")}>
+          {(() => {
+            const mc = ((report as any).managementCommentary ?? {}) as Record<string, string>;
+            const sections: { key: string; label: string }[] = [
+              { key: "overall", label: tr("mcOverall") },
+              { key: "production", label: tr("mcProduction") },
+              { key: "sales", label: tr("mcSales") },
+              { key: "inventory", label: tr("mcInventory") },
+              { key: "keyNote", label: tr("mcKeyNote") },
+            ];
+            const allEmpty = sections.every((s) => !(mc[s.key] ?? "").trim());
+            if (allEmpty) {
+              return <p className="text-sm text-muted-foreground italic">{tr("noCommentary")}</p>;
+            }
+            return (
+              <div className="space-y-3">
+                {sections.map((s) => {
+                  const v = (mc[s.key] ?? "").trim();
+                  return (
+                    <div key={s.key} className="rounded-lg border border-border bg-secondary/30 p-4">
+                      <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+                        {s.label}
+                      </p>
+                      {v ? (
+                        <p className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">{v}</p>
+                      ) : (
+                        <p className="text-sm italic text-muted-foreground">{tr("noComment")}</p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()}
+        </Modal>
+      )}
+    </div>
+  );
+}
+
+function Modal({
+  title,
+  onClose,
+  closeLabel,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  closeLabel: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="no-print fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-hidden rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between border-b border-border px-6 py-4">
+          <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+          <button
+            onClick={onClose}
+            className="rounded-md p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            aria-label={closeLabel}
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="overflow-y-auto p-6">{children}</div>
+      </div>
     </div>
   );
 }
