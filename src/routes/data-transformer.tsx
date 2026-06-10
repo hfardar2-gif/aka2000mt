@@ -257,6 +257,7 @@ function DataTransformerPage() {
               ))}
             </div>
           </Card>
+        )}
 
         <Card title="Project Analysis">
           <label className="block">
@@ -295,7 +296,6 @@ function DataTransformerPage() {
             ))}
           </div>
         </Card>
-        )}
 
         <Card title="Warehouse">
           {renderArray("warehouse", [
