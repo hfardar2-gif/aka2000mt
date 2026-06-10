@@ -706,7 +706,7 @@
     {
       "date": "2026-05-17",
       "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
-      "width": 1000,
+      "width": 1027,
       "tons": 250,
       "status": "Complete at 2026-05-17"
     },
@@ -742,7 +742,7 @@
       "date": "2026-06-08",
       "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
       "width": 1000,
-      "tons": 500,
+      "tons": 527,
       "status": "Hold ( Item 3 note)"
     }
   ],
