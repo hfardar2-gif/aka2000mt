@@ -1,18 +1,18 @@
 {
-  "reportDate": "2026-06-11",
+  "reportDate": "2026-06-23",
   "version": "03",
   "totals": {
     "inputCoilsTon": 2073.75,
     "inputCoilsQty": 121,
     "pickling": 2051.949,
     "rolling": 2051.949,
-    "galvanized": 1120.257,
-    "sold": 251.261
+    "galvanized": 1661.27,
+    "sold": 333.826
   },
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 21.801
+      "ton": 17.75
     },
     {
       "name": "Pickled",
@@ -20,11 +20,11 @@
     },
     {
       "name": "Rolled",
-      "ton": 904.533
+      "ton": 394.73
     },
     {
       "name": "Galvanized",
-      "ton": 840.73
+      "ton": 1299.178
     }
   ],
   "scrap": [
@@ -44,19 +44,19 @@
     },
     {
       "k": "Final Product",
-      "v": 1091.991
+      "v": 1633.004
     },
     {
       "k": "Warehouse + WIP",
-      "v": 1120.257
+      "v": 1661.27
     },
     {
       "k": "Warehouse + WIP − Sold",
-      "v": 868.996
+      "v": 1327.444
     },
     {
       "k": "Ready to ship",
-      "v": 840.73
+      "v": 1299.178
     },
     {
       "k": "Total Scrap",
@@ -72,12 +72,12 @@
     {
       "process": "Rolling Yield",
       "formula": "(Rolling − Scrap − Rolled WH) ÷ (Pickling − Pickled WH)",
-      "value": 0.5459
+      "value": 0.7948
     },
     {
       "process": "Galvanizing Yield",
       "formula": "(Galv − Scrap) ÷ (Rolling − Rolled WH)",
-      "value": 0.9517
+      "value": 0.9833
     },
     {
       "process": "Coil to Coil Yield",
@@ -333,6 +333,22 @@
       "pickling": 0,
       "rolling": 0,
       "galv": 0
+    },
+    {
+      "date": "2026-06-20",
+      "inputTon": 2073.75,
+      "inputQty": 0,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 241
+    },
+    {
+      "date": "2026-06-21",
+      "inputTon": 2073.75,
+      "inputQty": 0,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 246
     }
   ],
   "cumulative": [
@@ -589,7 +605,7 @@
       "sold": 251.26100000000002
     },
     {
-      "date": "2026-076-07",
+      "date": "2026-06-07",
       "inputTon": 207375,
       "inputQty": 121,
       "pickling": 2051.949,
@@ -614,6 +630,33 @@
       "rolling": 2051.949,
       "galv": 1120.257,
       "sold": 251.26100000000002
+    },
+    {
+      "date": "2026-06-20",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 2051.949,
+      "rolling": 2051.949,
+      "galv": 1361.357,
+      "sold": 333.826
+    },
+    {
+      "date": "2026-06-21",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 2051.949,
+      "rolling": 2051.949,
+      "galv": 1607.137,
+      "sold": 333.826
+    },
+    {
+      "date": "2026-06-22",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 2051.949,
+      "rolling": 2051.949,
+      "galv": 1607.137,
+      "sold": 333.826
     }
   ],
   "coating": [
@@ -689,18 +732,24 @@
       "date": "2026-05-17",
       "buyer": "Dashtestan",
       "tonnage": 150.181,
-      "amount": 283941238000
+      "amount": "283,941,238,000\t"
     },
     {
-      "date": "Go to note Item3",
+      "date": "2026-05-20",
       "buyer": "Hirad Co.",
       "tonnage": 101.08,
       "amount": "172,856,589,785\t"
+    },
+    {
+      "date": "2026-06-20",
+      "buyer": "Dashtestan",
+      "tonnage": 82.565,
+      "amount": "140,000,000,000\t"
     }
   ],
   "transport": {
     "underLoading": 0,
-    "readyWarehouse": 840.73
+    "readyWarehouse": 1299.178
   },
   "plan": [
     {
@@ -736,7 +785,7 @@
       "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
       "width": 1000,
       "tons": 500,
-      "status": "Hold ( Item 3 note)"
+      "status": " Complete at 2026-06-22"
     },
     {
       "date": "2026-06-08",
@@ -750,7 +799,8 @@
     "1.Every galvanized coil produced is immediately placed in the sales and shipment program.",
     "2.Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
     "3.Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t",
-    "4.In the reports of the past days, the amount and date for the goods sold to Hirad Company had been recorded based on the initial proforma invoice. After issuing the final invoice, the correct amounts will be entered into the report"
+    "4.Following extensive discussions, repeated follow-ups, and the strict requirement to segregate our production coils, a dedicated section of the cutting production hall has been officially designated as the exclusive storage warehouse for AKA Company's production coils.",
+    "5. To cover the customs clearance and transportation costs of 46 HRC coils stored at customs, amounting to IRR 140 billion, a total of 82 metric tons of galvanized coils (GLC) were sold by Foolad Dashtestan. The proceeds from this sale were allocated to and fully settled the aforementioned expenses.\t\t\t\t\t\t"
   ],
   "signature": {
     "role": "AKA Technical Representative",
