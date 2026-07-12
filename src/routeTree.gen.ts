@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ExecutiveDashboardRouteImport } from './routes/executive-dashboard'
 import { Route as DataTransformerRouteImport } from './routes/data-transformer'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ExecutiveDashboardRoute = ExecutiveDashboardRouteImport.update({
+  id: '/executive-dashboard',
+  path: '/executive-dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DataTransformerRoute = DataTransformerRouteImport.update({
   id: '/data-transformer',
   path: '/data-transformer',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/executive-dashboard': typeof ExecutiveDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/executive-dashboard': typeof ExecutiveDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/executive-dashboard': typeof ExecutiveDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-transformer'
+  fullPaths: '/' | '/data-transformer' | '/executive-dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-transformer'
-  id: '__root__' | '/' | '/data-transformer'
+  to: '/' | '/data-transformer' | '/executive-dashboard'
+  id: '__root__' | '/' | '/data-transformer' | '/executive-dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataTransformerRoute: typeof DataTransformerRoute
+  ExecutiveDashboardRoute: typeof ExecutiveDashboardRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/executive-dashboard': {
+      id: '/executive-dashboard'
+      path: '/executive-dashboard'
+      fullPath: '/executive-dashboard'
+      preLoaderRoute: typeof ExecutiveDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/data-transformer': {
       id: '/data-transformer'
       path: '/data-transformer'
@@ -71,7 +88,18 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataTransformerRoute: DataTransformerRoute,
+  ExecutiveDashboardRoute: ExecutiveDashboardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
