@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useState, type ChangeEvent, type ReactNode } from "react";
 import reportData from "@/data/report.json";
+import { importReportWorkbook } from "@/lib/xlsx-import";
 
 export const Route = createFileRoute("/data-transformer")({
   head: () => ({
     meta: [
       { title: "AKA Project Report — Data Entry" },
-      { name: "description", content: "Data entry and JSON export for the AKA Project Report." },
+      {
+        name: "description",
+        content: "Excel import, data entry and JSON export for the AKA Project Report.",
+      },
     ],
   }),
   component: DataTransformerPage,
@@ -14,6 +18,17 @@ export const Route = createFileRoute("/data-transformer")({
 
 const PASSWORD = "AKA";
 type AnyObj = Record<string, any>;
+type FieldType = "text" | "number";
+type ColumnDefinition = { key: string; label: string; type?: FieldType };
+type ImportMessage = { tone: "success" | "error" | "info"; text: string };
+
+type ArraySection = {
+  key: string;
+  title: string;
+  description?: string;
+  columns: ColumnDefinition[];
+  template: AnyObj;
+};
 
 const inputCls =
   "w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
@@ -21,12 +36,168 @@ const inputCls =
 const parseNum = (value: string) =>
   value === "" ? 0 : Number.isNaN(Number(value)) ? value : Number(value);
 
-function Card({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
+const ARRAY_SECTIONS: ArraySection[] = [
+  {
+    key: "coilInventory",
+    title: "Coil Inventory",
+    description:
+      "Available coil stock by thickness, width and tonnage. Excel sheet: Coil Inventory.",
+    columns: [
+      { key: "thickness", label: "Thickness (mm)", type: "number" },
+      { key: "width", label: "Width (mm)", type: "number" },
+      { key: "tonnage", label: "Available Tonnage", type: "number" },
+    ],
+    template: { thickness: 0, width: 1000, tonnage: 0 },
+  },
+  {
+    key: "warehouse",
+    title: "Warehouse",
+    columns: [
+      { key: "name", label: "Name" },
+      { key: "ton", label: "Ton", type: "number" },
+    ],
+    template: { name: "", ton: 0 },
+  },
+  {
+    key: "scrap",
+    title: "Scrap",
+    columns: [
+      { key: "line", label: "Line" },
+      { key: "ton", label: "Ton", type: "number" },
+    ],
+    template: { line: "", ton: 0 },
+  },
+  {
+    key: "materialBalance",
+    title: "Material Balance",
+    columns: [
+      { key: "k", label: "Key" },
+      { key: "v", label: "Value", type: "number" },
+    ],
+    template: { k: "", v: 0 },
+  },
+  {
+    key: "yields",
+    title: "Yields",
+    columns: [
+      { key: "process", label: "Process" },
+      { key: "formula", label: "Formula" },
+      { key: "value", label: "Value", type: "number" },
+    ],
+    template: { process: "", formula: "", value: 0 },
+  },
+  {
+    key: "daily",
+    title: "Daily",
+    columns: [
+      { key: "date", label: "Date" },
+      { key: "inputTon", label: "Input Ton", type: "number" },
+      { key: "inputQty", label: "Input Qty", type: "number" },
+      { key: "pickling", label: "Pickling", type: "number" },
+      { key: "rolling", label: "Rolling", type: "number" },
+      { key: "galv", label: "Galv", type: "number" },
+    ],
+    template: {
+      date: "",
+      inputTon: 0,
+      inputQty: 0,
+      pickling: 0,
+      rolling: 0,
+      galv: 0,
+    },
+  },
+  {
+    key: "cumulative",
+    title: "Cumulative",
+    columns: [
+      { key: "date", label: "Date" },
+      { key: "inputTon", label: "Input Ton", type: "number" },
+      { key: "inputQty", label: "Input Qty", type: "number" },
+      { key: "pickling", label: "Pickling", type: "number" },
+      { key: "rolling", label: "Rolling", type: "number" },
+      { key: "galv", label: "Galv", type: "number" },
+      { key: "sold", label: "Sold", type: "number" },
+    ],
+    template: {
+      date: "",
+      inputTon: 0,
+      inputQty: 0,
+      pickling: 0,
+      rolling: 0,
+      galv: 0,
+      sold: 0,
+    },
+  },
+  {
+    key: "coating",
+    title: "Coating",
+    columns: [
+      { key: "thickness", label: "Thickness", type: "number" },
+      { key: "width", label: "Width", type: "number" },
+      { key: "weight", label: "Weight", type: "number" },
+      { key: "theoZn", label: "Theo Zn", type: "number" },
+      { key: "dross", label: "Dross", type: "number" },
+      { key: "actual", label: "Actual", type: "number" },
+    ],
+    template: {
+      thickness: 0,
+      width: 1000,
+      weight: 0,
+      theoZn: 0,
+      dross: 0,
+      actual: 0,
+    },
+  },
+  {
+    key: "sales",
+    title: "Sales",
+    columns: [
+      { key: "date", label: "Date" },
+      { key: "buyer", label: "Buyer" },
+      { key: "tonnage", label: "Tonnage", type: "number" },
+      { key: "amount", label: "Amount", type: "number" },
+    ],
+    template: { date: "", buyer: "", tonnage: 0, amount: 0 },
+  },
+  {
+    key: "plan",
+    title: "Plan",
+    columns: [
+      { key: "date", label: "Date" },
+      { key: "thickness", label: "Thickness" },
+      { key: "width", label: "Width", type: "number" },
+      { key: "tons", label: "Tons", type: "number" },
+      { key: "status", label: "Status" },
+    ],
+    template: { date: "", thickness: "", width: 1000, tons: 0, status: "" },
+  },
+];
+
+const MANAGEMENT_SECTIONS = [
+  ["overall", "Overall Project Status"],
+  ["production", "Production Status"],
+  ["sales", "Sales Status"],
+  ["inventory", "Inventory Status"],
+  ["keyNote", "Key Management Note"],
+] as const;
+
+function Card({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
   return (
     <section className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
       <h2 className="text-lg font-semibold text-foreground">{title}</h2>
-      {description && <p className="mb-4 mt-1 text-xs text-muted-foreground">{description}</p>}
-      {!description && <div className="mb-4" />}
+      {description ? (
+        <p className="mb-4 mt-1 text-xs text-muted-foreground">{description}</p>
+      ) : (
+        <div className="mb-4" />
+      )}
       {children}
     </section>
   );
@@ -40,7 +211,7 @@ function Field({
 }: {
   label: string;
   value: any;
-  type?: "text" | "number";
+  type?: FieldType;
   onChange: (value: any) => void;
 }) {
   return (
@@ -67,7 +238,7 @@ function ArrayTable({
   onAdd,
 }: {
   arr: AnyObj[];
-  columns: { key: string; label: string; type?: "text" | "number" }[];
+  columns: ColumnDefinition[];
   onUpdate: (index: number, key: string, value: any) => void;
   onRemove: (index: number) => void;
   onAdd: () => void;
@@ -124,7 +295,7 @@ function ArrayTable({
       </div>
       {arr.length === 0 && (
         <p className="rounded-md border border-dashed border-border px-3 py-3 text-xs italic text-muted-foreground">
-          No rows entered yet. Select “Add Row” to create the first record.
+          No rows entered yet. Upload Excel or select “Add Row”.
         </p>
       )}
       <button
@@ -142,11 +313,9 @@ function DataTransformerPage() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [data, setData] = useState<AnyObj>(() => {
-    const initial = JSON.parse(JSON.stringify(reportData)) as AnyObj;
-    initial.coilInventory = initial.coilInventory ?? [];
-    return initial;
-  });
+  const [importing, setImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState<ImportMessage | null>(null);
+  const [data, setData] = useState<AnyObj>(() => createInitialData());
 
   if (!authed) {
     return (
@@ -168,7 +337,7 @@ function DataTransformerPage() {
           </p>
           <h1 className="mb-1 text-xl font-semibold text-foreground">Data Entry Login</h1>
           <p className="mb-4 text-sm text-muted-foreground">
-            Enter the password to update project report data.
+            Enter the password to import or edit project report data.
           </p>
           <input
             type="password"
@@ -195,7 +364,11 @@ function DataTransformerPage() {
       const next = JSON.parse(JSON.stringify(previous));
       let current: any = next;
       for (let index = 0; index < path.length - 1; index += 1) {
-        current = current[path[index]];
+        const segment = path[index];
+        if (current[segment] === undefined || current[segment] === null) {
+          current[segment] = typeof path[index + 1] === "number" ? [] : {};
+        }
+        current = current[segment];
       }
       current[path[path.length - 1]] = value;
       return next;
@@ -216,9 +389,41 @@ function DataTransformerPage() {
   const removeRow = (key: string, index: number) => {
     setData((previous) => {
       const next = JSON.parse(JSON.stringify(previous));
-      next[key] = (next[key] ?? []).filter((_: unknown, rowIndex: number) => rowIndex !== index);
+      next[key] = (next[key] ?? []).filter(
+        (_: unknown, rowIndex: number) => rowIndex !== index,
+      );
       return next;
     });
+  };
+
+  const handleExcelImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    setImporting(true);
+    setImportMessage({ tone: "info", text: `Reading ${file.name}…` });
+    try {
+      const result = await importReportWorkbook(file, data);
+      setData(result.data);
+      const warningText = result.warnings.length
+        ? ` Warnings: ${result.warnings.join(" ")}`
+        : "";
+      setImportMessage({
+        tone: "success",
+        text: `Excel import completed. ${result.importedSections.length} report sections were populated: ${result.importedSections.join(", ")}.${warningText} Review the fields below before exporting or publishing.`,
+      });
+    } catch (importError) {
+      setImportMessage({
+        tone: "error",
+        text:
+          importError instanceof Error
+            ? importError.message
+            : "The Excel workbook could not be imported.",
+      });
+    } finally {
+      setImporting(false);
+    }
   };
 
   const handleExport = () => {
@@ -234,17 +439,13 @@ function DataTransformerPage() {
     URL.revokeObjectURL(url);
   };
 
-  const renderArray = (
-    arrayKey: string,
-    columns: { key: string; label: string; type?: "text" | "number" }[],
-    template: AnyObj,
-  ) => (
+  const renderArray = (section: ArraySection) => (
     <ArrayTable
-      arr={(data[arrayKey] ?? []) as AnyObj[]}
-      columns={columns}
-      onUpdate={(index, key, value) => update([arrayKey, index, key], value)}
-      onRemove={(index) => removeRow(arrayKey, index)}
-      onAdd={() => addRow(arrayKey, template)}
+      arr={(data[section.key] ?? []) as AnyObj[]}
+      columns={section.columns}
+      onUpdate={(index, key, value) => update([section.key, index, key], value)}
+      onRemove={(index) => removeRow(section.key, index)}
+      onAdd={() => addRow(section.key, section.template)}
     />
   );
 
@@ -258,29 +459,105 @@ function DataTransformerPage() {
             </p>
             <h1 className="text-2xl font-semibold">Data Entry</h1>
             <p className="text-sm text-muted-foreground">
-              Edit report fields and export the completed data as JSON.
+              Import the official Excel workbook, review the mapped fields, and export the report JSON.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={handleExport}
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
-            Final Approval & Export JSON
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setData(createInitialData());
+                setImportMessage({ tone: "info", text: "The form was reset to the currently deployed report data." });
+              }}
+              className="rounded-md border border-border bg-secondary/40 px-4 py-2 text-sm font-medium hover:bg-secondary"
+            >
+              Reset Form
+            </button>
+            <button
+              type="button"
+              onClick={handleExport}
+              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Final Approval & Export JSON
+            </button>
+          </div>
         </header>
+
+        <Card
+          title="Import Excel Workbook"
+          description="Select the official AKA .xlsx template. The system reads recognized sheets and fills the matching fields automatically. Blank sheets do not erase the currently loaded data."
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <label
+              className={`inline-flex cursor-pointer items-center rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 ${importing ? "pointer-events-none opacity-60" : ""}`}
+            >
+              {importing ? "Reading Excel…" : "Choose Excel File"}
+              <input
+                type="file"
+                accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                className="hidden"
+                disabled={importing}
+                onChange={handleExcelImport}
+              />
+            </label>
+            <span className="text-xs text-muted-foreground">
+              Maximum size: 15 MB · Chrome or Edge recommended
+            </span>
+          </div>
+
+          {importMessage && (
+            <div
+              className={`mt-4 rounded-lg border px-4 py-3 text-sm ${
+                importMessage.tone === "success"
+                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+                  : importMessage.tone === "error"
+                    ? "border-destructive/40 bg-destructive/10 text-destructive"
+                    : "border-primary/30 bg-primary/10 text-foreground"
+              }`}
+            >
+              {importMessage.text}
+            </div>
+          )}
+
+          <ul className="mt-4 list-disc space-y-1 pl-5 text-xs text-muted-foreground">
+            <li>Do not rename workbook sheets, column headers, or Key values.</li>
+            <li>Enter dates as YYYY-MM-DD and leave unused table rows completely blank.</li>
+            <li>Import only fills sections that contain data; other existing sections remain unchanged.</li>
+          </ul>
+        </Card>
 
         <Card title="Meta">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Field label="Report Date" value={data.reportDate} onChange={(value) => update(["reportDate"], value)} />
-            <Field label="Version" value={data.version} onChange={(value) => update(["version"], value)} />
-            <Field label="Zinc Purchased" value={data.zincPurchased} type="number" onChange={(value) => update(["zincPurchased"], value)} />
-            <Field label="Zinc Remaining" value={data.zincRemaining} type="number" onChange={(value) => update(["zincRemaining"], value)} />
+            <Field
+              label="Report Date"
+              value={data.reportDate}
+              onChange={(value) => update(["reportDate"], value)}
+            />
+            <Field
+              label="Version"
+              value={data.version}
+              onChange={(value) => update(["version"], value)}
+            />
+            <Field
+              label="Zinc Purchased"
+              value={data.zincPurchased}
+              type="number"
+              onChange={(value) => update(["zincPurchased"], value)}
+            />
+            <Field
+              label="Zinc Remaining"
+              value={data.zincRemaining}
+              type="number"
+              onChange={(value) => update(["zincRemaining"], value)}
+            />
           </div>
         </Card>
 
         {data.totals && (
-          <Card title="Totals" description="Includes input coil tonnage and input coil count used by the main dashboard cards.">
+          <Card
+            title="Totals"
+            description="Includes input coil tonnage and input coil count used by the main dashboard cards."
+          >
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {Object.entries(data.totals).map(([key, value]) => (
                 <Field
@@ -294,21 +571,6 @@ function DataTransformerPage() {
             </div>
           </Card>
         )}
-
-        <Card
-          title="Coil Inventory"
-          description="Enter available coil stock by thickness, width and available tonnage. This table is shown as “Coil Inventory” on the dashboard."
-        >
-          {renderArray(
-            "coilInventory",
-            [
-              { key: "thickness", label: "Thickness (mm)", type: "number" },
-              { key: "width", label: "Width (mm)", type: "number" },
-              { key: "tonnage", label: "Available Tonnage", type: "number" },
-            ],
-            { thickness: 0, width: 1000, tonnage: 0 },
-          )}
-        </Card>
 
         {data.transport && (
           <Card title="Transport">
@@ -357,13 +619,7 @@ function DataTransformerPage() {
 
         <Card title="Management Commentary">
           <div className="grid grid-cols-1 gap-4">
-            {[
-              ["overall", "Overall Project Status"],
-              ["production", "Production Status"],
-              ["sales", "Sales Status"],
-              ["inventory", "Inventory Status"],
-              ["keyNote", "Key Management Note"],
-            ].map(([key, label]) => (
+            {MANAGEMENT_SECTIONS.map(([key, label]) => (
               <label key={key} className="block">
                 <span className="text-xs text-muted-foreground">{label}</span>
                 <textarea
@@ -378,131 +634,15 @@ function DataTransformerPage() {
           </div>
         </Card>
 
-        <Card title="Warehouse">
-          {renderArray(
-            "warehouse",
-            [
-              { key: "name", label: "Name" },
-              { key: "ton", label: "Ton", type: "number" },
-            ],
-            { name: "", ton: 0 },
-          )}
-        </Card>
-
-        <Card title="Scrap">
-          {renderArray(
-            "scrap",
-            [
-              { key: "line", label: "Line" },
-              { key: "ton", label: "Ton", type: "number" },
-            ],
-            { line: "", ton: 0 },
-          )}
-        </Card>
-
-        <Card title="Material Balance">
-          {renderArray(
-            "materialBalance",
-            [
-              { key: "k", label: "Key" },
-              { key: "v", label: "Value", type: "number" },
-            ],
-            { k: "", v: 0 },
-          )}
-        </Card>
-
-        <Card title="Yields">
-          {renderArray(
-            "yields",
-            [
-              { key: "process", label: "Process" },
-              { key: "formula", label: "Formula" },
-              { key: "value", label: "Value", type: "number" },
-            ],
-            { process: "", formula: "", value: 0 },
-          )}
-        </Card>
-
-        <Card title="Daily">
-          {renderArray(
-            "daily",
-            [
-              { key: "date", label: "Date" },
-              { key: "inputTon", label: "Input Ton", type: "number" },
-              { key: "inputQty", label: "Input Qty", type: "number" },
-              { key: "pickling", label: "Pickling", type: "number" },
-              { key: "rolling", label: "Rolling", type: "number" },
-              { key: "galv", label: "Galv", type: "number" },
-            ],
-            { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 },
-          )}
-        </Card>
-
-        <Card title="Cumulative">
-          {renderArray(
-            "cumulative",
-            [
-              { key: "date", label: "Date" },
-              { key: "inputTon", label: "Input Ton", type: "number" },
-              { key: "inputQty", label: "Input Qty", type: "number" },
-              { key: "pickling", label: "Pickling", type: "number" },
-              { key: "rolling", label: "Rolling", type: "number" },
-              { key: "galv", label: "Galv", type: "number" },
-              { key: "sold", label: "Sold", type: "number" },
-            ],
-            {
-              date: "",
-              inputTon: 0,
-              inputQty: 0,
-              pickling: 0,
-              rolling: 0,
-              galv: 0,
-              sold: 0,
-            },
-          )}
-        </Card>
-
-        <Card title="Coating">
-          {renderArray(
-            "coating",
-            [
-              { key: "thickness", label: "Thickness", type: "number" },
-              { key: "width", label: "Width", type: "number" },
-              { key: "weight", label: "Weight", type: "number" },
-              { key: "theoZn", label: "Theo Zn", type: "number" },
-              { key: "dross", label: "Dross", type: "number" },
-              { key: "actual", label: "Actual", type: "number" },
-            ],
-            { thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 },
-          )}
-        </Card>
-
-        <Card title="Sales">
-          {renderArray(
-            "sales",
-            [
-              { key: "date", label: "Date" },
-              { key: "buyer", label: "Buyer" },
-              { key: "tonnage", label: "Tonnage", type: "number" },
-              { key: "amount", label: "Amount", type: "number" },
-            ],
-            { date: "", buyer: "", tonnage: 0, amount: 0 },
-          )}
-        </Card>
-
-        <Card title="Plan">
-          {renderArray(
-            "plan",
-            [
-              { key: "date", label: "Date" },
-              { key: "thickness", label: "Thickness" },
-              { key: "width", label: "Width", type: "number" },
-              { key: "tons", label: "Tons", type: "number" },
-              { key: "status", label: "Status" },
-            ],
-            { date: "", thickness: "", width: 1000, tons: 0, status: "" },
-          )}
-        </Card>
+        {ARRAY_SECTIONS.map((section) => (
+          <Card
+            key={section.key}
+            title={section.title}
+            description={section.description}
+          >
+            {renderArray(section)}
+          </Card>
+        ))}
 
         <Card title="Notes">
           <div className="space-y-2">
@@ -553,4 +693,11 @@ function DataTransformerPage() {
       </div>
     </div>
   );
+}
+
+function createInitialData() {
+  const initial = JSON.parse(JSON.stringify(reportData)) as AnyObj;
+  initial.coilInventory = initial.coilInventory ?? [];
+  initial.managementCommentary = initial.managementCommentary ?? {};
+  return initial;
 }
