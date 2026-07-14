@@ -6,8 +6,8 @@
     "inputCoilsQty": 145,
     "pickling": 2158.55,
     "rolling": 2100.909,
-    "galvanized": 1798.8670000000002,
-    "sold": 433.346
+    "galvanized": 2119.717,
+    "sold": 754.196
   },
   "warehouse": [
     {
@@ -44,7 +44,7 @@
     },
     {
       "k": "Final Product",
-      "v": 1798.8670000000002
+      "v": 2119.717
     },
     {
       "k": "Warehouse + WIP-Sold",
@@ -73,7 +73,7 @@
     {
       "process": "Galvanizing Yield",
       "formula": "(Galv - Galv Scrap) ÷ (Rolling - Rolled WH)",
-      "value": 0.9158893732891097
+      "value": 1.0818573725276794
     },
     {
       "process": "Coil to Coil Yield",
@@ -439,7 +439,7 @@
       "inputTon": 2484.25,
       "inputQty": 131,
       "pickling": 84.8,
-      "rolling": 48.96,
+      "rolling": 75655,
       "galv": 49.85200000000009
     }
   ],
@@ -845,7 +845,7 @@
       "inputTon": 2073.75,
       "inputQty": 2136.7490000000003,
       "pickling": 2136.7490000000003,
-      "rolling": 2100.909,
+      "rolling": 77706.949,
       "galv": 1706.8410000000001,
       "sold": 433.346
     },
@@ -854,9 +854,9 @@
       "inputTon": 2484.25,
       "inputQty": 2221.5490000000004,
       "pickling": 2221.5490000000004,
-      "rolling": 2149.869,
+      "rolling": 153361.949,
       "galv": 1756.6930000000002,
-      "sold": 433.346
+      "sold": 754.196
     }
   ],
   "coating": [
@@ -970,7 +970,7 @@
     }
   ],
   "transport": {
-    "underLoading": 0,
+    "underLoading": 320.85,
     "readyWarehouse": 1337.255
   },
   "plan": [
@@ -1046,27 +1046,27 @@
     {
       "thickness": 0.45,
       "width": 1000,
-      "tonnage": 48.525
+      "tonnage": 26.075
     },
     {
       "thickness": 0.48,
       "width": 1000,
-      "tonnage": 268.62
+      "tonnage": 68.42
     },
     {
       "thickness": 0.5,
       "width": 1000,
-      "tonnage": 387.05
+      "tonnage": 324.05
     },
     {
       "thickness": 0.6,
       "width": 1000,
-      "tonnage": 272.995
+      "tonnage": 243.795
     },
     {
       "thickness": 0.7,
       "width": 1000,
-      "tonnage": 300.105
+      "tonnage": 294.105
     },
     {
       "thickness": 0.8,
