@@ -13,6 +13,12 @@ const totalLabels: Record<string, string> = {
   "موجودی کویل‌ها": "مجموع موجودی",
 };
 
+const unitLabels: Record<string, string> = {
+  "Coil Inventory": "ton",
+  "卷材库存": "吨",
+  "موجودی کویل‌ها": "تن",
+};
+
 const formatTonnage = (value: number) =>
   value.toLocaleString("en-US", {
     minimumFractionDigits: 2,
@@ -21,13 +27,12 @@ const formatTonnage = (value: number) =>
 
 export function CoilInventoryEnhancer() {
   useEffect(() => {
-    const total = (((report as Record<string, unknown>).coilInventory ?? []) as CoilInventoryRow[]).reduce(
-      (sum, row) => {
-        const value = Number(row.tonnage ?? 0);
-        return sum + (Number.isFinite(value) ? value : 0);
-      },
-      0,
-    );
+    const total = (
+      ((report as unknown as Record<string, unknown>).coilInventory ?? []) as CoilInventoryRow[]
+    ).reduce((sum, row) => {
+      const value = Number(row.tonnage ?? 0);
+      return sum + (Number.isFinite(value) ? value : 0);
+    }, 0);
 
     const enhanceTable = () => {
       const section = Array.from(document.querySelectorAll("section")).find((candidate) => {
@@ -63,8 +68,11 @@ export function CoilInventoryEnhancer() {
       }
 
       const cells = footer.querySelectorAll("td");
-      if (cells[0]) cells[0].textContent = totalLabels[heading] ?? "Total inventory";
-      if (cells[1]) cells[1].textContent = `${formatTonnage(total)} ton`;
+      const totalLabel = totalLabels[heading] ?? "Total inventory";
+      const totalValue = `${formatTonnage(total)} ${unitLabels[heading] ?? "ton"}`;
+
+      if (cells[0] && cells[0].textContent !== totalLabel) cells[0].textContent = totalLabel;
+      if (cells[1] && cells[1].textContent !== totalValue) cells[1].textContent = totalValue;
     };
 
     enhanceTable();
