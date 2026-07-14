@@ -1,30 +1,30 @@
 {
-  "reportDate": "2026-06-30",
-  "version": "03",
+  "reportDate": "2026-07-14",
+  "version": "3.1",
   "totals": {
-    "inputCoilsTon": 2073.75,
-    "inputCoilsQty": 121,
-    "pickling": 2051.949,
-    "rolling": 2051.949,
-    "galvanized": 1711.122,
-    "sold": 333.826
+    "inputCoilsTon": 2484.25,
+    "inputCoilsQty": 145,
+    "pickling": 2158.55,
+    "rolling": 2100.909,
+    "galvanized": 1798.8670000000002,
+    "sold": 433.346
   },
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 17.75
+      "ton": 325.6999999999998
     },
     {
       "name": "Pickled",
-      "ton": 0
+      "ton": 57.641000000000076
     },
     {
       "name": "Rolled",
-      "ton": 344.878
+      "ton": 167.705
     },
     {
-      "name": "Galvanized",
-      "ton": 1349.03
+      "name": "Galvanied",
+      "ton": 1337.255
     }
   ],
   "scrap": [
@@ -34,25 +34,25 @@
     },
     {
       "line": "Galvanizing",
-      "ton": 28.266
+      "ton": 28.266000000000002
     }
   ],
   "materialBalance": [
     {
       "k": "Factory Input",
-      "v": 2073.75
+      "v": 2484.25
     },
     {
       "k": "Final Product",
-      "v": 1711.122
+      "v": 1798.8670000000002
     },
     {
-      "k": "Warehouse + WIP − Sold",
-      "v": 1377.296
+      "k": "Warehouse + WIP-Sold",
+      "v": 1365.5210000000002
     },
     {
       "k": "Ready to ship",
-      "v": 1349.03
+      "v": 1337.255
     },
     {
       "k": "Total Scrap",
@@ -62,18 +62,18 @@
   "yields": [
     {
       "process": "Pickling Yield",
-      "formula": "Pickling ÷ (Input − Unpickled WH)",
+      "formula": "Pickling ÷ (Input - Unpickled WH)",
       "value": 1
     },
     {
       "process": "Rolling Yield",
-      "formula": "(Rolling − Scrap − Rolled WH) ÷ (Pickling − Pickled WH)",
-      "value": 0.819
+      "formula": "(Rolling - Rolling Scrap - Rolled WH) ÷ (Pickling - Pickled WH)",
+      "value": 0.9072477675139665
     },
     {
       "process": "Galvanizing Yield",
-      "formula": "(Galv − Scrap) ÷ (Rolling − Rolled WH)",
-      "value": 0.9835
+      "formula": "(Galv - Galv Scrap) ÷ (Rolling - Rolled WH)",
+      "value": 0.9158893732891097
     },
     {
       "process": "Coil to Coil Yield",
@@ -304,7 +304,7 @@
       "inputQty": 121,
       "pickling": 26.072,
       "rolling": 28.275,
-      "galv": 84.871
+      "galv": 84.87100000000001
     },
     {
       "date": "2026-06-07",
@@ -321,475 +321,676 @@
       "pickling": 0,
       "rolling": 0,
       "galv": 0
-    },
-    {
-      "date": "2026-06-08",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 0
-    },
-    {
-      "date": "2026-06-20",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 241
-    },
-    {
-      "date": "2026-06-21",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 246
-    },
-    {
-      "date": "2026-06-27",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 49.852
-    }
-  ],
-  "cumulative": [
-    {
-      "date": "2026-05-10",
-      "inputTon": 2056.73,
-      "inputQty": 120,
-      "pickling": 425.41,
-      "rolling": 282.956,
-      "galv": 32.925,
-      "sold": null
-    },
-    {
-      "date": "2026-05-11",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 118.96000000000001,
-      "rolling": 15.97,
-      "galv": 96.26500000000001,
-      "sold": null
-    },
-    {
-      "date": "2026-05-12",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 0,
-      "sold": null
-    },
-    {
-      "date": "2026-05-13",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 0,
-      "sold": null
-    },
-    {
-      "date": "2026-05-14",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": "Shut down",
-      "rolling": "Shut down",
-      "galv": "Shut down",
-      "sold": null
-    },
-    {
-      "date": "2026-05-15",
-      "inputTon": 2073,
-      "inputQty": 121,
-      "pickling": "Shut down",
-      "rolling": "Shut down",
-      "galv": "Shut down",
-      "sold": null
-    },
-    {
-      "date": "2026-05-16",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 0,
-      "rolling": 66.59,
-      "galv": 76.515,
-      "sold": null
-    },
-    {
-      "date": "2026-05-17",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 564.45,
-      "rolling": 384.356,
-      "galv": 263.455,
-      "sold": null
-    },
-    {
-      "date": "2026-05-18",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 816.5,
-      "rolling": 365.516,
-      "galv": 263.455,
-      "sold": null
-    },
-    {
-      "date": "2026-05-19",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1514.34,
-      "rolling": 365.516,
-      "galv": 263.455,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-20",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 584.12,
-      "galv": 263.455,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-21",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 584.12,
-      "galv": 263.455,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-22",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 584.12,
-      "galv": 263.455,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-23",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 584.12,
-      "galv": 511.975,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-24",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1102.89,
-      "galv": 795.601,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-25",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1102.39,
-      "galv": 965.821,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-26",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1102.89,
-      "galv": 1003.218,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-27",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1166.294,
-      "galv": 1029.424,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-28",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1166.294,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-29",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1166.294,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-30",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 1548.38,
-      "rolling": 1166.294,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-05-31",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1872.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-01",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1872.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-02",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1872.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-03",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1872.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-04",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 1972.574,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-05",
-      "inputTon": 2073.75,
-      "inputQty": 121,
-      "pickling": 2025.877,
-      "rolling": 2023.674,
-      "galv": 1035.386,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-06",
-      "inputTon": 207375,
-      "inputQty": 121,
-      "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1120.257,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-07",
-      "inputTon": 207375,
-      "inputQty": 121,
-      "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1120.257,
-      "sold": 251.26100000000002
-    },
-    {
-      "date": "2026-06-08",
-      "inputTon": 207375,
-      "inputQty": 121,
-      "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1120.257,
-      "sold": 251.26100000000002
     },
     {
       "date": "2026-06-09",
       "inputTon": 2073.75,
       "inputQty": 121,
-      "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1120.257,
-      "sold": 251.26100000000002
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-10",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-11",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-12",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-13",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-14",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-15",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-16",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-17",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-18",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
+    },
+    {
+      "date": "2026-06-19",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     },
     {
       "date": "2026-06-20",
       "inputTon": 2073.75,
       "inputQty": 121,
-      "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1361.357,
-      "sold": 333.826
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 241.1
     },
     {
       "date": "2026-06-21",
       "inputTon": 2073.75,
       "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 245.78
+    },
+    {
+      "date": "2027-06-27",
+      "inputTon": 2073.75,
+      "inputQty": 121,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 49.85200000000009
+    },
+    {
+      "date": "2027-07-14",
+      "inputTon": 2210.29,
+      "inputQty": 131,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 49.85200000000009
+    }
+  ],
+  "cumulative": [
+    {
+      "date": "2026-05-10",
+      "inputTon": 2073.75,
+      "inputQty": 425.41,
+      "pickling": 282.956,
+      "rolling": 32.925,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-11",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 298.92600000000004,
+      "rolling": 129.19,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-12",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 298.92600000000004,
+      "rolling": 129.19,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-13",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 298.92600000000004,
+      "rolling": 129.19,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-14",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 298.92600000000004,
+      "rolling": 129.19,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-15",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 298.92600000000004,
+      "rolling": 129.19,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-16",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 365.5160000000001,
+      "rolling": 205.70499999999998,
+      "galv": 0,
+      "sold": 0
+    },
+    {
+      "date": "2026-05-17",
+      "inputTon": 2073.75,
+      "inputQty": 544.37,
+      "pickling": 365.5160000000001,
+      "rolling": 263.455,
+      "galv": 150.181,
+      "sold": 150.181
+    },
+    {
+      "date": "2026-05-18",
+      "inputTon": 2073.75,
+      "inputQty": 816.5,
+      "pickling": 365.5160000000001,
+      "rolling": 263.455,
+      "galv": 202.511,
+      "sold": 202.511
+    },
+    {
+      "date": "2026-05-19",
+      "inputTon": 2073.75,
+      "inputQty": 1514.34,
+      "pickling": 365.5160000000001,
+      "rolling": 263.455,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-20",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 584.1200000000001,
+      "rolling": 263.455,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-21",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 584.1200000000001,
+      "rolling": 263.455,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-22",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 584.1200000000001,
+      "rolling": 263.455,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-23",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 584.1200000000001,
+      "rolling": 511.975,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-24",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1102.89,
+      "rolling": 795.601,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-25",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1102.89,
+      "rolling": 965.821,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-26",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1102.89,
+      "rolling": 1003.2180000000001,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-27",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1166.294,
+      "rolling": 1029.424,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-28",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1166.294,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-29",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1166.294,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-30",
+      "inputTon": 2073.75,
+      "inputQty": 1548.3799999999999,
+      "pickling": 1166.294,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-05-31",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 1872.574,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-01",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 1872.574,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-02",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 1872.574,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-03",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 1872.574,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-04",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 1972.574,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-05",
+      "inputTon": 2073.75,
+      "inputQty": 2025.877,
+      "pickling": 2023.674,
+      "rolling": 1035.386,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-06",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1607.137,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-07",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-08",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-09",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-10",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-11",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-12",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-13",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-14",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-15",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-16",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-17",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-18",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-19",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1120.257,
+      "galv": 251.261,
+      "sold": 251.261
+    },
+    {
+      "date": "2026-06-20",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1361.357,
+      "galv": 333.826,
       "sold": 333.826
     },
     {
-      "date": "2026-06-22",
+      "date": "2026-06-21",
       "inputTon": 2073.75,
-      "inputQty": 121,
+      "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1607.137,
+      "rolling": 1607.137,
+      "galv": 333.826,
       "sold": 333.826
     },
     {
-      "date": "2026-06-29",
+      "date": "2026-06-27",
       "inputTon": 2073.75,
-      "inputQty": 121,
+      "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 2051.949,
-      "galv": 1656.989,
+      "rolling": 1656.989,
+      "galv": 333.826,
       "sold": 333.826
+    },
+    {
+      "date": "2026-07-01",
+      "inputTon": 2073.75,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1706.8410000000001,
+      "galv": 433.346,
+      "sold": 433.346
+    },
+    {
+      "date": "2026-07-14",
+      "inputTon": 2210.29,
+      "inputQty": 2051.949,
+      "pickling": 2051.949,
+      "rolling": 1706.8410000000001,
+      "galv": 433.346,
+      "sold": 433.346
     }
   ],
   "coating": [
     {
+      "thickness": 0.4,
+      "width": 1000,
+      "weight": 51.1,
+      "theoZn": 879.89496,
+      "dross": 158.38109279999998,
+      "actual": 721.5138672
+    },
+    {
       "thickness": 0.45,
       "width": 1000,
-      "weight": 51.01,
-      "theoZn": 879.895,
-      "dross": 158.4,
-      "actual": 721.5
+      "weight": 51.1,
+      "theoZn": 879.89496,
+      "dross": 158.38109279999998,
+      "actual": 721.5138672
     },
     {
       "thickness": 0.48,
       "width": 1000,
       "weight": 359.336,
-      "theoZn": 5969.847,
-      "dross": 1074.6,
-      "actual": 4895.3
+      "theoZn": 5969.847320000001,
+      "dross": 1074.5725176,
+      "actual": 4895.274802400001
     },
     {
       "thickness": 0.5,
       "width": 1000,
-      "weight": 476.2,
-      "theoZn": 7551.364,
-      "dross": 1359.2,
-      "actual": 6192.1
+      "weight": 476.201,
+      "theoZn": 7551.364100000001,
+      "dross": 1359.2455380000001,
+      "actual": 6192.118562000001
     },
     {
       "thickness": 0.6,
       "width": 1000,
-      "weight": 425.06,
-      "theoZn": 5748.106,
-      "dross": 1034.7,
-      "actual": 4713.4
+      "weight": 425.063,
+      "theoZn": 5748.105839999999,
+      "dross": 1034.6590511999998,
+      "actual": 4713.4467888
     },
     {
       "thickness": 0.7,
       "width": 1000,
-      "weight": 306.58,
-      "theoZn": 3609.694,
-      "dross": 649.7,
-      "actual": 2959.9
-    },
-    {
-      "thickness": 0.9,
-      "width": 1000,
-      "weight": 16.61,
-      "theoZn": 681.545,
-      "dross": 122.7,
-      "actual": 558.9
-    },
-    {
-      "thickness": 1,
-      "width": 1000,
-      "weight": 84.69,
-      "theoZn": 100.738,
-      "dross": 18.1,
-      "actual": 82.6
-    },
-    {
-      "thickness": 1.2,
-      "width": 1000,
-      "weight": 16.78,
-      "theoZn": 172.486,
-      "dross": 31,
-      "actual": 141.4
+      "weight": 306.576,
+      "theoZn": 3609.6939900000007,
+      "dross": 649.7449182000001,
+      "actual": 2959.9490718000006
     },
     {
       "thickness": 0.8,
       "width": 1000,
       "weight": 16.88,
-      "theoZn": 150.763,
-      "dross": 27.1,
-      "actual": 123.6
+      "theoZn": 150.76252999999997,
+      "dross": 27.137255399999994,
+      "actual": 123.62527459999998
+    },
+    {
+      "thickness": 0.9,
+      "width": 1000,
+      "weight": 16.611,
+      "theoZn": 681.54533,
+      "dross": 122.6781594,
+      "actual": 558.8671706
+    },
+    {
+      "thickness": 1,
+      "width": 1000,
+      "weight": 84.691,
+      "theoZn": 100.73751000000001,
+      "dross": 18.1327518,
+      "actual": 82.60475820000002
+    },
+    {
+      "thickness": 1.2,
+      "width": 1000,
+      "weight": 16.782,
+      "theoZn": 172.48626000000002,
+      "dross": 31.0475268,
+      "actual": 141.4387332
     }
   ],
   "zincPurchased": 29.1,
-  "zincRemaining": 8.71,
+  "zincRemaining": 8.711160971200002,
   "sales": [
     {
       "date": "2026-05-17",
       "buyer": "Dashtestan",
       "tonnage": 150.181,
-      "amount": "283,941,238,000\t"
+      "amount": 283941238000
     },
     {
       "date": "2026-05-20",
-      "buyer": "Hirad Co.",
+      "buyer": "Hirad Co,",
       "tonnage": 101.08,
-      "amount": "172,856,589,785\t"
+      "amount": 172856540000
     },
     {
       "date": "2026-06-20",
       "buyer": "Dashtestan",
       "tonnage": 82.565,
-      "amount": "140,000,000,000\t"
+      "amount": 140000000000
+    },
+    {
+      "date": "2026-07-01",
+      "buyer": "Hoshmand glv.",
+      "tonnage": 99.52,
+      "amount": 136341902400
     }
   ],
   "transport": {
     "underLoading": 0,
-    "readyWarehouse": 1349.03
+    "readyWarehouse": 1337.255
   },
   "plan": [
     {
       "date": "2026-05-17",
-      "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
-      "width": 1027,
+      "thickness": "0.45,0.48,0.5,0.6,0.9",
+      "width": 1000,
       "tons": 250,
       "status": "Complete at 2026-05-17"
     },
     {
       "date": "2026-05-22",
-      "thickness": "0.45, 0.48, 0.5",
+      "thickness": "0.45,0.48,0.5",
       "width": 1000,
       "tons": 250,
       "status": "Complete at 2026-05-23"
     },
     {
       "date": "2026-05-28",
-      "thickness": "0.7, 1, 1.2",
+      "thickness": "0.7,1,1.2",
       "width": 1000,
       "tons": 300,
       "status": "Complete at 2026-05-28"
@@ -803,26 +1004,26 @@
     },
     {
       "date": "2026-06-04",
-      "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
+      "thickness": "0.45,0.48,0.5",
       "width": 1000,
       "tons": 500,
-      "status": " Complete at 2026-06-22"
+      "status": "Complete at 2026-06-22"
     },
     {
       "date": "2026-06-08",
-      "thickness": "0.45, 0.48, 0.5, 0.6, 0.9",
+      "thickness": "0.40,0.48,0.5,07",
       "width": 1000,
-      "tons": 527,
+      "tons": 500,
       "status": "Hold ( Item 6 note)"
     }
   ],
   "notes": [
-    "1.Every galvanized coil produced is immediately placed in the sales and shipment program.",
-    "2.Transport waybills, zinc/zamak, 2.5% abandoned warehouse, and remaining clearance fees to be settled under 150 MT of HDG sold by Dashtestan (sale 2026-05-17).",
-    "3.Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"\" \"\t\t\t\t\t\t",
+    "1. Every galvanized coil produced is immediately placed in the sales and shipment program.",
+    "2. The costs of transport waybills from port  to the factory, the cost of zinc and zamak, the 2.5% abandoned warehouse cost, and the remaining customs clearance agent fees, aginst officialy invoices to be setteled under  150 metric tons of galvanized  (HDG)  to be sold by Dashtestan.(reffer to sales report table date : (2026-05-17)",
+    "3.Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"",
     "4.Following extensive discussions, repeated follow-ups, and the strict requirement to segregate our production coils, a dedicated section of the cutting production hall has been officially designated as the exclusive storage warehouse for AKA Company's production coils.",
-    "5. To cover the customs clearance and transportation costs of 46 HRC coils stored at customs, amounting to IRR 140 billion, a total of 82 metric tons of galvanized coils (GLC) were sold by Foolad Dashtestan. The proceeds from this sale were allocated to and fully settled the aforementioned expenses.\t\t\t\t\t\t",
-    "6. In view of the warehouse capacity constraints, daily production planning will be implemented for the AKA project. Production will proceed progressively and in accordance with the available storage capacity. The manufacturing pace will be continuously regulated to optimize inventory levels, avoid warehouse congestion, and ensure the sustainable continuation of production activities.\t\t\t\t\t\t"
+    "5. To cover the customs clearance and transportation costs of 46 HRC coils stored at customs, amounting to IRR 140 billion, a total of 82 metric tons of galvanized coils (GLC) were sold by Foolad Dashtestan. The proceeds from this sale were allocated to and fully settled the aforementioned expenses.",
+    "6. In view of the warehouse capacity constraints, daily production planning will be implemented for the AKA project. Production will proceed progressively and in accordance with the available storage capacity. The manufacturing pace will be continuously regulated to optimize inventory levels, avoid warehouse congestion, and ensure the sustainable continuation of production activities."
   ],
   "signature": {
     "role": "AKA Technical Representative",
@@ -830,10 +1031,52 @@
   },
   "projectAnalysis": "The 2,000 MT Galvanized Coil Project has achieved a strong production performance, reaching 82.5% physical completion with an overall Coil-to-Coil Yield of 96.88%, indicating efficient process control and low material losses. However, the project is currently facing a significant operational bottleneck caused by warehouse capacity constraints, with more than 1,349 tons of finished products ready for shipment and only 19.5% of total production sold to date. The imbalance between production and sales has resulted in a high inventory level and an estimated 198 days of inventory coverage, negatively affecting cash flow and limiting further production activities. Production scheduling has also deviated from the original plan, with one 500-ton milestone completed 18 days behind schedule and another 500-ton target still on hold. Furthermore, the remaining zinc inventory is sufficient for only about 614 tons of additional production, creating a medium-term supply risk if production resumes without replenishment. Therefore, the immediate strategic priority should be to accelerate product shipments, expand storage capacity, and secure additional zinc supply to eliminate operational constraints and enable the successful completion of the project.",
   "managementCommentary": {
-    "overall": "As of 2026-06-28, the project has produced 1,711.122 tons of galvanized coils out of a total 2,073.750 tons of input coils. Therefore, the physical progress of the project is 82.51%, while 362.63 tons (17.49%) of the input material has not yet been converted into finished product.\nA comparison between the production plan and actual completion indicates significant schedule deviations. The 500-ton production target planned for 2026-06-04 was completed with an 18-day delay on 2026-06-22. Additionally, the 500-ton target scheduled for 2026-06-08 remains in Hold status, resulting in at least 500 tons of production backlog.\nManagement notes highlight that the most critical project risk is the lack of warehouse capacity and storage constraints, which has directly limited galvanized production. Furthermore, the emergency sale of 82 tons of galvanized coils to finance customs clearance and transportation expenses indicates liquidity pressure and increases operational risk.",
-    "production": "The overall Coil-to-Coil Yield is 96.88%, which is considered excellent and falls within the upper range of industry standards (typically 95%–97%). This indicates that the project has maintained a relatively low overall material loss throughout the production process.\n\nThe process yields are as follows:\n\nPickling Yield: 100.00%\nRolling Yield: 81.90%\nGalvanizing Yield: 98.35%\n\nPickling and galvanizing performances are satisfactory and within acceptable limits. However, the rolling process shows the lowest yield and represents the largest source of material loss in the production chain.\n\nScrap generation amounted to 27.159 tons in the rolling line, equivalent to 1.32% of rolling production, and 28.266 tons in the galvanizing line, equivalent to 1.65% of galvanized production. Based on management observations, frequent production interruptions, warehouse limitations, and multiple order changes may have contributed to the increased scrap generation.",
-    "sales": "Total sales achieved to date, extracted from cell H10, amount to 333.826 tons, representing only 19.51% of the total galvanized production (1,711.122 tons). This indicates a relatively low conversion rate from production to sales and a significant accumulation of finished goods inventory.\n\nThe sales distribution by customer is as follows:\n\nDashtestan: 232.746 tons (69.73%)\nHirad Co.: 101.080 tons (30.27%)\n\nTherefore, Dashtestan is the largest customer, accounting for approximately 70% of total sales volume.\nThe quantity of material ready for shipment is approximately 1,349.03 tons. Assuming a minimum truck loading capacity of 25 tons per truck, approximately 54 truckloads are required to clear the existing inventory. At a loading rate of 4–5 trucks per day, the entire stock could be shipped within 11 to 14 working days.",
-    "inventory": "Work-in-Process (WIP) and inventory by production stage are as follows:\n\nUnpickled Coils: 17.75 tons\nPickled Coils: 0 tons\nRolling Stage Inventory: 344.878 tons\nGalvanized Finished Inventory: 1,320.764 tons\n\nThe total inventory and WIP amount to approximately 1,683.39 tons, which is exceptionally high compared to the sales volume achieved.\n\nThe estimated inventory turnover ratio is approximately 0.247 times, indicating very slow inventory movement. Based on the current operating period, the estimated Days Sales of Inventory (DSI) is approximately 198 days, demonstrating substantial capital tied up in inventory.\nAccording to Management Note No. 3, the warehouse has reached its capacity limit, directly affecting the continuation of galvanized production. The largest inventories are concentrated in thicknesses of 0.60 mm (323.123 tons), 0.50 mm (305.248 tons), and 0.48 mm (187.493 tons), which should be prioritized for shipment and sales.",
-    "keyNote": "There is a strong interrelationship between production, sales performance, and warehouse constraints. Although the project has achieved 82.5% physical completion, only 19.5% of production has been sold, leaving more than 1,349 tons of finished products in stock. Consequently, warehouse saturation has become the primary bottleneck preventing further production.\nThe remaining inventory of zinc and zamak is approximately 8.711 tons. Based on the current zinc consumption rate, this quantity is sufficient to produce approximately 614 tons of galvanized coils, equivalent to around 17 production days at the current average production rate. Any production restart without additional zinc procurement could result in another operational shutdown.\nThe highest-priority actions for the next 48 hours are:\nAccelerate shipment and sales of ready inventory, particularly the 0.48 mm, 0.50 mm, and 0.60 mm products.\nSecure additional warehouse capacity or transfer inventory to external storage facilities.\nArrange immediate replenishment of zinc and zamak inventories before restarting production to avoid another production interruption."
-  }
+    "overall": "As of 2026-06-28, the project has produced 1,711.122 tons of galvanized coils out of a total 2,073.750 tons of input coils. Therefore, the physical progress of the project is 82.51%, while 362.63 tons (17.49%) of the input material has not yet been converted into finished product. A comparison between the production plan and actual completion indicates significant schedule deviations. The 500-ton production target planned for 2026-06-04 was completed with an 18-day delay on 2026-06-22. Additionally, the 500-ton target scheduled for 2026-06-08 remains in Hold status, resulting in at least 500 tons of production backlog. Management notes highlight that the most critical project risk is the lack of warehouse capacity and storage constraints, which has directly limited galvanized production. Furthermore, the emergency sale of 82 tons of galvanized coils to finance customs clearance and transportation expenses indicates liquidity pressure and increases operational risk.",
+    "production": "The overall Coil-to-Coil Yield is 96.88%, which is considered excellent and falls within the upper range of industry standards (typically 95%–97%). This indicates that the project has maintained a relatively low overall material loss throughout the production process. The process yields are as follows: Pickling Yield: 100.00% Rolling Yield: 81.90% Galvanizing Yield: 98.35% Pickling and galvanizing performances are satisfactory and within acceptable limits. However, the rolling process shows the lowest yield and represents the largest source of material loss in the production chain. Scrap generation amounted to 27.159 tons in the rolling line, equivalent to 1.32% of rolling production, and 28.266 tons in the galvanizing line, equivalent to 1.65% of galvanized production. Based on management observations, frequent production interruptions, warehouse limitations, and multiple order changes may have contributed to the increased scrap generation.",
+    "sales": "Total sales achieved to date, extracted from cell H10, amount to 333.826 tons, representing only 19.51% of the total galvanized production (1,711.122 tons). This indicates a relatively low conversion rate from production to sales and a significant accumulation of finished goods inventory. The sales distribution by customer is as follows: Dashtestan: 232.746 tons (69.73%) Hirad Co.: 101.080 tons (30.27%) Therefore, Dashtestan is the largest customer, accounting for approximately 70% of total sales volume. The quantity of material ready for shipment is approximately 1,349.03 tons. Assuming a minimum truck loading capacity of 25 tons per truck, approximately 54 truckloads are required to clear the existing inventory. At a loading rate of 4–5 trucks per day, the entire stock could be shipped within 11 to 14 working days.",
+    "inventory": "Work-in-Process (WIP) and inventory by production stage are as follows: Unpickled Coils: 17.75 tons Pickled Coils: 0 tons Rolling Stage Inventory: 344.878 tons Galvanized Finished Inventory: 1,320.764 tons The total inventory and WIP amount to approximately 1,683.39 tons, which is exceptionally high compared to the sales volume achieved. The estimated inventory turnover ratio is approximately 0.247 times, indicating very slow inventory movement. Based on the current operating period, the estimated Days Sales of Inventory (DSI) is approximately 198 days, demonstrating substantial capital tied up in inventory. According to Management Note No. 3, the warehouse has reached its capacity limit, directly affecting the continuation of galvanized production. The largest inventories are concentrated in thicknesses of 0.60 mm (323.123 tons), 0.50 mm (305.248 tons), and 0.48 mm (187.493 tons), which should be prioritized for shipment and sales.",
+    "keyNote": "There is a strong interrelationship between production, sales performance, and warehouse constraints. Although the project has achieved 82.5% physical completion, only 19.5% of production has been sold, leaving more than 1,349 tons of finished products in stock. Consequently, warehouse saturation has become the primary bottleneck preventing further production. The remaining inventory of zinc and zamak is approximately 8.711 tons. Based on the current zinc consumption rate, this quantity is sufficient to produce approximately 614 tons of galvanized coils, equivalent to around 17 production days at the current average production rate. Any production restart without additional zinc procurement could result in another operational shutdown. The highest-priority actions for the next 48 hours are: Accelerate shipment and sales of ready inventory, particularly the 0.48 mm, 0.50 mm, and 0.60 mm products. Secure additional warehouse capacity or transfer inventory to external storage facilities. Arrange immediate replenishment of zinc and zamak inventories before restarting production to avoid another production interruption."
+  },
+  "coilInventory": [
+    {
+      "thickness": 0.4,
+      "width": 1000,
+      "tonnage": 27150
+    },
+    {
+      "thickness": 0.45,
+      "width": 1000,
+      "tonnage": 48525
+    },
+    {
+      "thickness": 0.48,
+      "width": 1000,
+      "tonnage": 268620
+    },
+    {
+      "thickness": 0.5,
+      "width": 1000,
+      "tonnage": 387050
+    },
+    {
+      "thickness": 0.6,
+      "width": 1000,
+      "tonnage": 272995
+    },
+    {
+      "thickness": 0.7,
+      "width": 1000,
+      "tonnage": 300105
+    },
+    {
+      "thickness": 0.8,
+      "width": 1000,
+      "tonnage": 16550
+    },
+    {
+      "thickness": 1.2,
+      "width": 1000,
+      "tonnage": 16260
+    }
+  ]
 }
