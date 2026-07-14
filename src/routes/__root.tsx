@@ -77,16 +77,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AKA PROJECT" },
-      { name: "description", content: "AKA  2000MT PROJECT REPORT" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "AKA PROJECT" },
-      { property: "og:description", content: "AKA  2000MT PROJECT REPORT" },
+      { title: "AKA Project Report" },
+      { name: "description", content: "AKA Project production, inventory and management report" },
+      { name: "author", content: "AKA" },
+      { property: "og:title", content: "AKA Project Report" },
+      { property: "og:description", content: "AKA Project production, inventory and management report" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "AKA PROJECT" },
-      { name: "twitter:description", content: "AKA  2000MT PROJECT REPORT" },
+      { name: "twitter:title", content: "AKA Project Report" },
+      { name: "twitter:description", content: "AKA Project production, inventory and management report" },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bc67bcca-945a-4f1c-9d75-f48e2a70976f/id-preview-a743b77b--e9586ada-5c98-46be-adde-e054c417f380.lovable.app-1780332470770.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bc67bcca-945a-4f1c-9d75-f48e2a70976f/id-preview-a743b77b--e9586ada-5c98-46be-adde-e054c417f380.lovable.app-1780332470770.png" },
     ],
@@ -105,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
       <head>
         <HeadContent />
       </head>
@@ -139,7 +138,7 @@ function RootComponent() {
             inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
             className="transition-colors"
           >
-            Data Transformer
+            Data Entry
           </Link>
         </div>
       </nav>
