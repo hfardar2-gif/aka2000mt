@@ -1024,7 +1024,7 @@
     },
     {
       "date": "2026-07-30",
-      "thickness": "",
+      "thickness": "0.40,0.48,0.5,07",
       "width": 1000,
       "tons": 0,
       "status": ""
