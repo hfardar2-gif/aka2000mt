@@ -436,10 +436,10 @@
     },
     {
       "date": "2027-07-14",
-      "inputTon": 2210.29,
+      "inputTon": 2484.25,
       "inputQty": 131,
-      "pickling": 0,
-      "rolling": 0,
+      "pickling": 84.8,
+      "rolling": 48.96,
       "galv": 49.85200000000009
     }
   ],
@@ -448,243 +448,243 @@
       "date": "2026-05-10",
       "inputTon": 2073.75,
       "inputQty": 425.41,
-      "pickling": 282.956,
-      "rolling": 32.925,
-      "galv": 0,
+      "pickling": 425.41,
+      "rolling": 282.956,
+      "galv": 32.925,
       "sold": 0
     },
     {
       "date": "2026-05-11",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 298.92600000000004,
-      "rolling": 129.19,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 298.92600000000004,
+      "galv": 129.19,
       "sold": 0
     },
     {
       "date": "2026-05-12",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 298.92600000000004,
-      "rolling": 129.19,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 298.92600000000004,
+      "galv": 129.19,
       "sold": 0
     },
     {
       "date": "2026-05-13",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 298.92600000000004,
-      "rolling": 129.19,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 298.92600000000004,
+      "galv": 129.19,
       "sold": 0
     },
     {
       "date": "2026-05-14",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 298.92600000000004,
-      "rolling": 129.19,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 298.92600000000004,
+      "galv": 129.19,
       "sold": 0
     },
     {
       "date": "2026-05-15",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 298.92600000000004,
-      "rolling": 129.19,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 298.92600000000004,
+      "galv": 129.19,
       "sold": 0
     },
     {
       "date": "2026-05-16",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 365.5160000000001,
-      "rolling": 205.70499999999998,
-      "galv": 0,
+      "pickling": 544.37,
+      "rolling": 365.5160000000001,
+      "galv": 205.70499999999998,
       "sold": 0
     },
     {
       "date": "2026-05-17",
       "inputTon": 2073.75,
       "inputQty": 544.37,
-      "pickling": 365.5160000000001,
-      "rolling": 263.455,
-      "galv": 150.181,
+      "pickling": 544.37,
+      "rolling": 365.5160000000001,
+      "galv": 263.455,
       "sold": 150.181
     },
     {
       "date": "2026-05-18",
       "inputTon": 2073.75,
       "inputQty": 816.5,
-      "pickling": 365.5160000000001,
-      "rolling": 263.455,
-      "galv": 202.511,
+      "pickling": 816.5,
+      "rolling": 365.5160000000001,
+      "galv": 263.455,
       "sold": 202.511
     },
     {
       "date": "2026-05-19",
       "inputTon": 2073.75,
       "inputQty": 1514.34,
-      "pickling": 365.5160000000001,
-      "rolling": 263.455,
-      "galv": 251.261,
+      "pickling": 1514.34,
+      "rolling": 365.5160000000001,
+      "galv": 263.455,
       "sold": 251.261
     },
     {
       "date": "2026-05-20",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 584.1200000000001,
-      "rolling": 263.455,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 584.1200000000001,
+      "galv": 263.455,
       "sold": 251.261
     },
     {
       "date": "2026-05-21",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 584.1200000000001,
-      "rolling": 263.455,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 584.1200000000001,
+      "galv": 263.455,
       "sold": 251.261
     },
     {
       "date": "2026-05-22",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 584.1200000000001,
-      "rolling": 263.455,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 584.1200000000001,
+      "galv": 263.455,
       "sold": 251.261
     },
     {
       "date": "2026-05-23",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 584.1200000000001,
-      "rolling": 511.975,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 584.1200000000001,
+      "galv": 511.975,
       "sold": 251.261
     },
     {
       "date": "2026-05-24",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1102.89,
-      "rolling": 795.601,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1102.89,
+      "galv": 795.601,
       "sold": 251.261
     },
     {
       "date": "2026-05-25",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1102.89,
-      "rolling": 965.821,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1102.89,
+      "galv": 965.821,
       "sold": 251.261
     },
     {
       "date": "2026-05-26",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1102.89,
-      "rolling": 1003.2180000000001,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1102.89,
+      "galv": 1003.2180000000001,
       "sold": 251.261
     },
     {
       "date": "2026-05-27",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1166.294,
-      "rolling": 1029.424,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1166.294,
+      "galv": 1029.424,
       "sold": 251.261
     },
     {
       "date": "2026-05-28",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1166.294,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1166.294,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-05-29",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1166.294,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1166.294,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-05-30",
       "inputTon": 2073.75,
       "inputQty": 1548.3799999999999,
-      "pickling": 1166.294,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 1548.3799999999999,
+      "rolling": 1166.294,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-05-31",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 1872.574,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 1872.574,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-06-01",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 1872.574,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 1872.574,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-06-02",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 1872.574,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 1872.574,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-06-03",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 1872.574,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 1872.574,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-06-04",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 1972.574,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 1972.574,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
       "date": "2026-06-05",
       "inputTon": 2073.75,
       "inputQty": 2025.877,
-      "pickling": 2023.674,
-      "rolling": 1035.386,
-      "galv": 251.261,
+      "pickling": 2025.877,
+      "rolling": 2023.674,
+      "galv": 1035.386,
       "sold": 251.261
     },
     {
@@ -692,8 +692,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -701,8 +701,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -710,8 +710,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -719,8 +719,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -728,8 +728,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -737,8 +737,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -746,8 +746,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -755,8 +755,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -764,8 +764,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -773,8 +773,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -782,8 +782,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -791,8 +791,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -800,8 +800,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -809,8 +809,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1120.257,
-      "galv": 251.261,
+      "rolling": 2051.949,
+      "galv": 1120.257,
       "sold": 251.261
     },
     {
@@ -818,8 +818,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1361.357,
-      "galv": 333.826,
+      "rolling": 2051.949,
+      "galv": 1361.357,
       "sold": 333.826
     },
     {
@@ -827,8 +827,8 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1607.137,
-      "galv": 333.826,
+      "rolling": 2051.949,
+      "galv": 1607.137,
       "sold": 333.826
     },
     {
@@ -836,26 +836,26 @@
       "inputTon": 2073.75,
       "inputQty": 2051.949,
       "pickling": 2051.949,
-      "rolling": 1656.989,
-      "galv": 333.826,
+      "rolling": 2051.949,
+      "galv": 1656.989,
       "sold": 333.826
     },
     {
       "date": "2026-07-01",
       "inputTon": 2073.75,
-      "inputQty": 2051.949,
-      "pickling": 2051.949,
-      "rolling": 1706.8410000000001,
-      "galv": 433.346,
+      "inputQty": 2136.7490000000003,
+      "pickling": 2136.7490000000003,
+      "rolling": 2100.909,
+      "galv": 1706.8410000000001,
       "sold": 433.346
     },
     {
       "date": "2026-07-14",
-      "inputTon": 2210.29,
-      "inputQty": 2051.949,
-      "pickling": 2051.949,
-      "rolling": 1706.8410000000001,
-      "galv": 433.346,
+      "inputTon": 2484.25,
+      "inputQty": 2221.5490000000004,
+      "pickling": 2221.5490000000004,
+      "rolling": 2149.869,
+      "galv": 1756.6930000000002,
       "sold": 433.346
     }
   ],
