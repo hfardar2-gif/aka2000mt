@@ -1041,42 +1041,42 @@
     {
       "thickness": 0.4,
       "width": 1000,
-      "tonnage": 27150
+      "tonnage": 27.15
     },
     {
       "thickness": 0.45,
       "width": 1000,
-      "tonnage": 48525
+      "tonnage": 48.525
     },
     {
       "thickness": 0.48,
       "width": 1000,
-      "tonnage": 268620
+      "tonnage": 268.62
     },
     {
       "thickness": 0.5,
       "width": 1000,
-      "tonnage": 387050
+      "tonnage": 387.05
     },
     {
       "thickness": 0.6,
       "width": 1000,
-      "tonnage": 272995
+      "tonnage": 272.995
     },
     {
       "thickness": 0.7,
       "width": 1000,
-      "tonnage": 300105
+      "tonnage": 300.105
     },
     {
       "thickness": 0.8,
       "width": 1000,
-      "tonnage": 16550
+      "tonnage": 16.55
     },
     {
       "thickness": 1.2,
       "width": 1000,
-      "tonnage": 16260
+      "tonnage": 16.26
     }
   ]
 }
