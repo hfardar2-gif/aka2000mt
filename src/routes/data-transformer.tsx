@@ -1,24 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import reportData from "@/data/report.json";
 
 export const Route = createFileRoute("/data-transformer")({
+  head: () => ({
+    meta: [
+      { title: "AKA Project Report — Data Entry" },
+      { name: "description", content: "Data entry and JSON export for the AKA Project Report." },
+    ],
+  }),
   component: DataTransformerPage,
 });
 
 const PASSWORD = "AKA";
-
 type AnyObj = Record<string, any>;
 
 const inputCls =
   "w-full rounded-md border border-input bg-transparent px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-ring";
 
-const parseNum = (v: string) => (v === "" ? 0 : isNaN(Number(v)) ? v : Number(v));
+const parseNum = (value: string) =>
+  value === "" ? 0 : Number.isNaN(Number(value)) ? value : Number(value);
 
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
+function Card({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
   return (
     <section className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <h2 className="text-lg font-semibold text-foreground mb-4">{title}</h2>
+      <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+      {description && <p className="mb-4 mt-1 text-xs text-muted-foreground">{description}</p>}
+      {!description && <div className="mb-4" />}
       {children}
     </section>
   );
@@ -33,15 +41,19 @@ function Field({
   label: string;
   value: any;
   type?: "text" | "number";
-  onChange: (v: any) => void;
+  onChange: (value: any) => void;
 }) {
   return (
     <label className="block">
       <span className="text-xs text-muted-foreground">{label}</span>
       <input
-        className={inputCls + " mt-1"}
+        type={type}
+        step={type === "number" ? "any" : undefined}
+        className={`${inputCls} mt-1`}
         value={value ?? ""}
-        onChange={(e) => onChange(type === "number" ? parseNum(e.target.value) : e.target.value)}
+        onChange={(event) =>
+          onChange(type === "number" ? parseNum(event.target.value) : event.target.value)
+        }
       />
     </label>
   );
@@ -56,42 +68,51 @@ function ArrayTable({
 }: {
   arr: AnyObj[];
   columns: { key: string; label: string; type?: "text" | "number" }[];
-  onUpdate: (i: number, key: string, v: any) => void;
-  onRemove: (i: number) => void;
+  onUpdate: (index: number, key: string, value: any) => void;
+  onRemove: (index: number) => void;
   onAdd: () => void;
 }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[560px] text-sm">
           <thead>
             <tr className="border-b border-border text-left text-muted-foreground">
-              {columns.map((c) => (
-                <th key={c.key} className="px-2 py-2 font-medium">
-                  {c.label}
+              {columns.map((column) => (
+                <th key={column.key} className="px-2 py-2 font-medium">
+                  {column.label}
                 </th>
               ))}
-              <th className="px-2 py-2"></th>
+              <th className="px-2 py-2 text-right font-medium">Action</th>
             </tr>
           </thead>
           <tbody>
-            {arr.map((row, i) => (
-              <tr key={i} className="border-b border-border/50">
-                {columns.map((c) => (
-                  <td key={c.key} className="px-2 py-1">
+            {arr.map((row, index) => (
+              <tr key={index} className="border-b border-border/50">
+                {columns.map((column) => (
+                  <td key={column.key} className="px-2 py-1">
                     <input
+                      type={column.type ?? "text"}
+                      step={column.type === "number" ? "any" : undefined}
                       className={inputCls}
-                      value={row[c.key] ?? ""}
-                      onChange={(e) =>
-                        onUpdate(i, c.key, c.type === "number" ? parseNum(e.target.value) : e.target.value)
+                      value={row[column.key] ?? ""}
+                      onChange={(event) =>
+                        onUpdate(
+                          index,
+                          column.key,
+                          column.type === "number"
+                            ? parseNum(event.target.value)
+                            : event.target.value,
+                        )
                       }
                     />
                   </td>
                 ))}
-                <td className="px-2 py-1">
+                <td className="px-2 py-1 text-right">
                   <button
-                    onClick={() => onRemove(i)}
-                    className="text-xs rounded-md bg-destructive text-destructive-foreground px-2 py-1 hover:bg-destructive/90"
+                    type="button"
+                    onClick={() => onRemove(index)}
+                    className="rounded-md bg-destructive px-2 py-1 text-xs text-destructive-foreground hover:bg-destructive/90"
                   >
                     Delete
                   </button>
@@ -101,9 +122,15 @@ function ArrayTable({
           </tbody>
         </table>
       </div>
+      {arr.length === 0 && (
+        <p className="rounded-md border border-dashed border-border px-3 py-3 text-xs italic text-muted-foreground">
+          No rows entered yet. Select “Add Row” to create the first record.
+        </p>
+      )}
       <button
+        type="button"
         onClick={onAdd}
-        className="text-xs rounded-md bg-secondary text-secondary-foreground px-3 py-1.5 hover:bg-secondary/80"
+        className="rounded-md bg-secondary px-3 py-1.5 text-xs text-secondary-foreground hover:bg-secondary/80"
       >
         + Add Row
       </button>
@@ -113,38 +140,48 @@ function ArrayTable({
 
 function DataTransformerPage() {
   const [authed, setAuthed] = useState(false);
-  const [pwd, setPwd] = useState("");
-  const [err, setErr] = useState("");
-  const [data, setData] = useState<AnyObj>(() => JSON.parse(JSON.stringify(reportData)));
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [data, setData] = useState<AnyObj>(() => {
+    const initial = JSON.parse(JSON.stringify(reportData)) as AnyObj;
+    initial.coilInventory = initial.coilInventory ?? [];
+    return initial;
+  });
 
   if (!authed) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="flex min-h-screen items-center justify-center bg-background p-4 text-foreground">
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (pwd === PASSWORD) {
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (password === PASSWORD) {
               setAuthed(true);
-              setErr("");
+              setError("");
             } else {
-              setErr("Incorrect password");
+              setError("Incorrect password");
             }
           }}
           className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]"
         >
-          <h1 className="text-xl font-semibold text-foreground mb-4">Data Transformer Login</h1>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+            AKA Project Report
+          </p>
+          <h1 className="mb-1 text-xl font-semibold text-foreground">Data Entry Login</h1>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Enter the password to update project report data.
+          </p>
           <input
             type="password"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
-            className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm mb-3 focus:outline-none focus:ring-1 focus:ring-ring"
+            className="mb-3 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
             autoFocus
           />
-          {err && <p className="text-xs text-destructive mb-2">{err}</p>}
+          {error && <p className="mb-2 text-xs text-destructive">{error}</p>}
           <button
             type="submit"
-            className="w-full rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium hover:bg-primary/90"
+            className="w-full rounded-md bg-primary py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             Enter
           </button>
@@ -154,96 +191,136 @@ function DataTransformerPage() {
   }
 
   const update = (path: (string | number)[], value: any) => {
-    setData((prev) => {
-      const next = JSON.parse(JSON.stringify(prev));
-      let cur: any = next;
-      for (let i = 0; i < path.length - 1; i++) cur = cur[path[i]];
-      cur[path[path.length - 1]] = value;
+    setData((previous) => {
+      const next = JSON.parse(JSON.stringify(previous));
+      let current: any = next;
+      for (let index = 0; index < path.length - 1; index += 1) {
+        current = current[path[index]];
+      }
+      current[path[path.length - 1]] = value;
       return next;
     });
   };
 
   const addRow = (key: string, template: AnyObj | string) => {
-    setData((prev) => {
-      const next = JSON.parse(JSON.stringify(prev));
-      next[key] = [...(next[key] ?? []), typeof template === "string" ? template : { ...template }];
+    setData((previous) => {
+      const next = JSON.parse(JSON.stringify(previous));
+      next[key] = [
+        ...(next[key] ?? []),
+        typeof template === "string" ? template : { ...template },
+      ];
       return next;
     });
   };
 
-  const removeRow = (key: string, idx: number) => {
-    setData((prev) => {
-      const next = JSON.parse(JSON.stringify(prev));
-      next[key] = next[key].filter((_: any, i: number) => i !== idx);
+  const removeRow = (key: string, index: number) => {
+    setData((previous) => {
+      const next = JSON.parse(JSON.stringify(previous));
+      next[key] = (next[key] ?? []).filter((_: unknown, rowIndex: number) => rowIndex !== index);
       return next;
     });
   };
 
   const handleExport = () => {
     const today = new Date().toISOString().slice(0, 10);
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `report-export-${today}.json`;
-    a.click();
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `report-export-${today}.json`;
+    anchor.click();
     URL.revokeObjectURL(url);
   };
 
   const renderArray = (
-    arrKey: string,
+    arrayKey: string,
     columns: { key: string; label: string; type?: "text" | "number" }[],
     template: AnyObj,
   ) => (
     <ArrayTable
-      arr={(data[arrKey] ?? []) as AnyObj[]}
+      arr={(data[arrayKey] ?? []) as AnyObj[]}
       columns={columns}
-      onUpdate={(i, key, v) => update([arrKey, i, key], v)}
-      onRemove={(i) => removeRow(arrKey, i)}
-      onAdd={() => addRow(arrKey, template)}
+      onUpdate={(index, key, value) => update([arrayKey, index, key], value)}
+      onRemove={(index) => removeRow(arrayKey, index)}
+      onAdd={() => addRow(arrayKey, template)}
     />
   );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl p-6 space-y-6">
-        <header className="flex items-center justify-between">
+      <div className="mx-auto max-w-6xl space-y-6 p-6">
+        <header className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold">Data Transformer</h1>
-            <p className="text-sm text-muted-foreground">Edit all report fields and export as JSON.</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+              AKA Project Report
+            </p>
+            <h1 className="text-2xl font-semibold">Data Entry</h1>
+            <p className="text-sm text-muted-foreground">
+              Edit report fields and export the completed data as JSON.
+            </p>
           </div>
           <button
+            type="button"
             onClick={handleExport}
-            className="rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm font-medium hover:bg-primary/90"
+            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            تایید نهایی و ذخیره JSON
+            Final Approval & Export JSON
           </button>
         </header>
 
         <Card title="Meta">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Report Date" value={data.reportDate} onChange={(v) => update(["reportDate"], v)} />
-            <Field label="Version" value={data.version} onChange={(v) => update(["version"], v)} />
-            <Field label="Zinc Purchased" value={data.zincPurchased} type="number" onChange={(v) => update(["zincPurchased"], v)} />
-            <Field label="Zinc Remaining" value={data.zincRemaining} type="number" onChange={(v) => update(["zincRemaining"], v)} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Field label="Report Date" value={data.reportDate} onChange={(value) => update(["reportDate"], value)} />
+            <Field label="Version" value={data.version} onChange={(value) => update(["version"], value)} />
+            <Field label="Zinc Purchased" value={data.zincPurchased} type="number" onChange={(value) => update(["zincPurchased"], value)} />
+            <Field label="Zinc Remaining" value={data.zincRemaining} type="number" onChange={(value) => update(["zincRemaining"], value)} />
           </div>
         </Card>
 
         {data.totals && (
-          <Card title="Totals">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {Object.entries(data.totals).map(([k, v]) => (
-                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["totals", k], val)} />
+          <Card title="Totals" description="Includes input coil tonnage and input coil count used by the main dashboard cards.">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+              {Object.entries(data.totals).map(([key, value]) => (
+                <Field
+                  key={key}
+                  label={key}
+                  value={value}
+                  type="number"
+                  onChange={(nextValue) => update(["totals", key], nextValue)}
+                />
               ))}
             </div>
           </Card>
         )}
 
+        <Card
+          title="Coil Inventory"
+          description="Enter available coil stock by thickness, width and available tonnage. This table is shown as “Coil Inventory” on the dashboard."
+        >
+          {renderArray(
+            "coilInventory",
+            [
+              { key: "thickness", label: "Thickness (mm)", type: "number" },
+              { key: "width", label: "Width (mm)", type: "number" },
+              { key: "tonnage", label: "Available Tonnage", type: "number" },
+            ],
+            { thickness: 0, width: 1000, tonnage: 0 },
+          )}
+        </Card>
+
         {data.transport && (
           <Card title="Transport">
             <div className="grid grid-cols-2 gap-4">
-              {Object.entries(data.transport).map(([k, v]) => (
-                <Field key={k} label={k} value={v} type="number" onChange={(val) => update(["transport", k], val)} />
+              {Object.entries(data.transport).map(([key, value]) => (
+                <Field
+                  key={key}
+                  label={key}
+                  value={value}
+                  type="number"
+                  onChange={(nextValue) => update(["transport", key], nextValue)}
+                />
               ))}
             </div>
           </Card>
@@ -251,9 +328,14 @@ function DataTransformerPage() {
 
         {data.signature && (
           <Card title="Signature">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {Object.entries(data.signature).map(([k, v]) => (
-                <Field key={k} label={k} value={v} onChange={(val) => update(["signature", k], val)} />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {Object.entries(data.signature).map(([key, value]) => (
+                <Field
+                  key={key}
+                  label={key}
+                  value={value}
+                  onChange={(nextValue) => update(["signature", key], nextValue)}
+                />
               ))}
             </div>
           </Card>
@@ -262,35 +344,34 @@ function DataTransformerPage() {
         <Card title="Project Analysis">
           <label className="block">
             <span className="text-xs text-muted-foreground">
-              Project analysis (shown in the Project Analysis modal on the dashboard)
+              Project analysis shown in the dashboard modal
             </span>
             <textarea
-              className={inputCls + " mt-1 min-h-[160px] font-mono text-xs leading-relaxed"}
+              className={`${inputCls} mt-1 min-h-[160px] font-mono text-xs leading-relaxed`}
               value={data.projectAnalysis ?? ""}
-              onChange={(e) => update(["projectAnalysis"], e.target.value)}
-              placeholder="Enter 5–10 lines of project analysis…"
+              onChange={(event) => update(["projectAnalysis"], event.target.value)}
+              placeholder="Enter the project analysis…"
             />
           </label>
         </Card>
 
         <Card title="Management Commentary">
           <div className="grid grid-cols-1 gap-4">
-            {([
+            {[
               ["overall", "Overall Project Status"],
               ["production", "Production Status"],
               ["sales", "Sales Status"],
               ["inventory", "Inventory Status"],
               ["keyNote", "Key Management Note"],
-            ] as const).map(([k, label]) => (
-              <label key={k} className="block">
+            ].map(([key, label]) => (
+              <label key={key} className="block">
                 <span className="text-xs text-muted-foreground">{label}</span>
                 <textarea
-                  className={inputCls + " mt-1 min-h-[80px] text-sm leading-relaxed"}
-                  value={(data.managementCommentary?.[k] as string) ?? ""}
-                  onChange={(e) =>
-                    update(["managementCommentary", k], e.target.value)
+                  className={`${inputCls} mt-1 min-h-[80px] text-sm leading-relaxed`}
+                  value={data.managementCommentary?.[key] ?? ""}
+                  onChange={(event) =>
+                    update(["managementCommentary", key], event.target.value)
                   }
-                  placeholder="1–3 short sentences…"
                 />
               </label>
             ))}
@@ -298,47 +379,69 @@ function DataTransformerPage() {
         </Card>
 
         <Card title="Warehouse">
-          {renderArray("warehouse", [
+          {renderArray(
+            "warehouse",
+            [
               { key: "name", label: "Name" },
               { key: "ton", label: "Ton", type: "number" },
-            ], { name: "", ton: 0 })}
+            ],
+            { name: "", ton: 0 },
+          )}
         </Card>
 
         <Card title="Scrap">
-          {renderArray("scrap", [
+          {renderArray(
+            "scrap",
+            [
               { key: "line", label: "Line" },
               { key: "ton", label: "Ton", type: "number" },
-            ], { line: "", ton: 0 })}
+            ],
+            { line: "", ton: 0 },
+          )}
         </Card>
 
         <Card title="Material Balance">
-          {renderArray("materialBalance", [
+          {renderArray(
+            "materialBalance",
+            [
               { key: "k", label: "Key" },
               { key: "v", label: "Value", type: "number" },
-            ], { k: "", v: 0 })}
+            ],
+            { k: "", v: 0 },
+          )}
         </Card>
 
         <Card title="Yields">
-          {renderArray("yields", [
+          {renderArray(
+            "yields",
+            [
               { key: "process", label: "Process" },
               { key: "formula", label: "Formula" },
               { key: "value", label: "Value", type: "number" },
-            ], { process: "", formula: "", value: 0 })}
+            ],
+            { process: "", formula: "", value: 0 },
+          )}
         </Card>
 
         <Card title="Daily">
-          {renderArray("daily", [
+          {renderArray(
+            "daily",
+            [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
               { key: "pickling", label: "Pickling", type: "number" },
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
-            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 })}
+            ],
+            { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0 },
+          )}
         </Card>
 
         <Card title="Cumulative">
-          {renderArray("cumulative", [
+          {renderArray(
+            "cumulative",
+            [
               { key: "date", label: "Date" },
               { key: "inputTon", label: "Input Ton", type: "number" },
               { key: "inputQty", label: "Input Qty", type: "number" },
@@ -346,56 +449,82 @@ function DataTransformerPage() {
               { key: "rolling", label: "Rolling", type: "number" },
               { key: "galv", label: "Galv", type: "number" },
               { key: "sold", label: "Sold", type: "number" },
-            ], { date: "", inputTon: 0, inputQty: 0, pickling: 0, rolling: 0, galv: 0, sold: 0 })}
+            ],
+            {
+              date: "",
+              inputTon: 0,
+              inputQty: 0,
+              pickling: 0,
+              rolling: 0,
+              galv: 0,
+              sold: 0,
+            },
+          )}
         </Card>
 
         <Card title="Coating">
-          {renderArray("coating", [
+          {renderArray(
+            "coating",
+            [
               { key: "thickness", label: "Thickness", type: "number" },
               { key: "width", label: "Width", type: "number" },
               { key: "weight", label: "Weight", type: "number" },
               { key: "theoZn", label: "Theo Zn", type: "number" },
               { key: "dross", label: "Dross", type: "number" },
               { key: "actual", label: "Actual", type: "number" },
-            ], { thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 })}
+            ],
+            { thickness: 0, width: 1000, weight: 0, theoZn: 0, dross: 0, actual: 0 },
+          )}
         </Card>
 
         <Card title="Sales">
-          {renderArray("sales", [
+          {renderArray(
+            "sales",
+            [
               { key: "date", label: "Date" },
               { key: "buyer", label: "Buyer" },
               { key: "tonnage", label: "Tonnage", type: "number" },
               { key: "amount", label: "Amount", type: "number" },
-            ], { date: "", buyer: "", tonnage: 0, amount: 0 })}
+            ],
+            { date: "", buyer: "", tonnage: 0, amount: 0 },
+          )}
         </Card>
 
         <Card title="Plan">
-          {renderArray("plan", [
+          {renderArray(
+            "plan",
+            [
               { key: "date", label: "Date" },
               { key: "thickness", label: "Thickness" },
               { key: "width", label: "Width", type: "number" },
               { key: "tons", label: "Tons", type: "number" },
               { key: "status", label: "Status" },
-            ], { date: "", thickness: "", width: 1000, tons: 0, status: "" })}
+            ],
+            { date: "", thickness: "", width: 1000, tons: 0, status: "" },
+          )}
         </Card>
 
         <Card title="Notes">
           <div className="space-y-2">
-            {(data.notes ?? []).map((n: any, i: number) => {
-              const isObj = typeof n === "object" && n !== null;
-              const val = isObj ? n.note ?? "" : n;
+            {(data.notes ?? []).map((note: any, index: number) => {
+              const isObject = typeof note === "object" && note !== null;
+              const value = isObject ? note.note ?? "" : note;
               return (
-                <div key={i} className="flex gap-2">
+                <div key={index} className="flex gap-2">
                   <input
                     className={inputCls}
-                    value={val}
-                    onChange={(e) =>
-                      update(["notes", i], isObj ? { ...n, note: e.target.value } : e.target.value)
+                    value={value}
+                    onChange={(event) =>
+                      update(
+                        ["notes", index],
+                        isObject ? { ...note, note: event.target.value } : event.target.value,
+                      )
                     }
                   />
                   <button
-                    onClick={() => removeRow("notes", i)}
-                    className="text-xs rounded-md bg-destructive text-destructive-foreground px-2 py-1 hover:bg-destructive/90"
+                    type="button"
+                    onClick={() => removeRow("notes", index)}
+                    className="rounded-md bg-destructive px-2 py-1 text-xs text-destructive-foreground hover:bg-destructive/90"
                   >
                     Delete
                   </button>
@@ -403,8 +532,9 @@ function DataTransformerPage() {
               );
             })}
             <button
+              type="button"
               onClick={() => addRow("notes", "")}
-              className="text-xs rounded-md bg-secondary text-secondary-foreground px-3 py-1.5 hover:bg-secondary/80"
+              className="rounded-md bg-secondary px-3 py-1.5 text-xs text-secondary-foreground hover:bg-secondary/80"
             >
               + Add Note
             </button>
@@ -413,10 +543,11 @@ function DataTransformerPage() {
 
         <div className="flex justify-end pt-4">
           <button
+            type="button"
             onClick={handleExport}
-            className="rounded-md bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary/90"
+            className="rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            تایید نهایی و ذخیره JSON
+            Final Approval & Export JSON
           </button>
         </div>
       </div>
