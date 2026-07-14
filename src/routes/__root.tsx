@@ -140,6 +140,14 @@ function RootComponent() {
           >
             Data Entry
           </Link>
+          <Link
+            to="/report-publisher"
+            activeProps={{ className: "text-primary font-semibold" }}
+            inactiveProps={{ className: "text-muted-foreground hover:text-foreground" }}
+            className="transition-colors"
+          >
+            Excel Deploy
+          </Link>
         </div>
       </nav>
       <Outlet />
