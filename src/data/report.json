@@ -12,15 +12,15 @@
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 325.6999999999998
+      "ton": 0
     },
     {
       "name": "Pickled",
-      "ton": 57.641000000000076
+      "ton": 391.08
     },
     {
       "name": "Rolled",
-      "ton": 167.705
+      "ton": 184.003
     },
     {
       "name": "Galvanied",
