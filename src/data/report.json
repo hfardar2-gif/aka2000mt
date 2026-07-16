@@ -967,6 +967,12 @@
       "buyer": "Hoshmand glv.",
       "tonnage": 99.52,
       "amount": 136341902400
+    },
+    {
+      "date": "2026-07-14",
+      "buyer": "Dashtestan",
+      "tonnage": 320,
+      "amount": 0
     }
   ],
   "transport": {
