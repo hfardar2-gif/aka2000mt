@@ -427,7 +427,7 @@
       "galv": 245.78
     },
     {
-      "date": "2027-06-27",
+      "date": "2026-06-27",
       "inputTon": 2073.75,
       "inputQty": 121,
       "pickling": 0,
@@ -435,12 +435,20 @@
       "galv": 49.85200000000009
     },
     {
-      "date": "2027-07-14",
+      "date": "2026-07-14",
       "inputTon": 2484.25,
       "inputQty": 131,
       "pickling": 84.8,
       "rolling": 75655,
       "galv": 49.85200000000009
+    },
+    {
+      "date": "2026-07-15",
+      "inputTon": 0,
+      "inputQty": 0,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0
     }
   ],
   "cumulative": [
