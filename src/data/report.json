@@ -446,9 +446,9 @@
       "date": "2026-07-15",
       "inputTon": 2706.1,
       "inputQty": 158,
-      "pickling": 0,
-      "rolling": 0,
-      "galv": 0
+      "pickling": 107,
+      "rolling": 68,
+      "galv": 58
     }
   ],
   "cumulative": [
@@ -865,6 +865,15 @@
       "rolling": 153361.949,
       "galv": 1756.6930000000002,
       "sold": 754.196
+    },
+    {
+      "date": "2026-07-16",
+      "inputTon": 2706.1,
+      "inputQty": 27,
+      "pickling": 0,
+      "rolling": 0,
+      "galv": 0,
+      "sold": 0
     }
   ],
   "coating": [
