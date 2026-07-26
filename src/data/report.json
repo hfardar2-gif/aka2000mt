@@ -967,6 +967,18 @@
       "buyer": "Hoshmand glv.",
       "tonnage": 99.52,
       "amount": 136341902400
+    },
+    {
+      "date": "2026-07-14",
+      "buyer": "Dashtestan",
+      "tonnage": 331.16,
+      "amount": 500993175000
+    },
+    {
+      "date": "2026-07-26",
+      "buyer": "Tehran Galv.",
+      "tonnage": 284,
+      "amount": 459165157000
     }
   ],
   "transport": {
@@ -1014,7 +1026,14 @@
       "thickness": "0.40,0.48,0.5,07",
       "width": 1000,
       "tons": 500,
-      "status": "Hold ( Item 6 note)"
+      "status": "Complete at 2026-07-10"
+    },
+    {
+      "date": "2026-07-30",
+      "thickness": "0.40,0.48,0.5,08",
+      "width": 1000,
+      "tons": 826,
+      "status": "Progress"
     }
   ],
   "notes": [
@@ -1023,7 +1042,8 @@
     "3.Because the warehouse inventory for our products is full, the production plan has been affected. If the warehouse is cleared to any extent, galvanized production will be carried out.\"",
     "4.Following extensive discussions, repeated follow-ups, and the strict requirement to segregate our production coils, a dedicated section of the cutting production hall has been officially designated as the exclusive storage warehouse for AKA Company's production coils.",
     "5. To cover the customs clearance and transportation costs of 46 HRC coils stored at customs, amounting to IRR 140 billion, a total of 82 metric tons of galvanized coils (GLC) were sold by Foolad Dashtestan. The proceeds from this sale were allocated to and fully settled the aforementioned expenses.",
-    "6. In view of the warehouse capacity constraints, daily production planning will be implemented for the AKA project. Production will proceed progressively and in accordance with the available storage capacity. The manufacturing pace will be continuously regulated to optimize inventory levels, avoid warehouse congestion, and ensure the sustainable continuation of production activities."
+    "6. In view of the warehouse capacity constraints, daily production planning will be implemented for the AKA project. Production will proceed progressively and in accordance with the available storage capacity. The manufacturing pace will be continuously regulated to optimize inventory levels, avoid warehouse congestion, and ensure the sustainable continuation of production activities.",
+    "7.In accordance with the issued sales proforma invoice, a quantity of 284 metric tons has been reserved for Tehran Galvanize Company and is currently ready to ship. Shipment will proceed upon receipt of payment. Please kindly note that the exact consignment weight is considered provisional until the loading and weighbridge verification are fully completed. The final, accurate figures will be substituted and confirmed immediately upon the conclusion of the loading process."
   ],
   "signature": {
     "role": "AKA Technical Representative",
