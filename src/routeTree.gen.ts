@@ -9,48 +9,101 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as DataTransformerRouteImport } from './routes/data-transformer'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DataTransformerRouteImport } from './routes/data-transformer'
+import { Route as ReportPublisherRouteImport } from './routes/report-publisher'
+import { Route as ApiPublishReportRouteImport } from './routes/api/publish-report'
+import { Route as ApiReportDataRouteImport } from './routes/api/report-data'
 
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DataTransformerRoute = DataTransformerRouteImport.update({
   id: '/data-transformer',
   path: '/data-transformer',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ReportPublisherRoute = ReportPublisherRouteImport.update({
+  id: '/report-publisher',
+  path: '/report-publisher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublishReportRoute = ApiPublishReportRouteImport.update({
+  id: '/api/publish-report',
+  path: '/api/publish-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiReportDataRoute = ApiReportDataRouteImport.update({
+  id: '/api/report-data',
+  path: '/api/report-data',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/report-publisher': typeof ReportPublisherRoute
+  '/api/publish-report': typeof ApiPublishReportRoute
+  '/api/report-data': typeof ApiReportDataRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/report-publisher': typeof ReportPublisherRoute
+  '/api/publish-report': typeof ApiPublishReportRoute
+  '/api/report-data': typeof ApiReportDataRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/data-transformer': typeof DataTransformerRoute
+  '/report-publisher': typeof ReportPublisherRoute
+  '/api/publish-report': typeof ApiPublishReportRoute
+  '/api/report-data': typeof ApiReportDataRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/data-transformer'
+  fullPaths:
+    | '/'
+    | '/data-transformer'
+    | '/report-publisher'
+    | '/api/publish-report'
+    | '/api/report-data'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/data-transformer'
-  id: '__root__' | '/' | '/data-transformer'
+  to:
+    | '/'
+    | '/data-transformer'
+    | '/report-publisher'
+    | '/api/publish-report'
+    | '/api/report-data'
+  id:
+    | '__root__'
+    | '/'
+    | '/data-transformer'
+    | '/report-publisher'
+    | '/api/publish-report'
+    | '/api/report-data'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DataTransformerRoute: typeof DataTransformerRoute
+  ReportPublisherRoute: typeof ReportPublisherRoute
+  ApiPublishReportRoute: typeof ApiPublishReportRoute
+  ApiReportDataRoute: typeof ApiReportDataRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/data-transformer': {
       id: '/data-transformer'
       path: '/data-transformer'
@@ -58,11 +111,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DataTransformerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/report-publisher': {
+      id: '/report-publisher'
+      path: '/report-publisher'
+      fullPath: '/report-publisher'
+      preLoaderRoute: typeof ReportPublisherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/publish-report': {
+      id: '/api/publish-report'
+      path: '/api/publish-report'
+      fullPath: '/api/publish-report'
+      preLoaderRoute: typeof ApiPublishReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/report-data': {
+      id: '/api/report-data'
+      path: '/api/report-data'
+      fullPath: '/api/report-data'
+      preLoaderRoute: typeof ApiReportDataRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -71,7 +138,20 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DataTransformerRoute: DataTransformerRoute,
+  ReportPublisherRoute: ReportPublisherRoute,
+  ApiPublishReportRoute: ApiPublishReportRoute,
+  ApiReportDataRoute: ApiReportDataRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
