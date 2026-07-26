@@ -14,6 +14,7 @@ type AnyObj = Record<string, any>;
 type FieldType = "text" | "number";
 type Tone = "info" | "success" | "error";
 type Message = { tone: Tone; text: string };
+type ContentLang = "en" | "fa" | "zh";
 type ColumnDefinition = { key: string; label: string; type?: FieldType };
 type ArraySection = {
   key: string;
@@ -55,6 +56,24 @@ const statusClasses: Record<Tone, string> = {
 
 const parseNum = (value: string) =>
   value === "" ? 0 : Number.isNaN(Number(value)) ? value : Number(value);
+
+const CONTENT_LANGUAGES: Array<{ code: ContentLang; label: string; dir: "ltr" | "rtl" }> = [
+  { code: "en", label: "English", dir: "ltr" },
+  { code: "fa", label: "فارسی", dir: "rtl" },
+  { code: "zh", label: "中文", dir: "ltr" },
+];
+
+const localizedValue = (value: unknown, lang: ContentLang) => {
+  if (typeof value === "string") return lang === "en" ? value : "";
+  if (!value || typeof value !== "object") return "";
+  const selected = (value as Record<string, unknown>)[lang];
+  return typeof selected === "string" ? selected : "";
+};
+
+const withLocalizedValue = (value: unknown, lang: ContentLang, text: string) => ({
+  ...(typeof value === "string" ? { en: value } : value && typeof value === "object" ? value : {}),
+  [lang]: text,
+});
 
 const cloneReport = () => {
   const initial = JSON.parse(JSON.stringify(reportData)) as AnyObj;
@@ -699,24 +718,54 @@ function DataTransformerPage() {
         )}
 
         <Card title="Project Analysis">
-          <textarea
-            className={`${inputCls} min-h-[160px] font-mono text-xs leading-relaxed`}
-            value={data.projectAnalysis ?? ""}
-            onChange={(event) => update(["projectAnalysis"], event.target.value)}
-          />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+            {CONTENT_LANGUAGES.map(({ code, label, dir }) => (
+              <label key={code} className="block">
+                <span className="text-xs text-muted-foreground">{label}</span>
+                <textarea
+                  dir={dir}
+                  className={`${inputCls} mt-1 min-h-[180px] text-sm leading-relaxed`}
+                  value={localizedValue(data.projectAnalysis, code)}
+                  onChange={(event) =>
+                    update(
+                      ["projectAnalysis"],
+                      withLocalizedValue(data.projectAnalysis, code, event.target.value),
+                    )
+                  }
+                />
+              </label>
+            ))}
+          </div>
         </Card>
 
         <Card title="Management Commentary">
-          <div className="grid grid-cols-1 gap-4">
+          <div className="space-y-5">
             {MANAGEMENT_SECTIONS.map(([key, label]) => (
-              <label key={key} className="block">
-                <span className="text-xs text-muted-foreground">{label}</span>
-                <textarea
-                  className={`${inputCls} mt-1 min-h-[80px] text-sm leading-relaxed`}
-                  value={data.managementCommentary?.[key] ?? ""}
-                  onChange={(event) => update(["managementCommentary", key], event.target.value)}
-                />
-              </label>
+              <div key={key}>
+                <p className="mb-2 text-sm font-medium">{label}</p>
+                <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+                  {CONTENT_LANGUAGES.map(({ code, label: languageLabel, dir }) => (
+                    <label key={code} className="block">
+                      <span className="text-xs text-muted-foreground">{languageLabel}</span>
+                      <textarea
+                        dir={dir}
+                        className={`${inputCls} mt-1 min-h-[110px] text-sm leading-relaxed`}
+                        value={localizedValue(data.managementCommentary?.[key], code)}
+                        onChange={(event) =>
+                          update(
+                            ["managementCommentary", key],
+                            withLocalizedValue(
+                              data.managementCommentary?.[key],
+                              code,
+                              event.target.value,
+                            ),
+                          )
+                        }
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </Card>
