@@ -72,6 +72,43 @@ type CoilInventoryRow = {
   width: number | string;
   tonnage: number;
 };
+type LocalizedText = string | Partial<Record<Lang, string>> & { note?: string };
+
+const localizedText = (value: unknown, lang: Lang) => {
+  if (typeof value === "string") return value;
+  if (!value || typeof value !== "object") return "";
+
+  const text = value as Partial<Record<Lang, unknown>> & { note?: unknown };
+  const selected = text[lang];
+  const fallback = text.en ?? text.fa ?? text.zh ?? text.note;
+  return typeof selected === "string" ? selected : typeof fallback === "string" ? fallback : "";
+};
+
+const noteTranslations: Record<Exclude<Lang, "en">, string[]> = {
+  fa: [
+    "۱. هر کویل گالوانیزهٔ تولیدشده، بلافاصله در برنامهٔ فروش و ارسال قرار می‌گیرد.",
+    "۲. هزینهٔ بارنامه‌های حمل از بندر تا کارخانه، بهای روی و زاماک، هزینهٔ ۲٫۵ درصدی انبار متروکه و باقی‌ماندهٔ حق‌العمل ترخیص‌کار، در برابر فاکتورهای رسمی و از محل فروش ۱۵۰ تن محصول گالوانیزه (HDG) توسط فولاد دشتستان تسویه خواهد شد. برای جزئیات به جدول گزارش فروش مورخ ۲۰۲۶-۰۵-۱۷ مراجعه شود.",
+    "۳. به‌علت تکمیل ظرفیت انبار محصولات، برنامهٔ تولید تحت تأثیر قرار گرفته است. با آزادشدن هر میزان از فضای انبار، تولید گالوانیزه از سر گرفته خواهد شد.",
+    "۴. پس از گفت‌وگوهای گسترده، پیگیری‌های مکرر و تأکید بر جداسازی کویل‌های تولیدی ما، بخشی اختصاصی از سالن تولید برش رسماً به‌عنوان انبار ویژهٔ کویل‌های تولیدی شرکت آکا تعیین شد.",
+    "۵. برای تأمین ۱۴۰ میلیارد ریال هزینهٔ ترخیص و حمل ۴۶ کویل HRC موجود در گمرک، فولاد دشتستان در مجموع ۸۲ تن کویل گالوانیزه (GLC) فروخت و درآمد حاصل را به‌طور کامل صرف تسویهٔ هزینه‌های یادشده کرد.",
+    "۶. با توجه به محدودیت ظرفیت انبار، برنامه‌ریزی تولید پروژهٔ آکا به‌صورت روزانه انجام می‌شود. تولید متناسب با فضای موجود، مرحله‌به‌مرحله پیش خواهد رفت و سرعت آن برای بهینه‌سازی موجودی، جلوگیری از ازدحام انبار و تداوم پایدار فعالیت‌های تولیدی پیوسته تنظیم خواهد شد.",
+    "۷. مطابق پیش‌فاکتور فروش صادرشده، ۲۸۴ تن محصول برای شرکت گالوانیزه تهران رزرو و آمادهٔ ارسال است. ارسال پس از دریافت وجه انجام می‌شود. وزن دقیق محموله تا پایان بارگیری و تأیید باسکول، موقت تلقی می‌شود و ارقام نهایی بلافاصله پس از اتمام بارگیری ثبت و تأیید خواهد شد.",
+  ],
+  zh: [
+    "1. 每卷生产完成的镀锌卷都会立即纳入销售和发运计划。",
+    "2. 从港口到工厂的运输单费用、锌和扎马克合金费用、2.5%的弃置仓储费以及剩余报关代理费，将依据正式发票，通过Foolad Dashtestan销售150公吨镀锌产品（HDG）的款项结算。详情请参阅2026-05-17销售报告表。",
+    "3. 由于产品仓库已满，生产计划受到影响。仓库一旦腾出任何空间，即恢复镀锌生产。",
+    "4. 经过充分协商、多次跟进，并严格要求将我方生产卷材分区存放后，切割生产车间内的一处专用区域已正式划定为AKA公司生产卷材的独立仓库。",
+    "5. 为支付海关存放的46卷HRC卷材所产生的报关及运输费用（共计1,400亿里亚尔），Foolad Dashtestan销售了82公吨镀锌卷（GLC）；销售收入已全部用于结清上述费用。",
+    "6. 鉴于仓储容量受限，AKA项目将实行每日生产计划。生产将根据可用仓储空间逐步推进，并持续调节生产节奏，以优化库存、避免仓库拥堵并确保生产活动持续稳定。",
+    "7. 根据已开具的销售形式发票，284公吨产品已为Tehran Galvanize Company预留并可随时发运。收到货款后安排发运。在装货及地磅核验全部完成前，准确货重均为暂定值；装货结束后将立即更新并确认最终数据。",
+  ],
+};
+
+const noteText = (value: LocalizedText, index: number, lang: Lang) => {
+  if (typeof value !== "string") return localizedText(value, lang);
+  return lang === "en" ? value : noteTranslations[lang][index] ?? value;
+};
 
 const translations: Record<string, Record<Lang, string>> = {
   badge: { en: "Management Report", zh: "管理报告", fa: "گزارش مدیریتی" },
@@ -374,7 +411,7 @@ function Index() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl space-y-8 px-6 py-10">
+      <main className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-10">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 xl:grid-cols-7">
           <StatCard label={tr("inputCoils")} value={fmt(totals.inputCoilsTon, 0)} unit={tr("ton")} />
           <StatCard label={tr("inputCoilCount")} value={fmt0(totals.inputCoilsQty)} unit={tr("coils")} accent="accent" />
@@ -497,6 +534,33 @@ function Index() {
           </div>
         </Section>
 
+        <Section title={tr("plan")} subtitle={tr("planSub")}>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[680px] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="py-3 pr-4 font-medium">{tr("date")}</th>
+                  <th className="py-3 pr-4 font-medium">{tr("thickness")}</th>
+                  <th className="py-3 pr-4 font-medium">{tr("width")}</th>
+                  <th className="py-3 pr-4 text-right font-medium">{tr("tons")}</th>
+                  <th className="py-3 font-medium">{tr("status")}</th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {report.plan.map((item, index) => (
+                  <tr key={index} className="border-b border-border/60 hover:bg-secondary/30">
+                    <td className="py-3 pr-4 font-medium">{item.date}</td>
+                    <td className="py-3 pr-4 text-muted-foreground">{item.thickness}</td>
+                    <td className="py-3 pr-4 text-muted-foreground">{item.width}</td>
+                    <td className="py-3 pr-4 text-right font-semibold">{item.tons}</td>
+                    <td className="py-3 text-muted-foreground">{dt(item.status || "Scheduled", lang)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
         <div className="grid gap-6 lg:grid-cols-3">
           <Section title={tr("warehouse")} subtitle={tr("warehouseSub")}>
             <ul className="space-y-3">
@@ -546,6 +610,7 @@ function Index() {
           </Section>
         </div>
 
+        <div className="order-1">
         <Section title={tr("coating")} subtitle={tr("coatingSub")}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[700px] text-sm">
@@ -611,6 +676,7 @@ function Index() {
             </div>
           </div>
         </Section>
+        </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
@@ -648,33 +714,7 @@ function Index() {
           </Section>
         </div>
 
-        <Section title={tr("plan")} subtitle={tr("planSub")}>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[680px] text-sm">
-              <thead>
-                <tr className="border-b border-border text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="py-3 pr-4 font-medium">{tr("date")}</th>
-                  <th className="py-3 pr-4 font-medium">{tr("thickness")}</th>
-                  <th className="py-3 pr-4 font-medium">{tr("width")}</th>
-                  <th className="py-3 pr-4 text-right font-medium">{tr("tons")}</th>
-                  <th className="py-3 font-medium">{tr("status")}</th>
-                </tr>
-              </thead>
-              <tbody className="tabular-nums">
-                {report.plan.map((item, index) => (
-                  <tr key={index} className="border-b border-border/60 hover:bg-secondary/30">
-                    <td className="py-3 pr-4 font-medium">{item.date}</td>
-                    <td className="py-3 pr-4 text-muted-foreground">{item.thickness}</td>
-                    <td className="py-3 pr-4 text-muted-foreground">{item.width}</td>
-                    <td className="py-3 pr-4 text-right font-semibold">{item.tons}</td>
-                    <td className="py-3 text-muted-foreground">{item.status || tr("scheduled")}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Section>
-
+        <div className="order-2">
         <Section title={tr("notes")} subtitle={tr("notesSub")}>
           <ol className="space-y-3 text-sm">
             {report.notes.map((note, index) => (
@@ -682,13 +722,14 @@ function Index() {
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 text-[10px] font-semibold text-primary">
                   {index + 1}
                 </span>
-                <span className="text-muted-foreground">{typeof note === "string" ? note : (note as { note?: string }).note ?? ""}</span>
+                <span className="text-muted-foreground">{noteText(note as LocalizedText, index, lang)}</span>
               </li>
             ))}
           </ol>
         </Section>
+        </div>
 
-        <footer className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card px-6 py-5 text-sm">
+        <footer className="order-3 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-card px-6 py-5 text-sm">
           <p className="text-muted-foreground">{tr("copyright")}</p>
           <div className={lang === "fa" ? "text-left" : "text-right"}>
             <p className="text-xs uppercase tracking-wider text-muted-foreground">{dt(report.signature.role, lang)}</p>
@@ -699,9 +740,9 @@ function Index() {
 
       {showAnalysis && (
         <Modal title={tr("projectAnalysis")} onClose={() => setShowAnalysis(false)} closeLabel={tr("close")}>
-          {String((report as unknown as Record<string, unknown>).projectAnalysis ?? "").trim() ? (
+          {localizedText((report as unknown as Record<string, unknown>).projectAnalysis, lang).trim() ? (
             <div className="whitespace-pre-wrap text-sm leading-relaxed">
-              {String((report as unknown as Record<string, unknown>).projectAnalysis)}
+              {localizedText((report as unknown as Record<string, unknown>).projectAnalysis, lang)}
             </div>
           ) : (
             <p className="text-sm italic text-muted-foreground">{tr("noAnalysis")}</p>
@@ -711,7 +752,7 @@ function Index() {
 
       {showCommentary && (
         <Modal title={tr("mgmtCommentary")} onClose={() => setShowCommentary(false)} closeLabel={tr("close")}>
-          <ManagementCommentary tr={tr} />
+          <ManagementCommentary tr={tr} lang={lang} />
         </Modal>
       )}
     </div>
@@ -734,8 +775,8 @@ function SummaryValue({ label, value, highlight = false }: { label: string; valu
   );
 }
 
-function ManagementCommentary({ tr }: { tr: (key: string) => string }) {
-  const commentary = (((report as unknown as Record<string, unknown>).managementCommentary ?? {}) as Record<string, string>);
+function ManagementCommentary({ tr, lang }: { tr: (key: string) => string; lang: Lang }) {
+  const commentary = (((report as unknown as Record<string, unknown>).managementCommentary ?? {}) as Record<string, LocalizedText>);
   const sections = [
     { key: "overall", label: tr("mcOverall") },
     { key: "production", label: tr("mcProduction") },
@@ -744,14 +785,14 @@ function ManagementCommentary({ tr }: { tr: (key: string) => string }) {
     { key: "keyNote", label: tr("mcKeyNote") },
   ];
 
-  if (sections.every((section) => !(commentary[section.key] ?? "").trim())) {
+  if (sections.every((section) => !localizedText(commentary[section.key], lang).trim())) {
     return <p className="text-sm italic text-muted-foreground">{tr("noCommentary")}</p>;
   }
 
   return (
     <div className="space-y-3">
       {sections.map((section) => {
-        const value = (commentary[section.key] ?? "").trim();
+        const value = localizedText(commentary[section.key], lang).trim();
         return (
           <div key={section.key} className="rounded-lg border border-border bg-secondary/30 p-4">
             <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-primary">{section.label}</p>
