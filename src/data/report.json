@@ -1,30 +1,30 @@
 {
-  "reportDate": "2026-07-16",
+  "reportDate": "2026-07-22",
   "version": "3.1",
   "totals": {
-    "inputCoilsTon": 2706.1,
-    "inputCoilsQty": 158,
-    "pickling": 2586.879,
-    "rolling": 2168.64,
-    "galvanized": 1956.471,
-    "sold": 754.196
+    "inputCoilsTon": 2826.212,
+    "inputCoilsQty": 165,
+    "pickling": 2687.25,
+    "rolling": 2371.201,
+    "galvanized": 2159.316,
+    "sold": 775.981
   },
   "warehouse": [
     {
       "name": "Unpickled",
-      "ton": 119.221
+      "ton": 138.962
     },
     {
       "name": "Pickled",
-      "ton": 391.08
+      "ton": 288.89
     },
     {
       "name": "Rolled",
-      "ton": 184.003
+      "ton": 183.719
     },
     {
       "name": "Galvanied",
-      "ton": 1202.275
+      "ton": 1383.3349999999998
     }
   ],
   "scrap": [
@@ -40,19 +40,19 @@
   "materialBalance": [
     {
       "k": "Factory Input",
-      "v": 2706.1
+      "v": 2826.212
     },
     {
       "k": "Final Product",
-      "v": 1956.471
+      "v": 2159.316
     },
     {
       "k": "Warehouse + WIP-Sold",
-      "v": 1202.275
+      "v": 1383.3349999999998
     },
     {
       "k": "Ready to ship",
-      "v": 1202.275
+      "v": 1383.3349999999998
     },
     {
       "k": "Total Scrap",
@@ -68,12 +68,12 @@
     {
       "process": "Rolling Yield",
       "formula": "(Rolling - Rolling Scrap - Rolled WH) ÷ (Pickling - Pickled WH)",
-      "value": 0.8914650202500319
+      "value": 0.9007500958988641
     },
     {
       "process": "Galvanizing Yield",
       "formula": "(Galv - Galv Scrap) ÷ (Rolling - Rolled WH)",
-      "value": 0.9716159680586425
+      "value": 0.9742480166693942
     },
     {
       "process": "Coil to Coil Yield",
@@ -863,86 +863,86 @@
     {
       "thickness": 0.4,
       "width": 1000,
-      "weight": 51.1,
-      "theoZn": 879.89496,
-      "dross": 158.38109279999998,
-      "actual": 721.5138672
+      "weight": 181.24,
+      "theoZn": 5194.777070063695,
+      "dross": 303.55278761513,
+      "actual": 4891.224282448565
     },
     {
       "thickness": 0.45,
       "width": 1000,
-      "weight": 51.1,
-      "theoZn": 879.89496,
-      "dross": 158.38109279999998,
-      "actual": 721.5138672
+      "weight": 131.423,
+      "theoZn": 3348.356687898089,
+      "dross": 195.65863805754543,
+      "actual": 3152.6980498405437
     },
     {
       "thickness": 0.48,
       "width": 1000,
-      "weight": 359.336,
-      "theoZn": 5969.847320000001,
-      "dross": 1074.5725176,
-      "actual": 4895.274802400001
+      "weight": 543.938,
+      "theoZn": 12992.149681528663,
+      "dross": 759.1862364351055,
+      "actual": 12232.963445093557
     },
     {
       "thickness": 0.5,
       "width": 1000,
-      "weight": 476.201,
-      "theoZn": 7551.364100000001,
-      "dross": 1359.2455380000001,
-      "actual": 6192.118562000001
+      "weight": 496.16,
+      "theoZn": 11376.91719745223,
+      "dross": 664.8013732205818,
+      "actual": 10712.115824231649
     },
     {
       "thickness": 0.6,
       "width": 1000,
-      "weight": 425.063,
-      "theoZn": 5748.105839999999,
-      "dross": 1034.6590511999998,
-      "actual": 4713.4467888
+      "weight": 382.912,
+      "theoZn": 7316.789808917198,
+      "dross": 427.5509637728401,
+      "actual": 6889.238845144358
     },
     {
       "thickness": 0.7,
       "width": 1000,
-      "weight": 306.576,
-      "theoZn": 3609.6939900000007,
-      "dross": 649.7449182000001,
-      "actual": 2959.9490718000006
+      "weight": 300.14,
+      "theoZn": 4915.850773430392,
+      "dross": 287.2539448081634,
+      "actual": 4628.596828622229
     },
     {
       "thickness": 0.8,
       "width": 1000,
-      "weight": 16.88,
-      "theoZn": 150.76252999999997,
-      "dross": 27.137255399999994,
-      "actual": 123.62527459999998
+      "weight": 16.55,
+      "theoZn": 237.18152866242036,
+      "dross": 13.859519518402067,
+      "actual": 223.3220091440183
     },
     {
       "thickness": 0.9,
       "width": 1000,
-      "weight": 16.611,
-      "theoZn": 681.54533,
-      "dross": 122.6781594,
-      "actual": 558.8671706
+      "weight": 8.158,
+      "theoZn": 103.92356687898088,
+      "dross": 6.072693399456156,
+      "actual": 97.85087347952472
     },
     {
       "thickness": 1,
       "width": 1000,
-      "weight": 84.691,
-      "theoZn": 100.73751000000001,
-      "dross": 18.1327518,
-      "actual": 82.60475820000002
+      "weight": 82.535,
+      "theoZn": 946.2611464968154,
+      "dross": 55.29403956260148,
+      "actual": 890.9671069342139
     },
     {
       "thickness": 1.2,
       "width": 1000,
-      "weight": 16.782,
-      "theoZn": 172.48626000000002,
-      "dross": 31.0475268,
-      "actual": 141.4387332
+      "weight": 16.26,
+      "theoZn": 155.3503184713376,
+      "dross": 9.077775926252485,
+      "actual": 146.27254254508512
     }
   ],
   "zincPurchased": 29.1,
-  "zincRemaining": 3.21,
+  "zincRemaining": -14.765249807483741,
   "sales": [
     {
       "date": "2026-05-17",
@@ -960,24 +960,18 @@
       "date": "2026-06-20",
       "buyer": "Dashtestan",
       "tonnage": 82.565,
-      "amount": 140000000000
+      "amount": 128801400000
     },
     {
       "date": "2026-07-01",
       "buyer": "Hoshmand glv.",
       "tonnage": 99.52,
       "amount": 136341902400
-    },
-    {
-      "date": "2026-07-14",
-      "buyer": "Dashtestan",
-      "tonnage": 320.85,
-      "amount": 0
     }
   ],
   "transport": {
-    "underLoading": 320.85,
-    "readyWarehouse": 1202.275
+    "underLoading": 284,
+    "readyWarehouse": 1383.3349999999998
   },
   "plan": [
     {
@@ -1035,7 +1029,7 @@
     "role": "AKA Technical Representative",
     "name": "Hamid Reza Fardar"
   },
-  "projectAnalysis": "",
+  "projectAnalysis": "The 2,000 MT Galvanized Coil Project has achieved a strong production performance, reaching 82.5% physical completion with an overall Coil-to-Coil Yield of 96.88%, indicating efficient process control and low material losses. However, the project is currently facing a significant operational bottleneck caused by warehouse capacity constraints, with more than 1,349 tons of finished products ready for shipment and only 19.5% of total production sold to date. The imbalance between production and sales has resulted in a high inventory level and an estimated 198 days of inventory coverage, negatively affecting cash flow and limiting further production activities. Production scheduling has also deviated from the original plan, with one 500-ton milestone completed 18 days behind schedule and another 500-ton target still on hold. Furthermore, the remaining zinc inventory is sufficient for only about 614 tons of additional production, creating a medium-term supply risk if production resumes without replenishment. Therefore, the immediate strategic priority should be to accelerate product shipments, expand storage capacity, and secure additional zinc supply to eliminate operational constraints and enable the successful completion of the project.",
   "managementCommentary": {
     "overall": "As of 2026-06-28, the project has produced 1,711.122 tons of galvanized coils out of a total 2,073.750 tons of input coils. Therefore, the physical progress of the project is 82.51%, while 362.63 tons (17.49%) of the input material has not yet been converted into finished product. A comparison between the production plan and actual completion indicates significant schedule deviations. The 500-ton production target planned for 2026-06-04 was completed with an 18-day delay on 2026-06-22. Additionally, the 500-ton target scheduled for 2026-06-08 remains in Hold status, resulting in at least 500 tons of production backlog. Management notes highlight that the most critical project risk is the lack of warehouse capacity and storage constraints, which has directly limited galvanized production. Furthermore, the emergency sale of 82 tons of galvanized coils to finance customs clearance and transportation expenses indicates liquidity pressure and increases operational risk.",
     "production": "The overall Coil-to-Coil Yield is 96.88%, which is considered excellent and falls within the upper range of industry standards (typically 95%–97%). This indicates that the project has maintained a relatively low overall material loss throughout the production process. The process yields are as follows: Pickling Yield: 100.00% Rolling Yield: 81.90% Galvanizing Yield: 98.35% Pickling and galvanizing performances are satisfactory and within acceptable limits. However, the rolling process shows the lowest yield and represents the largest source of material loss in the production chain. Scrap generation amounted to 27.159 tons in the rolling line, equivalent to 1.32% of rolling production, and 28.266 tons in the galvanizing line, equivalent to 1.65% of galvanized production. Based on management observations, frequent production interruptions, warehouse limitations, and multiple order changes may have contributed to the increased scrap generation.",
@@ -1047,32 +1041,32 @@
     {
       "thickness": 0.4,
       "width": 1000,
-      "tonnage": 131.435
+      "tonnage": 181.24
     },
     {
       "thickness": 0.45,
       "width": 1000,
-      "tonnage": 26.09
+      "tonnage": 92.845
     },
     {
       "thickness": 0.48,
       "width": 1000,
-      "tonnage": 87.79
+      "tonnage": 198.24
     },
     {
       "thickness": 0.5,
       "width": 1000,
-      "tonnage": 402
+      "tonnage": 372.275
     },
     {
       "thickness": 0.6,
       "width": 1000,
-      "tonnage": 252.15
+      "tonnage": 246.88
     },
     {
       "thickness": 0.7,
       "width": 1000,
-      "tonnage": 270
+      "tonnage": 259.045
     },
     {
       "thickness": 0.8,
