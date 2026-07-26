@@ -41,6 +41,13 @@ const toNumber = (value: unknown) => {
 
 const toText = (value: unknown) => normalizeText(value);
 
+const withEnglishTranslation = (current: unknown, english: string) => ({
+  ...(current && typeof current === "object" && !Array.isArray(current)
+    ? current
+    : {}),
+  en: english,
+});
+
 const columnIndexFromReference = (reference: string) => {
   const letters = reference.match(/[A-Z]+/i)?.[0]?.toUpperCase() ?? "A";
   let index = 0;
@@ -380,7 +387,7 @@ export const importReportWorkbook = async (
 
   const projectAnalysis = textAfterHeader(workbook.sheets["Project Analysis"], "Analysis Text");
   if (projectAnalysis) {
-    next.projectAnalysis = projectAnalysis;
+    next.projectAnalysis = withEnglishTranslation(next.projectAnalysis, projectAnalysis);
     importedSections.push("projectAnalysis");
   }
 
@@ -392,7 +399,12 @@ export const importReportWorkbook = async (
     next.managementCommentary = { ...(next.managementCommentary ?? {}) };
     for (const row of commentaryRows) {
       const key = toText(row.key);
-      if (key && !isBlank(row.commentary)) next.managementCommentary[key] = toText(row.commentary);
+      if (key && !isBlank(row.commentary)) {
+        next.managementCommentary[key] = withEnglishTranslation(
+          next.managementCommentary[key],
+          toText(row.commentary),
+        );
+      }
     }
     importedSections.push("managementCommentary");
   }

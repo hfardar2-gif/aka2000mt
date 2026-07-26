@@ -1049,13 +1049,37 @@
     "role": "AKA Technical Representative",
     "name": "Hamid Reza Fardar"
   },
-  "projectAnalysis": "Most supplied hot-rolled material has progressed through conversion into galvanized product.\nSales conversion has not advanced at the same pace as production.\nAs a result, a substantial volume of finished goods remains in warehouse awaiting sale or shipment.\nThe 284-ton reserved consignment may reduce inventory once payment and loading are completed.\nProject completion now depends materially on converting available stock into dispatched sales and releasing storage capacity.",
+  "projectAnalysis": {
+    "en": "Most supplied hot-rolled material has progressed through conversion into galvanized product.\nSales conversion has not advanced at the same pace as production.\nAs a result, a substantial volume of finished goods remains in warehouse awaiting sale or shipment.\nThe 284-ton reserved consignment may reduce inventory once payment and loading are completed.\nProject completion now depends materially on converting available stock into dispatched sales and releasing storage capacity.",
+    "fa": "بخش عمدهٔ ورق گرم تأمین‌شده به محصول گالوانیزه تبدیل شده است.\nروند فروش هم‌پای تولید پیش نرفته و در نتیجه، حجم چشمگیری از محصول نهایی در انبار در انتظار فروش یا ارسال باقی مانده است.\nمحمولهٔ رزروشدهٔ ۲۸۴ تنی، پس از دریافت وجه و تکمیل بارگیری، می‌تواند از موجودی انبار بکاهد.\nتکمیل پروژه اکنون تا حد زیادی به تبدیل موجودی آماده به فروش قطعی و ارسال‌شده و آزادسازی ظرفیت انبار وابسته است.",
+    "zh": "大部分已供应的热轧材料均已进入镀锌产品转换阶段。\n销售转化进度未能与生产保持同步，因此大量成品仍积压在仓库，等待销售或发运。\n在收到货款并完成装运后，已预留的284吨货物有望降低库存。\n项目能否完成，目前很大程度上取决于将现有库存转化为已发运销售，并释放仓储空间。"
+  },
   "managementCommentary": {
-    "overall": "The project has reached an advanced execution stage, with most supplied hot-rolled material already processed and 70.8% of the production plan recorded as achieved. The final production tranche remains in progress, while warehouse constraints are directly affecting continued production.",
-    "production": "Galvanized output has reached 2,159 tons from 2,826 tons of supplied input, showing substantial conversion of the available material. However, remaining work-in-process and the incomplete final production plan indicate that conversion is not yet complete.",
-    "sales": "Commercialization remains behind galvanized production, with the dashboard reporting 776 tons sold against 2,159 tons produced. A further 284 tons is reserved and under loading, but shipment remains conditional on payment and final weight confirmation.",
-    "inventory": "Finished-goods inventory stands at approximately 1,383 tons and is identified as ready for shipment. This accumulation is materially higher than completed sales and has filled available warehouse capacity, thereby constraining further production",
-    "keyNote": "The principal management issue is the imbalance between production and completed commercialization. High finished-goods inventory is restricting warehouse capacity and has become the immediate bottleneck to completing the remaining production plan"
+    "overall": {
+      "en": "The project has reached an advanced execution stage, with most supplied hot-rolled material already processed and 70.8% of the production plan recorded as achieved. The final production tranche remains in progress, while warehouse constraints are directly affecting continued production.",
+      "fa": "پروژه به مرحلهٔ پیشرفته‌ای از اجرا رسیده است؛ بخش عمدهٔ ورق گرم تأمین‌شده فرآوری شده و ۷۰٫۸ درصد برنامهٔ تولید تحقق یافته است. آخرین بخش برنامه همچنان در حال اجراست، اما محدودیت ظرفیت انبار مستقیماً ادامهٔ تولید را تحت تأثیر قرار می‌دهد.",
+      "zh": "项目已进入较后期的执行阶段，大部分已供应热轧材料完成加工，生产计划完成率达到70.8%。最后一批生产仍在推进，但仓储容量限制正直接影响后续生产。"
+    },
+    "production": {
+      "en": "Galvanized output has reached 2,159 tons from 2,826 tons of supplied input, showing substantial conversion of the available material. However, remaining work-in-process and the incomplete final production plan indicate that conversion is not yet complete.",
+      "fa": "از مجموع ۲٬۸۲۶ تن ورودی تأمین‌شده، تولید محصول گالوانیزه به ۲٬۱۵۹ تن رسیده که بیانگر تبدیل بخش عمدهٔ مواد موجود است. بااین‌حال، باقی‌ماندن کالای در جریان ساخت و تکمیل‌نشدن بخش پایانی برنامه نشان می‌دهد فرایند تبدیل هنوز پایان نیافته است.",
+      "zh": "在2,826吨供应投入中，镀锌产量已达到2,159吨，表明现有材料已实现较大比例的转换。然而，仍有在制品且最终生产计划尚未完成，说明转换过程仍未结束。"
+    },
+    "sales": {
+      "en": "Commercialization remains behind galvanized production, with the dashboard reporting 776 tons sold against 2,159 tons produced. A further 284 tons is reserved and under loading, but shipment remains conditional on payment and final weight confirmation.",
+      "fa": "فروش از تولید گالوانیزه عقب‌تر است؛ در برابر ۲٬۱۵۹ تن تولید، ۷۷۶ تن فروش ثبت شده است. ۲۸۴ تن دیگر نیز رزرو و در مرحلهٔ بارگیری است، اما ارسال آن به دریافت وجه و تأیید وزن نهایی وابسته خواهد بود.",
+      "zh": "商业销售进度仍落后于镀锌生产：已生产2,159吨，而已售数量为776吨。另有284吨已预留并处于装运阶段，但发运仍取决于收款及最终重量确认。"
+    },
+    "inventory": {
+      "en": "Finished-goods inventory stands at approximately 1,383 tons and is identified as ready for shipment. This accumulation is materially higher than completed sales and has filled available warehouse capacity, thereby constraining further production",
+      "fa": "موجودی محصول نهایی حدود ۱٬۳۸۳ تن است و به‌عنوان آمادهٔ ارسال ثبت شده است. این انباشت به‌مراتب بیش از فروش قطعی است و با اشغال ظرفیت موجود انبار، ادامهٔ تولید را محدود می‌کند.",
+      "zh": "成品库存约为1,383吨，并标记为可发运。该库存积压明显高于已完成销售量，已占满可用仓储容量，进而限制后续生产。"
+    },
+    "keyNote": {
+      "en": "The principal management issue is the imbalance between production and completed commercialization. High finished-goods inventory is restricting warehouse capacity and has become the immediate bottleneck to completing the remaining production plan",
+      "fa": "مهم‌ترین مسئلهٔ مدیریتی، عدم توازن میان تولید و فروش قطعی است. موجودی بالای محصول نهایی ظرفیت انبار را محدود کرده و به گلوگاه فوری تکمیل باقی‌ماندهٔ برنامهٔ تولید تبدیل شده است.",
+      "zh": "当前最主要的管理问题是生产与已完成销售之间失衡。高企的成品库存压缩了仓储容量，并已成为完成剩余生产计划的直接瓶颈。"
+    }
   },
   "coilInventory": [
     {
