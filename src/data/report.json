@@ -1051,10 +1051,10 @@
   },
   "projectAnalysis": "Most supplied hot-rolled material has progressed through conversion into galvanized product.\nSales conversion has not advanced at the same pace as production.\nAs a result, a substantial volume of finished goods remains in warehouse awaiting sale or shipment.\nThe 284-ton reserved consignment may reduce inventory once payment and loading are completed.\nProject completion now depends materially on converting available stock into dispatched sales and releasing storage capacity.",
   "managementCommentary": {
-    "overall": "",
-    "production": "A total of 2,159 tons has been converted into galvanized output from 2,826 tons of input coils. Production remains in progress under the current plan.",
-    "sales": "",
-    "inventory": "",
+    "overall": "The project has reached an advanced execution stage, with most supplied hot-rolled material already processed and 70.8% of the production plan recorded as achieved. The final production tranche remains in progress, while warehouse constraints are directly affecting continued production.",
+    "production": "Galvanized output has reached 2,159 tons from 2,826 tons of supplied input, showing substantial conversion of the available material. However, remaining work-in-process and the incomplete final production plan indicate that conversion is not yet complete.",
+    "sales": "Commercialization remains behind galvanized production, with the dashboard reporting 776 tons sold against 2,159 tons produced. A further 284 tons is reserved and under loading, but shipment remains conditional on payment and final weight confirmation.",
+    "inventory": "Finished-goods inventory stands at approximately 1,383 tons and is identified as ready for shipment. This accumulation is materially higher than completed sales and has filled available warehouse capacity, thereby constraining further production",
     "keyNote": ""
   },
   "coilInventory": [
